@@ -1,0 +1,9 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'MagicLiteralsSelector',
+      #directory : 'src',
+      #platforms : [ #pharo ]
+    }
+  ]
+}
