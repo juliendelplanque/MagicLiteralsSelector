@@ -7,6 +7,11 @@ Class {
 	#category : #MagicLiteralsSelector
 }
 
+{ #category : #testing }
+MLSCanNotDecide >> isCanNotDecide [
+	^ true
+]
+
 { #category : #accessing }
 MLSCanNotDecide >> justification [
 	^ justification

@@ -29,10 +29,50 @@ MLSLiteralCandidate >> astNode: anObject [
 	astNode := anObject
 ]
 
+{ #category : #'status setting' }
+MLSLiteralCandidate >> beCanNotDecide [
+	self status: MLSCanNotDecide new
+]
+
+{ #category : #'status setting' }
+MLSLiteralCandidate >> beMagic [
+	self status: MLSIsMagic new
+]
+
+{ #category : #'status setting' }
+MLSLiteralCandidate >> beNotMagic [
+	self status: MLSIsNotMagic new
+]
+
+{ #category : #'status setting' }
+MLSLiteralCandidate >> beUnknown [
+	self status: MLSUnknownStatus new
+]
+
 { #category : #initialization }
 MLSLiteralCandidate >> initialize [
 	super initialize.
-	self status: MLSUnknownStatus new
+	self beUnknown
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isCanNotDecide [
+	^ self status isCanNotDecide
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isMagic [
+	^ self status isMagic
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isNotMagic [
+	^ self status isNotMagic
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isUnknown [
+	^ self status isUnknown
 ]
 
 { #category : #accessing }
