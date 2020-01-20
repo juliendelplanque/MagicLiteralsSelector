@@ -25,11 +25,16 @@ MLSMethodPresenter class >> defaultSpec [
 
 { #category : #initialization }
 MLSMethodPresenter >> initializePresenters [
-	sourceCodePresenter := self newCode.
+	sourceCodePresenter := self newText.
+	justificationTextInput := self newText.
+	justificationTextInput enabled: false. 
 	
 	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
+	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
+		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
+	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
+		justificationTextInput enabled: literalCandidate isCanNotDecide ]
 	
-	justificationTextInput := self newText
 ]
 
 { #category : #accessing }
