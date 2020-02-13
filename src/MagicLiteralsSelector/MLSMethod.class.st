@@ -35,6 +35,11 @@ MLSMethod >> literalsCandidates [
 ]
 
 { #category : #accessing }
+MLSMethod >> methodClass [
+	^ self compiledMethod methodClass
+]
+
+{ #category : #accessing }
 MLSMethod >> sourceCode [
 	^ self compiledMethod sourceCode
 ]

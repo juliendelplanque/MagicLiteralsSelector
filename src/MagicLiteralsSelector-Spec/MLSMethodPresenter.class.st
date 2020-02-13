@@ -25,7 +25,7 @@ MLSMethodPresenter class >> defaultSpec [
 
 { #category : #initialization }
 MLSMethodPresenter >> initializePresenters [
-	sourceCodePresenter := self newText.
+	sourceCodePresenter := self newCode.
 	justificationTextInput := self newText.
 	justificationTextInput enabled: false. 
 	
@@ -39,7 +39,9 @@ MLSMethodPresenter >> initializePresenters [
 
 { #category : #accessing }
 MLSMethodPresenter >> method: aMethod [
-	sourceCodePresenter text: aMethod sourceCode.
+	sourceCodePresenter
+		behavior: aMethod methodClass;
+		text: aMethod sourceCode.
 	literalCandidatesPresenter literalsCandidates: aMethod literalsCandidates.
 	
 ]
