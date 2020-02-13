@@ -5,7 +5,9 @@ Class {
 	#name : #MLSMethod,
 	#superclass : #Object,
 	#instVars : [
-		'compiledMethod'
+		'compiledMethod',
+		'literalsCandidates',
+		'anyLiteralCandidateStatusChangedBlock'
 	],
 	#category : #MagicLiteralsSelector
 }
@@ -27,6 +29,22 @@ MLSMethod >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
+{ #category : #private }
+MLSMethod >> gatherLiteralsCandidates [
+	^ literalsCandidates := self compiledMethod parseTree allChildren
+		select: [ :n | n class = RBLiteralValueNode ]
+		thenCollect: [ :n | 
+			(MLSLiteralCandidate astNode: n)
+				whenStatusChangedDo: [ :literalCandidate | anyLiteralCandidateStatusChangedBlock cull: literalCandidate ];
+				yourself ]
+]
+
+{ #category : #initialization }
+MLSMethod >> initialize [
+	super initialize.
+	anyLiteralCandidateStatusChangedBlock := [ :literalCandidate | ]
+]
+
 { #category : #testing }
 MLSMethod >> isCompleted [
 	^ self literalsCandidates noneSatisfy: [ :candidate |
@@ -35,9 +53,7 @@ MLSMethod >> isCompleted [
 
 { #category : #api }
 MLSMethod >> literalsCandidates [
-	^ self compiledMethod parseTree allChildren
-		select: [ :n | n class = RBLiteralValueNode ]
-		thenCollect: [ :n | MLSLiteralCandidate astNode: n ]
+	^ literalsCandidates ifNil: [ literalsCandidates := self gatherLiteralsCandidates ]
 ]
 
 { #category : #accessing }
@@ -48,4 +64,9 @@ MLSMethod >> methodClass [
 { #category : #accessing }
 MLSMethod >> sourceCode [
 	^ self compiledMethod sourceCode
+]
+
+{ #category : #api }
+MLSMethod >> whenAnyLiteralCandidateStatusChangedDo: aBlock [
+	anyLiteralCandidateStatusChangedBlock := aBlock
 ]

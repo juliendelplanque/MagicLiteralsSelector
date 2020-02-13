@@ -31,3 +31,18 @@ MLSMethodTest >> testSourceCode [
 	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
 	self assert: method sourceCode equals: (self class >> #sampleMethodWithLiterals) sourceCode
 ]
+
+{ #category : #test }
+MLSMethodTest >> testWhenAnyLiteralCandidateStatusChangedDo [
+	| method changedLiteral |
+	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
+	
+	changedLiteral := nil.
+	method whenAnyLiteralCandidateStatusChangedDo: [ :literal | changedLiteral := literal ].
+	
+	self assert: changedLiteral isNil.
+	
+	method literalsCandidates first beMagic.
+	
+	self assert: changedLiteral equals: method literalsCandidates first
+]
