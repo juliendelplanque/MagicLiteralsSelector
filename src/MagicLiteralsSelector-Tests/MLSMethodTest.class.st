@@ -38,7 +38,7 @@ MLSMethodTest >> testWhenAnyLiteralCandidateStatusChangedDo [
 	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
 	
 	changedLiteral := nil.
-	method whenAnyLiteralCandidateStatusChangedDo: [ :literal | changedLiteral := literal ].
+	method whenAnyLiteralCandidateStatusChangedDo: [ :m :literal | changedLiteral := literal ].
 	
 	self assert: changedLiteral isNil.
 	

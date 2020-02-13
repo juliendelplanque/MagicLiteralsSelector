@@ -35,14 +35,14 @@ MLSMethod >> gatherLiteralsCandidates [
 		select: [ :n | n class = RBLiteralValueNode ]
 		thenCollect: [ :n | 
 			(MLSLiteralCandidate astNode: n)
-				whenStatusChangedDo: [ :literalCandidate | anyLiteralCandidateStatusChangedBlock cull: literalCandidate ];
+				whenStatusChangedDo: [ :literalCandidate | anyLiteralCandidateStatusChangedBlock cull: self cull: literalCandidate ];
 				yourself ]
 ]
 
 { #category : #initialization }
 MLSMethod >> initialize [
 	super initialize.
-	anyLiteralCandidateStatusChangedBlock := [ :literalCandidate | ]
+	anyLiteralCandidateStatusChangedBlock := [ :method :literalCandidate | ]
 ]
 
 { #category : #testing }
