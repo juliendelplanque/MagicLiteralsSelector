@@ -5,9 +5,12 @@ I hold the data related to categorisation made by the user (e.g. I am a magic li
 Class {
 	#name : #MLSLiteralCandidate,
 	#superclass : #Object,
+	#traits : 'TObservable',
+	#classTraits : 'TObservable classTrait',
 	#instVars : [
-		'astNode',
-		'status'
+		'#astNode',
+		'#status => ObservableSlot',
+		'#statusChangedBlock'
 	],
 	#category : #MagicLiteralsSelector
 }
@@ -51,8 +54,13 @@ MLSLiteralCandidate >> beUnknown [
 
 { #category : #initialization }
 MLSLiteralCandidate >> initialize [
+	
+	self class initializeSlots: self.
 	super initialize.
-	self beUnknown
+	self beUnknown.
+	
+	statusChangedBlock := [ :candidate | ].
+	self property: #status whenChangedDo: [ statusChangedBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -93,4 +101,9 @@ MLSLiteralCandidate >> status [
 { #category : #accessing }
 MLSLiteralCandidate >> status: anObject [
 	status := anObject
+]
+
+{ #category : #events }
+MLSLiteralCandidate >> whenStatusChangedDo: aBlock [
+	statusChangedBlock := aBlock
 ]

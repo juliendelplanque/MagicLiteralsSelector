@@ -66,3 +66,17 @@ MLSLiteralCandidateTest >> testPositionsInterval [
 	
 	self assert: literalCandidate positionsInterval equals: (40 to: 41)
 ]
+
+{ #category : #test }
+MLSLiteralCandidateTest >> testWhenStatusChangedDo [
+	| literalCandidate newStatus |
+	literalCandidate := (MLSMethod compiledMethod: MLSMethodTest >> #sampleMethodWithLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	newStatus := nil.
+	literalCandidate whenStatusChangedDo: [ :candidate | newStatus := candidate status ].
+	
+	self assert: newStatus isNil.
+	
+	literalCandidate beMagic.
+	
+	self assert: newStatus equals: literalCandidate status
+]
