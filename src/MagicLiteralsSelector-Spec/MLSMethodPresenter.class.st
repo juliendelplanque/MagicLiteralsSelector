@@ -12,6 +12,7 @@ Class {
 { #category : #specs }
 MLSMethodPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
+		spacing: 5;
 		add:
 			(SpBoxLayout newHorizontal
 				add: #sourceCodePresenter;

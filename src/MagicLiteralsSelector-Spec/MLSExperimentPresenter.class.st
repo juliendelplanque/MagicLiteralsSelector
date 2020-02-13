@@ -11,6 +11,7 @@ Class {
 { #category : #specs }
 MLSExperimentPresenter class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
+		spacing: 5;
 		add: #methodsList;
 		add: #methodPresenter;
 		yourself

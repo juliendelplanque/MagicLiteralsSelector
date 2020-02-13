@@ -3,8 +3,8 @@ Extension { #name : #MLSMethod }
 { #category : #'*MagicLiteralsSelector-Spec' }
 MLSMethod >> completionStatusIcon [
 	^ self isCompleted
-		ifTrue: [ #checkboxSelected ]
-		ifFalse: [ #checkboxUnselected ]
+		ifTrue: [ #glamorousAccept ]
+		ifFalse: [ #flag ]
 ]
 
 { #category : #'*MagicLiteralsSelector-Spec' }
