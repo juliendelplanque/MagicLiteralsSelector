@@ -17,8 +17,7 @@ MLSMethodPresenter class >> defaultSpec [
 				add: #sourceCodePresenter;
 				add: #literalCandidatesPresenter;
 				yourself);
-		add: 'Choice justification (in case you answered "Can not decide"):' 
-			withConstraints: [ :constraints | constraints height: self labelHeight ];
+		add: 'Choice justification (in case you answered "Can not decide"):' expand: false;
 		add: #justificationTextInput;
 		yourself
 ]

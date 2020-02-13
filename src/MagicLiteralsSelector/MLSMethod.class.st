@@ -27,6 +27,12 @@ MLSMethod >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
+{ #category : #testing }
+MLSMethod >> isCompleted [
+	^ self literalsCandidates noneSatisfy: [ :candidate |
+		candidate status isUnknown ]
+]
+
 { #category : #api }
 MLSMethod >> literalsCandidates [
 	^ self compiledMethod parseTree allChildren
