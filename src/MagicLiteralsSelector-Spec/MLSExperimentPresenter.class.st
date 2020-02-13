@@ -31,5 +31,9 @@ MLSExperimentPresenter >> initializePresenters [
 
 { #category : #accessing }
 MLSExperimentPresenter >> methodsSample: aMethodsSample [
-	methodsList items: aMethodsSample methods
+	methodsList items: aMethodsSample methods.
+	
+	aMethodsSample methods do: [ :m |
+		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
+			methodsList items: aMethodsSample methods. ] ]
 ]
