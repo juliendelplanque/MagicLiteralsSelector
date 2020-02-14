@@ -14,6 +14,11 @@ MLSMethodsSample class >> methods: methods [
 		yourself
 ]
 
+{ #category : #accessing }
+MLSMethodsSample >> completionPercentage [
+	^ (self methods select: [ :m | m isCompleted ]) size / self methods size
+]
+
 { #category : #initialization }
 MLSMethodsSample >> initialize [
 	super initialize.
