@@ -3,17 +3,23 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'methodsList',
-		'methodPresenter'
+		'methodPresenter',
+		'progressBar',
+		'methodsSample'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
 
 { #category : #specs }
 MLSExperimentPresenter class >> defaultSpec [
-	^ SpBoxLayout newHorizontal
-		spacing: 5;
-		add: #methodsList;
-		add: #methodPresenter;
+	^ SpBoxLayout newVertical
+		add: (SpBoxLayout newHorizontal
+					spacing: 5;
+					add: #methodsList;
+					add: #methodPresenter;
+					yourself);
+		add: 'Progress:' expand: false;
+		add: #progressBar expand: false;
 		yourself
 ]
 
@@ -26,14 +32,18 @@ MLSExperimentPresenter >> initializePresenters [
 	methodPresenter := self instantiate: MLSMethodPresenter.
 	
 	methodsList whenSelectionChangedDo: [ :selection |
-		methodPresenter method: selection selectedItem ] 
+		methodPresenter method: selection selectedItem ].
+	
+	progressBar := self newProgressBar.
+	progressBar progress: [ methodsSample ifNil: [ 0 ] ifNotNil: #completionPercentage ] every: 0.5 second.
 ]
 
 { #category : #accessing }
 MLSExperimentPresenter >> methodsSample: aMethodsSample [
+	methodsSample := aMethodsSample.
 	methodsList items: aMethodsSample methods.
 	
 	aMethodsSample methods do: [ :m |
 		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
-			methodsList items: aMethodsSample methods. ] ]
+			methodsList items: aMethodsSample methods ] ]
 ]
