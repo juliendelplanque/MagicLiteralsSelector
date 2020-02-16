@@ -9,20 +9,29 @@ Class {
 
 { #category : #'sample methods' }
 MLSMethodTest >> sampleMethodWithLiterals [
-	|x y |
+	|w x y z |
+	w := #one.
 	x := 42.
 	y := x + 1.
+	z := 'A string'.
+	
 	^ { x . y . $a }
 ]
 
 { #category : #test }
 MLSMethodTest >> testLiteralsCandidates [
 	| method |
-	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
-	
-	self assert: method literalsCandidates size equals: 3.
-	self assertCollection: (method literalsCandidates collect: #literalValue) includesAll: { 42 . 1 . $a }.
-	self assert: (method literalsCandidates allSatisfy: [ :l | l status isUnknown ])
+	method := MLSMethod
+		compiledMethod: self class >> #sampleMethodWithLiterals.
+	self assert: method literalsCandidates size equals: 5.
+	self
+		assertCollection: (method literalsCandidates collect: #literalValue)
+		includesAll: {42 . 1 . $a . 'A string' . #one}.
+	self
+		assertCollection: (method literalsCandidates collect: [:c | c literalValue storeString])
+		includesAll: {'42' . '1' . '$a' . '''A string''' . '#one'}.
+	self
+		assert: (method literalsCandidates allSatisfy: [ :l | l status isUnknown ])
 ]
 
 { #category : #test }
