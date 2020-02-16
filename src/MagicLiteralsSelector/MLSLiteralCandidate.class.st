@@ -26,11 +26,12 @@ MLSLiteralCandidate class >> astNode: aLiteralASTNode [
 MLSLiteralCandidate >> asString [
 	| theType |
 	theType := astNode value class.
-	theType = ByteSymbol
+	(theType = ByteSymbol) | (theType = WideSymbol)  
 		ifTrue: [ ^ '#' , astNode value asString ].
-	((theType = SmallInteger) | (theType = True) | (theType = False) | (theType = UndefinedObject ))
+	(Magnitude allSubclasses includes: theType) | (theType = True)
+		| (theType = False) | (theType = UndefinedObject)
 		ifTrue: [ ^ astNode value asString ].
-	theType = ByteString
+	(theType = ByteString) | (theType = WideString)
 		ifTrue: [ ^ '''' , astNode value asString , '''' ].
 	theType = Character
 		ifTrue: [ ^ '$' , astNode value asString ].
