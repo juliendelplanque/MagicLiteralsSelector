@@ -23,6 +23,22 @@ MLSLiteralCandidate class >> astNode: aLiteralASTNode [
 ]
 
 { #category : #accessing }
+MLSLiteralCandidate >> asString [
+	| theType |
+	theType := astNode value class.
+	theType = ByteSymbol
+		ifTrue: [ ^ '#' , astNode value asString ].
+	((theType = SmallInteger) | (theType = True) | (theType = False) | (theType = UndefinedObject ))
+		ifTrue: [ ^ astNode value asString ].
+	theType = ByteString
+		ifTrue: [ ^ '''' , astNode value asString , '''' ].
+	theType = Character
+		ifTrue: [ ^ '$' , astNode value asString ].
+	0 halt.
+	^ self astNode value asString
+]
+
+{ #category : #accessing }
 MLSLiteralCandidate >> astNode [
 	^ astNode
 ]

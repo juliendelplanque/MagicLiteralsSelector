@@ -64,7 +64,7 @@ MLSLiteralCandidateTest >> testPositionsInterval [
 	| literalCandidate |
 	literalCandidate := (MLSMethod compiledMethod: MLSMethodTest >> #sampleMethodWithLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
 	
-	self assert: literalCandidate positionsInterval equals: (40 to: 41)
+	self assert: literalCandidate positionsInterval equals: (56 to: 57)
 ]
 
 { #category : #test }
