@@ -28,7 +28,7 @@ MLSMethodTest >> testLiteralsCandidates [
 		assertCollection: (method literalsCandidates collect: #literalValue)
 		includesAll: {42 . 1 . $a . 'A string' . #one}.
 	self
-		assertCollection: (method literalsCandidates collect: #asString)
+		assertCollection: (method literalsCandidates collect: [:c | c literalValue storeString])
 		includesAll: {'42' . '1' . '$a' . '''A string''' . '#one'}.
 	self
 		assert: (method literalsCandidates allSatisfy: [ :l | l status isUnknown ])
