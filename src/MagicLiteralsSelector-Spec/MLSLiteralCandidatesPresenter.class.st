@@ -17,13 +17,17 @@ MLSLiteralCandidatesPresenter class >> defaultSpec [
 
 { #category : #initialization }
 MLSLiteralCandidatesPresenter >> initializePresenters [
-	literalCandidateStatusChangeBlock := [ :literalCandidate | ].
+	literalCandidateStatusChangeBlock := [ :literalCandidate |  ].
 	literalCandidatesTable := self newTable.
-	
 	literalCandidatesTable
-		addColumn: (SpStringTableColumn title: 'Literal value' evaluated: [ :literalCandidate | literalCandidate literalValue storeString ]);
 		addColumn:
-			((SpCheckBoxTableColumn title: 'Magic' evaluated: [ :literalCandidate | literalCandidate isMagic ])
+			(SpStringTableColumn
+				title: 'Literal value'
+				evaluated: [ :literalCandidate | literalCandidate literalValue storeString ]);
+		addColumn:
+			((SpCheckBoxTableColumn
+				title: 'Magic'
+				evaluated: [ :literalCandidate | literalCandidate isMagic ])
 				onActivation: [ :literalCandidate | 
 					literalCandidate beMagic.
 					self refresh.
@@ -34,7 +38,9 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 					literalCandidateStatusChangeBlock value: literalCandidate ];
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn title: 'Not magic' evaluated: [ :literalCandidate | literalCandidate isNotMagic ])
+			((SpCheckBoxTableColumn
+				title: 'Not magic'
+				evaluated: [ :literalCandidate | literalCandidate isNotMagic ])
 				onActivation: [ :literalCandidate | 
 					literalCandidate beNotMagic.
 					self refresh.
@@ -45,7 +51,9 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 					literalCandidateStatusChangeBlock value: literalCandidate ];
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn title: 'Can not decide' evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ])
+			((SpCheckBoxTableColumn
+				title: 'Can not decide'
+				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ])
 				onActivation: [ :literalCandidate | 
 					literalCandidate beCanNotDecide.
 					self refresh.
