@@ -6,7 +6,7 @@ Class {
 		'methodPresenter',
 		'progressBar',
 		'methodsSample',
-		'saveStatusButton'
+		'saveSelectionsButton'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
@@ -21,7 +21,7 @@ MLSExperimentPresenter class >> defaultSpec [
 					yourself);
 		add: 'Progress:' expand: false;
 		add: #progressBar expand: false;
-		add: #saveStatusButton expand: false;
+		add: #saveSelectionsButton expand: false;
 		yourself
 ]
 
@@ -39,9 +39,10 @@ MLSExperimentPresenter >> initializePresenters [
 	progressBar := self newProgressBar.
 	progressBar progress: [ methodsSample ifNil: [ 0 ] ifNotNil: #completionPercentage ] every: 0.5 second.
 	
-	saveStatusButton := self newButton
-		label: 'Save status to file';
-		icon: ((self iconNamed: #pharo ) scaledToSize: 32 @ 32);
+	saveSelectionsButton := self newButton
+		label: 'Save selections to file';
+		icon: ((self iconNamed: #smallSaveAsIcon ) "scaledToSize: 32 @ 32");
+		action: [ self inform: 'Pretend this is saving the selections'"Action to save the selections to a file" ]
 		yourself.
 
 ]
