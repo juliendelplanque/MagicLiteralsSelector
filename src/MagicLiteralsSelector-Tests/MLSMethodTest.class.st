@@ -19,6 +19,23 @@ MLSMethodTest >> sampleMethodWithLiterals [
 ]
 
 { #category : #test }
+MLSMethodTest >> testIsCompleted [
+	| method |
+	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
+	
+	self deny: method isCompleted.
+	
+	method literalsCandidates first beMagic.
+	
+	self deny: method isCompleted.
+	
+	method literalsCandidates do: [ :candidate |
+		candidate beMagic ].
+	
+	self assert: method isCompleted.
+]
+
+{ #category : #test }
 MLSMethodTest >> testLiteralsCandidates [
 	| method |
 	method := MLSMethod
@@ -32,6 +49,13 @@ MLSMethodTest >> testLiteralsCandidates [
 		includesAll: {'42' . '1' . '$a' . '''A string''' . '#one'}.
 	self
 		assert: (method literalsCandidates allSatisfy: [ :l | l status isUnknown ])
+]
+
+{ #category : #test }
+MLSMethodTest >> testMethodClass [
+	| method |
+	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
+	self assert: method methodClass equals: MLSMethodTest
 ]
 
 { #category : #test }
