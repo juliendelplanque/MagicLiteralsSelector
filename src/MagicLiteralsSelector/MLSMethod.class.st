@@ -1,5 +1,9 @@
 "
 I model a method to be presented to the user for checking literals.
+
+I wrap a compiled method available in the system and provide additional state such as the list of literal candidates.
+
+I allow one to be notified when the status of any of my literal candidate is updated via #whenAnyLiteralCandidateStatusChangedDo: method.
 "
 Class {
 	#name : #MLSMethod,

@@ -1,3 +1,6 @@
+"
+I model the fact that a user can not decide whether the literal candidate is magic or not.
+"
 Class {
 	#name : #MLSCanNotDecide,
 	#superclass : #MLSLiteralCandidateStatus,

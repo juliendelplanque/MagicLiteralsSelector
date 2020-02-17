@@ -1,3 +1,9 @@
+"
+I am an abstract class modeling the status of a literal candidate during the experiment.
+My subclasses implement concrete statuses.
+
+My subclasses allow one to store the classification made by a user for a specific candidate (e.g. it is magic, it is not magic, ...).
+"
 Class {
 	#name : #MLSLiteralCandidateStatus,
 	#superclass : #Object,

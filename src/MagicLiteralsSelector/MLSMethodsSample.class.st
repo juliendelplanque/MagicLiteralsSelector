@@ -1,3 +1,6 @@
+"
+I model a collection of methods to be viewed by the user.
+"
 Class {
 	#name : #MLSMethodsSample,
 	#superclass : #Object,
