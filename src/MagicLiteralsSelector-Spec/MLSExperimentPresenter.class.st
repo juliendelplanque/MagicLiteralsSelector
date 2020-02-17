@@ -41,8 +41,9 @@ MLSExperimentPresenter >> initializePresenters [
 	
 	saveSelectionsButton := self newButton
 		label: 'Save selections to file';
-		icon: ((self iconNamed: #smallSaveAsIcon ) "scaledToSize: 32 @ 32");
-		action: [ self inform: 'Pretend this is saving the selections'"Action to save the selections to a file" ]
+		icon: ((self iconNamed: #smallSaveAsIcon ));
+		help: 'Saves the results of the classifications (selections) in a file';
+		action: [ self inform: 'Pretend this is saving the selections' ]
 		yourself.
 
 ]
