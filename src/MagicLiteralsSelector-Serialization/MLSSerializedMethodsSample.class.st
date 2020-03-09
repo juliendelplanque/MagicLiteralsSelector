@@ -38,3 +38,18 @@ MLSSerializedMethodsSample >> pharoVersionString [
 MLSSerializedMethodsSample >> pharoVersionString: anObject [
 	pharoVersionString := anObject
 ]
+
+{ #category : #saving }
+MLSSerializedMethodsSample >> saveIn: anObject [
+	"Saves myself on anObject (that understands #asFileReference) encoded via STON format."
+	anObject asFileReference writeStreamDo: [ :stream |
+		STON put: self onStream: stream ]
+]
+
+{ #category : #saving }
+MLSSerializedMethodsSample >> saveInImageDirectory [
+	| fileReference |
+	fileReference := (FileLocator imageDirectory / 'magic-literals.1.ston') nextVersion.
+	self saveIn: fileReference.
+	^ fileReference
+]
