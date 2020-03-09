@@ -43,7 +43,7 @@ MLSExperimentPresenter >> initializePresenters [
 		label: 'Save selections to file';
 		icon: ((self iconNamed: #smallSaveAsIcon ));
 		help: 'Saves the results of the classifications (selections) in a file';
-		action: [ self inform: 'Pretend this is saving the selections' ]
+		action: [ self saveExperimentResults ]
 		yourself.
 
 ]
@@ -56,4 +56,11 @@ MLSExperimentPresenter >> methodsSample: aMethodsSample [
 	aMethodsSample methods do: [ :m |
 		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
 			methodsList items: aMethodsSample methods ] ]
+]
+
+{ #category : #actions }
+MLSExperimentPresenter >> saveExperimentResults [
+	| fileSavedIn |
+	fileSavedIn := methodsSample asSerializedMethodsSample saveInImageDirectory.
+	UIManager default inform: ('Results saved in "{1}"' format: {fileSavedIn}).
 ]
