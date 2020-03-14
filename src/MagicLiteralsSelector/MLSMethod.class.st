@@ -44,7 +44,7 @@ MLSMethod >> gatherLiteralsCandidates [
 
 { #category : #private }
 MLSMethod >> gatherRBLiteralsNodes [
-	^ MLSTopDownNodeVisitor new visit: (compiledMethod parseTree) select: [ :node | node isLiteralNode ].
+	^ MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)
 ]
 
 { #category : #initialization }

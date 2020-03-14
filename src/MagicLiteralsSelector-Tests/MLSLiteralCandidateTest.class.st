@@ -62,15 +62,15 @@ MLSLiteralCandidateTest >> testCandidateHasUnknownStatusAfterInstantiation [
 { #category : #tests }
 MLSLiteralCandidateTest >> testPositionsInterval [
 	| literalCandidate |
-	literalCandidate := (MLSMethod compiledMethod: MLSMethodTest >> #sampleMethodWithLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (MLSMethod compiledMethod: MLSTestCases >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
 	
-	self assert: literalCandidate positionsInterval equals: (56 to: 57)
+	self assert: literalCandidate positionsInterval equals: (44 to: 45)
 ]
 
 { #category : #test }
 MLSLiteralCandidateTest >> testWhenStatusChangedDo [
 	| literalCandidate newStatus |
-	literalCandidate := (MLSMethod compiledMethod: MLSMethodTest >> #sampleMethodWithLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (MLSMethod compiledMethod: MLSTestCases >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
 	newStatus := nil.
 	literalCandidate whenStatusChangedDo: [ :candidate | newStatus := candidate status ].
 	
