@@ -59,6 +59,11 @@ MLSMethod >> isCompleted [
 		candidate status isUnknown ]
 ]
 
+{ #category : #testing }
+MLSMethod >> isTestMethod [
+	^ self compiledMethod isTestMethod
+]
+
 { #category : #api }
 MLSMethod >> literalsCandidates [
 	^ literalsCandidates ifNil: [ literalsCandidates := self gatherLiteralsCandidates ]
