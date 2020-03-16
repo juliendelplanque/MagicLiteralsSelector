@@ -8,6 +8,16 @@ Class {
 }
 
 { #category : #'sample methods' }
+MLSTestCases >> curlyBraceArrayWithMixedLiteralAndNot [
+	^ {1 . 4/2 . 6-3}
+]
+
+{ #category : #'sample methods' }
+MLSTestCases >> literalsInCurlyBraceArray [
+	^ {1 . $a . 2}
+]
+
+{ #category : #'sample methods' }
 MLSTestCases >> manyLiterals [
 	|w x y z |
 	w := #one.

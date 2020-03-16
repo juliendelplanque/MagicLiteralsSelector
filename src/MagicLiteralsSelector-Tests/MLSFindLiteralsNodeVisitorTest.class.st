@@ -13,6 +13,18 @@ MLSFindLiteralsNodeVisitorTest >> literalsFor: aMethod [
 ]
 
 { #category : #tests }
+MLSFindLiteralsNodeVisitorTest >> testCurlyBraceArrayWithMixedLiteralAndNot [
+	self assert: (self literalsFor: #curlyBraceArrayWithMixedLiteralAndNot) size equals: 5
+
+]
+
+{ #category : #tests }
+MLSFindLiteralsNodeVisitorTest >> testLiteralsInCurlyBraceArray [
+	self assert: (self literalsFor: #literalsInCurlyBraceArray) size equals: 1
+
+]
+
+{ #category : #tests }
 MLSFindLiteralsNodeVisitorTest >> testNoLiterals [
 	self assert: (self literalsFor: #noLiterals) size equals: 0
 ]
