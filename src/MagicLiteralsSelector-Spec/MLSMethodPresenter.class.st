@@ -13,13 +13,10 @@ Class {
 MLSMethodPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		spacing: 5;
-		add:
-			(SpBoxLayout newHorizontal
-				add: #sourceCodePresenter;
-				add: #literalCandidatesPresenter;
-				yourself);
+		add: #sourceCodePresenter;
+		add: #literalCandidatesPresenter height: (self inputTextHeight * 2) ;
 		add: 'Choice justification (in case you answered "Can not decide"):' expand: false;
-		add: #justificationTextInput;
+		add: #justificationTextInput height: (self inputTextHeight * 3);
 		yourself
 ]
 

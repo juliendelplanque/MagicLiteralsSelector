@@ -4,25 +4,19 @@ A MLSMethodTest is a test class for testing the behavior of MLSMethod
 Class {
 	#name : #MLSMethodTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'method'
+	],
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
-{ #category : #'sample methods' }
-MLSMethodTest >> sampleMethodWithLiterals [
-	|w x y z |
-	w := #one.
-	x := 42.
-	y := x + 1.
-	z := 'A string'.
-	
-	^ { x . y . $a }
+{ #category : #running }
+MLSMethodTest >> setUp [ 
+	method := MLSMethod compiledMethod: MLSTestCases >> #manyLiterals.
 ]
 
 { #category : #test }
 MLSMethodTest >> testIsCompleted [
-	| method |
-	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
-	
 	self deny: method isCompleted.
 	
 	method literalsCandidates first beMagic.
@@ -37,9 +31,7 @@ MLSMethodTest >> testIsCompleted [
 
 { #category : #test }
 MLSMethodTest >> testLiteralsCandidates [
-	| method |
-	method := MLSMethod
-		compiledMethod: self class >> #sampleMethodWithLiterals.
+
 	self assert: method literalsCandidates size equals: 5.
 	self
 		assertCollection: (method literalsCandidates collect: #literalValue)
@@ -53,23 +45,18 @@ MLSMethodTest >> testLiteralsCandidates [
 
 { #category : #test }
 MLSMethodTest >> testMethodClass [
-	| method |
-	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
-	self assert: method methodClass equals: MLSMethodTest
+	self assert: method methodClass equals: MLSTestCases
 ]
 
 { #category : #test }
 MLSMethodTest >> testSourceCode [
-	| method |
-	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
-	self assert: method sourceCode equals: (self class >> #sampleMethodWithLiterals) sourceCode
+
+	self assert: method sourceCode equals: (MLSTestCases >> #manyLiterals) sourceCode
 ]
 
 { #category : #test }
 MLSMethodTest >> testWhenAnyLiteralCandidateStatusChangedDo [
-	| method changedLiteral |
-	method := MLSMethod compiledMethod: self class >> #sampleMethodWithLiterals.
-	
+	| changedLiteral |
 	changedLiteral := nil.
 	method whenAnyLiteralCandidateStatusChangedDo: [ :m :literal | changedLiteral := literal ].
 	

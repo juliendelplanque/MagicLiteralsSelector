@@ -35,12 +35,16 @@ MLSMethod >> compiledMethod: anObject [
 
 { #category : #private }
 MLSMethod >> gatherLiteralsCandidates [
-	^ literalsCandidates := self compiledMethod parseTree allChildren
-		select: [ :n | n class = RBLiteralValueNode ]
-		thenCollect: [ :n | 
+	^ literalsCandidates := self gatherRBLiteralsNodes
+		collect: [ :n | 
 			(MLSLiteralCandidate astNode: n)
 				whenStatusChangedDo: [ :literalCandidate | anyLiteralCandidateStatusChangedBlock cull: self cull: literalCandidate ];
 				yourself ]
+]
+
+{ #category : #private }
+MLSMethod >> gatherRBLiteralsNodes [
+	^ MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)
 ]
 
 { #category : #initialization }
@@ -53,6 +57,11 @@ MLSMethod >> initialize [
 MLSMethod >> isCompleted [
 	^ self literalsCandidates noneSatisfy: [ :candidate |
 		candidate status isUnknown ]
+]
+
+{ #category : #testing }
+MLSMethod >> isTestMethod [
+	^ self compiledMethod isTestMethod
 ]
 
 { #category : #api }
