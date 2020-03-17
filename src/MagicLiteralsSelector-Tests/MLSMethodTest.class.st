@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 MLSMethodTest >> setUp [ 
-	method := MLSMethod compiledMethod: MLSTestCases >> #manyLiterals.
+	method := MLSMethod compiledMethod: MLSFakeClassForTesting >> #manyLiterals.
 ]
 
 { #category : #test }
@@ -45,13 +45,13 @@ MLSMethodTest >> testLiteralsCandidates [
 
 { #category : #test }
 MLSMethodTest >> testMethodClass [
-	self assert: method methodClass equals: MLSTestCases
+	self assert: method methodClass equals: MLSFakeClassForTesting
 ]
 
 { #category : #test }
 MLSMethodTest >> testSourceCode [
 
-	self assert: method sourceCode equals: (MLSTestCases >> #manyLiterals) sourceCode
+	self assert: method sourceCode equals: (MLSFakeClassForTesting >> #manyLiterals) sourceCode
 ]
 
 { #category : #test }

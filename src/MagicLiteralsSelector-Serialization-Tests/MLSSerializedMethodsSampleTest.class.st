@@ -11,8 +11,8 @@ Class {
 MLSSerializedMethodsSampleTest >> testAsSerializedMethodsSample [
 	| sample serialized |
 	sample := MLSMethodsSample methods: { 
-					MLSMethod compiledMethod: MLSFakeClassForTestingPurpose>>#sampleMethodWithLiterals1.
-					MLSMethod compiledMethod: MLSFakeClassForTestingPurpose>>#sampleMethodWithLiterals2 }.
+					MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals1.
+					MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals2 }.
 	
 	serialized := sample asSerializedMethodsSample.
 	

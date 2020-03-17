@@ -7,26 +7,19 @@ Class {
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
-{ #category : #tests }
-MLSSerializedLiteralCandidateTest >> testAsSerializedLiteralCandidate [
-	| literalCandidate serialized |
-	literalCandidate := (MLSMethod compiledMethod: MLSFakeClassForTestingPurpose>>#sampleMethodWithLiterals2) literalsCandidates first.
-	
-	serialized := literalCandidate asSerializedLiteralCandidate.
-	
-	self assert: serialized status equals: literalCandidate status.
-	self assert: serialized startPosition equals: 31.
-	self assert: serialized endPosition equals: 31.
+{ #category : #'private - utilities' }
+MLSSerializedLiteralCandidateTest >> literalCandidatesFor: aMethod [
+	^(MLSMethod compiledMethod: MLSFakeClassForTestingSerialization >> aMethod) literalsCandidates
 ]
 
 { #category : #tests }
-MLSSerializedLiteralCandidateTest >> testAsSerializedLiteralCandidate2 [
+MLSSerializedLiteralCandidateTest >> testAsSerializedLiteralCandidate [
 	| literalCandidate serialized |
-	literalCandidate := (MLSMethod compiledMethod: MLSFakeClassForTestingPurpose>>#sampleMethodWithLiterals2) literalsCandidates second.
-	literalCandidate beMagic.
+	literalCandidate := (self literalCandidatesFor: #sampleMethodWithLiterals2) first.
+	
 	serialized := literalCandidate asSerializedLiteralCandidate.
 	
 	self assert: serialized status equals: literalCandidate status.
-	self assert: serialized startPosition equals: 35.
-	self assert: serialized endPosition equals: 35.
+	self assert: serialized startPosition equals: 29.
+	self assert: serialized endPosition equals: 42.
 ]

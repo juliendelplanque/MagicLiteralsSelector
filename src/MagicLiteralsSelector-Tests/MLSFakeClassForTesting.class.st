@@ -2,23 +2,23 @@
 Some methods to test Magic Literals stuff
 "
 Class {
-	#name : #MLSTestCases,
+	#name : #MLSFakeClassForTesting,
 	#superclass : #Object,
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
 { #category : #'sample methods' }
-MLSTestCases >> curlyBraceArrayWithMixedLiteralAndNot [
+MLSFakeClassForTesting >> curlyBraceArrayWithMixedLiteralAndNot [
 	^ {1 . 4/2 . 6-3}
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> literalsInCurlyBraceArray [
+MLSFakeClassForTesting >> literalsInCurlyBraceArray [
 	^ {1 . $a . 2}
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> manyLiterals [
+MLSFakeClassForTesting >> manyLiterals [
 	|w x y z |
 	w := #one.
 	x := 42.
@@ -29,41 +29,41 @@ MLSTestCases >> manyLiterals [
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> noLiterals [
+MLSFakeClassForTesting >> noLiterals [
 	^ Object methods size
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> oneLiteralArrayInReturn [
+MLSFakeClassForTesting >> oneLiteralArrayInReturn [
 	^ #(1 $a 2)
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> oneLiteralBooleanInReturn [
+MLSFakeClassForTesting >> oneLiteralBooleanInReturn [
 	^ true
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> oneLiteralCharInReturn [
+MLSFakeClassForTesting >> oneLiteralCharInReturn [
 	^ $a
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> oneLiteralNumberInReturn [
+MLSFakeClassForTesting >> oneLiteralNumberInReturn [
 	^ 10
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> oneLiteralStringInReturn [
+MLSFakeClassForTesting >> oneLiteralStringInReturn [
 	^ 'returned value'
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> twoLiteralsInArgument [
+MLSFakeClassForTesting >> twoLiteralsInArgument [
 	^ String new indexOf: $a startingAt: 5
 ]
 
 { #category : #'sample methods' }
-MLSTestCases >> twoLiteralsNumberInExpression [
+MLSFakeClassForTesting >> twoLiteralsNumberInExpression [
 	^ 10 * 10
 ]

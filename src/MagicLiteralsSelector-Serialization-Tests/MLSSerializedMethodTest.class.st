@@ -10,12 +10,12 @@ Class {
 { #category : #tests }
 MLSSerializedMethodTest >> testAsSerializedMethod [
 	| method serialized |
-	method := MLSMethod compiledMethod: MLSFakeClassForTestingPurpose>>#sampleMethodWithLiterals2.
+	method := MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals2.
 	
 	serialized := method asSerializedMethod.
 	
-	self assert: serialized methodPackageName equals: MLSFakeClassForTestingPurpose package name.
-	self assert: serialized methodClassName equals: #MLSFakeClassForTestingPurpose.
+	self assert: serialized methodPackageName equals: MLSFakeClassForTestingSerialization package name.
+	self assert: serialized methodClassName equals: #MLSFakeClassForTestingSerialization.
 	self assert: serialized methodSelector equals: #sampleMethodWithLiterals2.
 	self assert: serialized literalCandidates size equals: method literalsCandidates size.
 	self assert: serialized sourceCode equals: 'sampleMethodWithLiterals2

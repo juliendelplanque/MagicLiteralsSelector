@@ -1,11 +1,11 @@
 Class {
-	#name : #MLSFakeClassForTestingPurpose,
+	#name : #MLSFakeClassForTestingSerialization,
 	#superclass : #Object,
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
 { #category : #'fake methods' }
-MLSFakeClassForTestingPurpose >> sampleMethodWithLiterals1 [
+MLSFakeClassForTestingSerialization >> sampleMethodWithLiterals1 [
 	|w x y z |
 	w := #one.
 	x := 42.
@@ -16,6 +16,6 @@ MLSFakeClassForTestingPurpose >> sampleMethodWithLiterals1 [
 ]
 
 { #category : #'fake methods' }
-MLSFakeClassForTestingPurpose >> sampleMethodWithLiterals2 [
+MLSFakeClassForTestingSerialization >> sampleMethodWithLiterals2 [
 	^{ 1 . 2 . $a }
 ]

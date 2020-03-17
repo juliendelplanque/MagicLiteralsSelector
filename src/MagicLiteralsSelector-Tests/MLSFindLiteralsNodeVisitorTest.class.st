@@ -9,7 +9,7 @@ Class {
 
 { #category : #'private - utilities' }
 MLSFindLiteralsNodeVisitorTest >> literalsFor: aMethod [
-	^MLSFindLiteralsNodeVisitor visit: (MLSTestCases >> aMethod) parseTree
+	^MLSFindLiteralsNodeVisitor visit: (MLSFakeClassForTesting >> aMethod) parseTree
 ]
 
 { #category : #tests }
