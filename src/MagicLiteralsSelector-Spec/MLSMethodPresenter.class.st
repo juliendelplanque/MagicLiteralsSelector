@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'sourceCodePresenter',
 		'literalCandidatesPresenter',
-		'justificationTextInput'
+		'justificationTextInput',
+		'lblCannotDecideJustification'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
@@ -15,7 +16,7 @@ MLSMethodPresenter class >> defaultSpec [
 		spacing: 5;
 		add: #sourceCodePresenter;
 		add: #literalCandidatesPresenter height: (self inputTextHeight * 2) ;
-		add: 'Choice justification (in case you answered "Can not decide"):' expand: false;
+		add: #lblCannotDecideJustification expand: false;
 		add: #justificationTextInput height: (self inputTextHeight * 3);
 		yourself
 ]
@@ -23,6 +24,10 @@ MLSMethodPresenter class >> defaultSpec [
 { #category : #initialization }
 MLSMethodPresenter >> initializePresenters [
 	sourceCodePresenter := self newCode.
+	lblCannotDecideJustification := self newLabel
+		label: 'Choice justification (in case you answered "Can not decide"):' ;
+		enabled: false ;
+		yourself.
 	justificationTextInput := self newText.
 	justificationTextInput enabled: false. 
 	
@@ -30,7 +35,14 @@ MLSMethodPresenter >> initializePresenters [
 	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
 		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
 	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
-		justificationTextInput enabled: literalCandidate isCanNotDecide ]
+		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]
+	
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> justificationCannotDecideEnabled: aBoolean [
+	justificationTextInput enabled: aBoolean.
+	lblCannotDecideJustification enabled: aBoolean
 	
 ]
 
@@ -40,5 +52,7 @@ MLSMethodPresenter >> method: aMethod [
 		behavior: aMethod methodClass;
 		text: aMethod sourceCode.
 	literalCandidatesPresenter literalsCandidates: aMethod literalsCandidates.
+	self justificationCannotDecideEnabled: false.
+	justificationTextInput text: ''
 	
 ]
