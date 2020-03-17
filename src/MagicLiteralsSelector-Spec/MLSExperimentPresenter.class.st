@@ -25,12 +25,16 @@ MLSExperimentPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #specs }
+MLSExperimentPresenter class >> openOnPharoMethods: aCollection [
+	self new 
+		methodsSample: (MLSMethodsSample methods: (aCollection collect: [ :m | MLSMethod compiledMethod: m ]));
+    openWithSpec.
+]
+
 { #category : #initialization }
 MLSExperimentPresenter >> initializePresenters [
-	methodsList := self newList.
-	methodsList
-		display: [ :m | m displayString ];
-		icons: [ :m | self iconNamed: m completionStatusIcon ].
+	methodsList := self instantiate: MLSMethodListPresenter.
 	methodPresenter := self instantiate: MLSMethodPresenter.
 	
 	methodsList whenSelectionChangedDo: [ :selection |
@@ -51,11 +55,8 @@ MLSExperimentPresenter >> initializePresenters [
 { #category : #accessing }
 MLSExperimentPresenter >> methodsSample: aMethodsSample [
 	methodsSample := aMethodsSample.
-	methodsList items: aMethodsSample methods.
-	
-	aMethodsSample methods do: [ :m |
-		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
-			methodsList items: aMethodsSample methods ] ]
+	methodsList methodsSample: aMethodsSample.
+
 ]
 
 { #category : #actions }
