@@ -15,8 +15,12 @@ MLSMethodPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		spacing: 5;
 		add: #sourceCodePresenter;
-		add: #literalCandidatesPresenter height: (self inputTextHeight * 2) ;
-		add: #lblCannotDecideJustification expand: false;
+		add: #literalCandidatesPresenter
+			withConstraints: [ :constraints | 
+				constraints
+					expand: true ;
+					height: (self inputTextHeight * 2) ] ;
+		add: #lblCannotDecideJustification expand: false ;
 		add: #justificationTextInput height: (self inputTextHeight * 3);
 		yourself
 ]

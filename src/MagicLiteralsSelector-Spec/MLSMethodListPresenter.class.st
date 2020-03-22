@@ -63,7 +63,7 @@ MLSMethodListPresenter >> methodsSample: aMethodsSample [
 
 	aMethodsSample methods do: [ :m |
 		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
-			self update ] ]
+			"self update" ] ]
 ]
 
 { #category : #accessing }
