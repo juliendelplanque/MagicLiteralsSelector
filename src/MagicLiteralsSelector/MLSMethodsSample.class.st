@@ -17,9 +17,24 @@ MLSMethodsSample class >> methods: methods [
 		yourself
 ]
 
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> collect: aBlock [
+	^ self methods collect: aBlock
+]
+
 { #category : #accessing }
 MLSMethodsSample >> completionPercentage [
 	^ (self methods select: [ :m | m isCompleted ]) size / self methods size
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> detect: aBlock [
+	^ self methods detect: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> do: aBlock [
+	^ self methods do: aBlock
 ]
 
 { #category : #initialization }
@@ -36,4 +51,14 @@ MLSMethodsSample >> methods [
 { #category : #accessing }
 MLSMethodsSample >> methods: anObject [
 	methods := anObject asOrderedCollection
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> reject: aBlock [
+	^ self methods reject: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> select: aBlock [
+	^ self methods select: aBlock
 ]
