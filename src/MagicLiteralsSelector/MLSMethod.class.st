@@ -24,6 +24,11 @@ MLSMethod class >> compiledMethod: aCompiledMethod [
 ]
 
 { #category : #accessing }
+MLSMethod >> comments [
+	^ self compiledMethod comments
+]
+
+{ #category : #accessing }
 MLSMethod >> compiledMethod [
 	^ compiledMethod
 ]
@@ -45,6 +50,11 @@ MLSMethod >> gatherLiteralsCandidates [
 { #category : #private }
 MLSMethod >> gatherRBLiteralsNodes [
 	^ MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)
+]
+
+{ #category : #accessing }
+MLSMethod >> hasComment [
+	^ self comments notEmpty
 ]
 
 { #category : #initialization }

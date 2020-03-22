@@ -62,3 +62,8 @@ MLSMethodsSample >> reject: aBlock [
 MLSMethodsSample >> select: aBlock [
 	^ self methods select: aBlock
 ]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> size [
+	^ self methods size
+]
