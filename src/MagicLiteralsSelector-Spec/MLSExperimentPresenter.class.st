@@ -27,9 +27,14 @@ MLSExperimentPresenter class >> defaultSpec [
 
 { #category : #specs }
 MLSExperimentPresenter class >> openOnPharoMethods: aCollection [
+	self openOnSample: (MLSMethodsSample methods: (aCollection collect: [ :m | MLSMethod compiledMethod: m ]))
+]
+
+{ #category : #specs }
+MLSExperimentPresenter class >> openOnSample: aMethodSample [
 	self new 
-		methodsSample: (MLSMethodsSample methods: (aCollection collect: [ :m | MLSMethod compiledMethod: m ]));
-    openWithSpec.
+		methodsSample: aMethodSample ;
+    	openWithSpec.
 ]
 
 { #category : #initialization }

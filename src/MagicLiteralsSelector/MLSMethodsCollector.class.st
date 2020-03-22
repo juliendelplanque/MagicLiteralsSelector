@@ -24,9 +24,28 @@ MLSMethodsCollector class >> fromPackages: aCollection [
 		mlsMethods
 ]
 
+{ #category : #'instance creation' }
+MLSMethodsCollector class >> sampleFromClasses: aCollection [
+	^self new
+		classes: aCollection ;
+		methodsSample
+]
+
+{ #category : #'instance creation' }
+MLSMethodsCollector class >> sampleFromPackages: aCollection [
+	^self new
+		packages: aCollection ;
+		methodsSample
+]
+
 { #category : #accessing }
 MLSMethodsCollector >> classes: aCollection [
 	pharoClasses := aCollection 
+]
+
+{ #category : #accessing }
+MLSMethodsCollector >> methodsSample [
+	^MLSMethodsSample methods: self mlsMethods
 ]
 
 { #category : #accessing }
