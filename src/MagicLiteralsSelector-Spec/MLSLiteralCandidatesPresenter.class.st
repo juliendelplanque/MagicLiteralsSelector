@@ -28,40 +28,28 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 			((SpCheckBoxTableColumn
 				title: 'Magic'
 				evaluated: [ :literalCandidate | literalCandidate isMagic ])
-				onActivation: [ :literalCandidate | 
-					literalCandidate beMagic.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+				onActivation: [ :literalCandidate |
+					self setCandidate: literalCandidate status: #beMagic ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself);
 		addColumn:
 			((SpCheckBoxTableColumn
 				title: 'Not magic'
 				evaluated: [ :literalCandidate | literalCandidate isNotMagic ])
 				onActivation: [ :literalCandidate | 
-					literalCandidate beNotMagic.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beNotMagic ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself);
 		addColumn:
 			((SpCheckBoxTableColumn
 				title: 'Can not decide'
 				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ])
 				onActivation: [ :literalCandidate | 
-					literalCandidate beCanNotDecide.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beCanNotDecide ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself)
 ]
 
@@ -83,6 +71,13 @@ MLSLiteralCandidatesPresenter >> literalsCandidates: aListOfCandidates [
 { #category : #accessing }
 MLSLiteralCandidatesPresenter >> refresh [
 	self literalsCandidates: self literalsCandidates
+]
+
+{ #category : #initialization }
+MLSLiteralCandidatesPresenter >> setCandidate: aLiteralCandidate status: aSelector [
+	aLiteralCandidate perform: aSelector.
+	self refresh.
+	literalCandidateStatusChangeBlock value: aLiteralCandidate
 ]
 
 { #category : #api }
