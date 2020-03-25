@@ -64,8 +64,29 @@ MLSLiteralCandidate >> initialize [
 ]
 
 { #category : #testing }
+MLSLiteralCandidate >> isBooleanLiteral [
+	^(self literalValue = true) or: [ self literalValue = false ]
+
+]
+
+{ #category : #testing }
 MLSLiteralCandidate >> isCanNotDecide [
 	^ self status isCanNotDecide
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isCharacterLiteral [
+	^self literalValue isCharacter
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isFloatLiteral [
+	^self literalValue isFloat 
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isIntegerLiteral [
+	^self literalValue isInteger 
 ]
 
 { #category : #testing }
@@ -74,8 +95,18 @@ MLSLiteralCandidate >> isMagic [
 ]
 
 { #category : #testing }
+MLSLiteralCandidate >> isNilLiteral [
+	^self literalValue isNil
+]
+
+{ #category : #testing }
 MLSLiteralCandidate >> isNotMagic [
 	^ self status isNotMagic
+]
+
+{ #category : #testing }
+MLSLiteralCandidate >> isStringLiteral [
+	^self literalValue isString
 ]
 
 { #category : #testing }

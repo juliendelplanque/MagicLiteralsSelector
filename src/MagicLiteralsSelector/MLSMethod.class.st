@@ -52,9 +52,44 @@ MLSMethod >> gatherRBLiteralsNodes [
 	^ MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)
 ]
 
+{ #category : #testing }
+MLSMethod >> hasBooleanLiteral [
+	^self hasLiteral: #isBooleanLiteral 
+]
+
+{ #category : #testing }
+MLSMethod >> hasCharacterLiteral [
+	^self hasLiteral: #isCharacterLiteral 
+]
+
 { #category : #accessing }
 MLSMethod >> hasComment [
 	^ self comments notEmpty
+]
+
+{ #category : #testing }
+MLSMethod >> hasFloatLiteral [
+	^self hasLiteral: #isFloatLiteral 
+]
+
+{ #category : #testing }
+MLSMethod >> hasIntegerLiteral [
+	^self hasLiteral: #isIntegerLiteral 
+]
+
+{ #category : #testing }
+MLSMethod >> hasLiteral: aSymbol [ 
+	^self literalsCandidates anySatisfy: aSymbol
+]
+
+{ #category : #testing }
+MLSMethod >> hasNilLiteral [
+	^self hasLiteral: #isNilLiteral 
+]
+
+{ #category : #testing }
+MLSMethod >> hasStringLiteral [
+	^self hasLiteral: #isStringLiteral 
 ]
 
 { #category : #initialization }

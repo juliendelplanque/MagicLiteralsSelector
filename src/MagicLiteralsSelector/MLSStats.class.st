@@ -24,6 +24,23 @@ MLSStats class >> on: mlsMethods [
 ]
 
 { #category : #accessing }
+MLSStats >> classStats [
+	|lit nbLit |
+	lit := methodsSample reject: #isCompleted.
+	nbLit := lit size.
+	^String streamContents: [:str |
+		self csvOn: str line: { 'class', self desc . '#' . '%' }.
+		self csvOn: str class: 'int'   number: (lit select: #hasIntegerLiteral) size over: nbLit.
+		self csvOn: str class: 'string' number: (lit select: #hasStringLiteral) size over: nbLit.
+		self csvOn: str class: 'bool'  number: (lit select: #hasBooleanLiteral) size over: nbLit.
+		self csvOn: str class: 'char'  number: (lit select: #hasCharacterLiteral) size over: nbLit.
+		self csvOn: str class: 'float' number: (lit select: #hasFloatLiteral) size over: nbLit.
+		self csvOn: str class: 'nil'   number: (lit select: #hasNilLiteral) size over: nbLit.
+		str
+	]
+]
+
+{ #category : #accessing }
 MLSStats >> commentStats [
 	|lit noLit|
 	lit := methodsSample reject: #isCompleted.
@@ -35,6 +52,11 @@ MLSStats >> commentStats [
 		self csvOn: str line: { 'total' . (methodsSample reject: #hasComment) size . (methodsSample select: #hasComment) size . methodsSample size}.
 		str
 	]
+]
+
+{ #category : #accessing }
+MLSStats >> csvOn: str class: aString number: anInt over: total [
+	self csvOn: str line: { aString . anInt . (anInt / total * 100) roundTo: 0.1 }
 ]
 
 { #category : #accessing }
