@@ -65,5 +65,5 @@ MLSFakeClassForTesting >> twoLiteralsInArgument [
 
 { #category : #'sample methods' }
 MLSFakeClassForTesting >> twoLiteralsNumberInExpression [
-	^ 10 * 10
+	^ 10.0 * 10.0
 ]
