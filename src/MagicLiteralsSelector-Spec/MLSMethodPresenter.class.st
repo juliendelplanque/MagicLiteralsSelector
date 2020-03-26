@@ -14,17 +14,20 @@ Class {
 
 { #category : #specs }
 MLSMethodPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		spacing: 5;
-		add: #btnBrowse height: (self toolbarHeight);
-		add: #sourceCodePresenter;
-		add: #literalCandidatesPresenter
-			withConstraints: [ :constraints | 
-				constraints
-					expand: true ;
-					height: (self inputTextHeight * 2) ] ;
-		add: #lblCannotDecideJustification expand: false ;
-		add: #justificationTextInput height: (self inputTextHeight * 3);
+	^SpPanedLayout newVertical
+		add: (SpBoxLayout newVertical
+				"spacing: 5;"
+				add: #btnBrowse height: (self toolbarHeight);
+				add: #sourceCodePresenter ;
+				yourself) ;
+		add: (SpPanedLayout newVertical
+				"spacing: 5;"
+				add: #literalCandidatesPresenter ;
+				add: (SpBoxLayout newVertical
+						add: #lblCannotDecideJustification expand: false ;
+						add: #justificationTextInput ;
+						yourself);
+				yourself ) ;
 		yourself
 ]
 
