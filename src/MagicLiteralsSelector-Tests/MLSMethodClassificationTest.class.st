@@ -7,7 +7,7 @@ Class {
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
-{ #category : #tests }
+{ #category : #'private - utilities' }
 MLSMethodClassificationTest >> methodFor: aSymbol [
 	^MLSMethod compiledMethod: MLSFakeClassForTesting >> aSymbol
 ]

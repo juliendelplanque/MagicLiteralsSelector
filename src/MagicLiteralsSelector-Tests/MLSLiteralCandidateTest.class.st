@@ -7,7 +7,7 @@ Class {
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeCanNotDecide [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -18,7 +18,7 @@ MLSLiteralCandidateTest >> testBeCanNotDecide [
 	self assert: candidate isCanNotDecide
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeMagic [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -29,7 +29,7 @@ MLSLiteralCandidateTest >> testBeMagic [
 	self assert: candidate isMagic
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeNotMagic [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -40,7 +40,7 @@ MLSLiteralCandidateTest >> testBeNotMagic [
 	self assert: candidate isNotMagic
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeUnknown [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -67,7 +67,7 @@ MLSLiteralCandidateTest >> testPositionsInterval [
 	self assert: literalCandidate positionsInterval equals: (44 to: 45)
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testWhenStatusChangedDo [
 	| literalCandidate newStatus |
 	literalCandidate := (MLSMethod compiledMethod: MLSFakeClassForTesting >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
