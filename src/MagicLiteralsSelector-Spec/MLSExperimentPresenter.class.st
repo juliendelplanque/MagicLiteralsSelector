@@ -16,7 +16,7 @@ MLSExperimentPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: (SpBoxLayout newHorizontal
 					spacing: 5;
-					add: #methodsList;
+					add: #methodsList width: 200;
 					add: #methodPresenter;
 					yourself);
 		add: 'Progress:' expand: false;

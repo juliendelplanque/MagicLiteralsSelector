@@ -2,10 +2,12 @@ Class {
 	#name : #MLSMethodPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
+		'btnBrowse',
 		'sourceCodePresenter',
 		'literalCandidatesPresenter',
 		'justificationTextInput',
-		'lblCannotDecideJustification'
+		'lblCannotDecideJustification',
+		'pharoMethod'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
@@ -14,6 +16,7 @@ Class {
 MLSMethodPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		spacing: 5;
+		add: #btnBrowse height: (self toolbarHeight);
 		add: #sourceCodePresenter;
 		add: #literalCandidatesPresenter
 			withConstraints: [ :constraints | 
@@ -26,20 +29,42 @@ MLSMethodPresenter class >> defaultSpec [
 ]
 
 { #category : #initialization }
+MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
+	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
+	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
+		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
+	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
+		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]
+	
+]
+
+{ #category : #initialization }
 MLSMethodPresenter >> initializePresenters [
+	self initializeSourceCodePresenter.
+	self initializejustificationPresenter.
+	self initializeLiteralCandidatesPresenter
+	
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> initializeSourceCodePresenter [
+	btnBrowse := self newButton
+						label: 'Browse...' ;
+						action: [ pharoMethod ifNotNil: [ pharoMethod browse ] ] ;
+						yourself.
 	sourceCodePresenter := self newCode.
+
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> initializejustificationPresenter [
 	lblCannotDecideJustification := self newLabel
 		label: 'Choice justification (in case you answered "Can not decide"):' ;
 		enabled: false ;
 		yourself.
 	justificationTextInput := self newText.
 	justificationTextInput enabled: false. 
-	
-	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
-	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
-		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
-	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
-		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]
+	self initializeLiteralCandidatesPresenter
 	
 ]
 
@@ -52,6 +77,7 @@ MLSMethodPresenter >> justificationCannotDecideEnabled: aBoolean [
 
 { #category : #accessing }
 MLSMethodPresenter >> method: aMethod [
+	pharoMethod := aMethod compiledMethod .
 	sourceCodePresenter
 		behavior: aMethod methodClass;
 		text: aMethod sourceCode.
