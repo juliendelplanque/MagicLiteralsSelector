@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'results'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #visiting }

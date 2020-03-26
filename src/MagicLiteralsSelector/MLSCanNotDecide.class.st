@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'justification'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #testing }

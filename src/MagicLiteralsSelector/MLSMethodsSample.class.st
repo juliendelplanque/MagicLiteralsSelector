@@ -7,13 +7,22 @@ Class {
 	#instVars : [
 		'methods'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #'instance creation' }
 MLSMethodsSample class >> methods: methods [
 	^ self new
 		methods: methods;
+		yourself
+]
+
+{ #category : #converting }
+MLSMethodsSample >> asSerializedMethodsSample [
+	^ MLSSerializedMethodsSample new
+		methods: (self methods collect: #asSerializedMethod);
+		pharoVersionString: SystemVersion current imageVersionString;
+		generationDateAndTime: DateAndTime now;
 		yourself
 ]
 

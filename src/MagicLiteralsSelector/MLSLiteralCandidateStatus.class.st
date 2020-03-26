@@ -7,7 +7,7 @@ My subclasses allow one to store the classification made by a user for a specifi
 Class {
 	#name : #MLSLiteralCandidateStatus,
 	#superclass : #Object,
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #testing }

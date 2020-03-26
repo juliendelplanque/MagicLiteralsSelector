@@ -12,13 +12,22 @@ Class {
 		'#status => ObservableSlot',
 		'#statusChangedBlock'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #'instance creation' }
 MLSLiteralCandidate class >> astNode: aLiteralASTNode [
 	^ self new
 		astNode: aLiteralASTNode;
+		yourself
+]
+
+{ #category : #converting }
+MLSLiteralCandidate >> asSerializedLiteralCandidate [
+	^ MLSSerializedLiteralCandidate new
+		status: self status;
+		startPosition: self astNode start;
+		endPosition: self astNode stop;
 		yourself
 ]
 

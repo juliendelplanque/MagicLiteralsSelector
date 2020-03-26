@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'pharoClasses'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-experiment'
 }
 
 { #category : #'instance creation' }
@@ -28,24 +28,24 @@ MLSMethodsCollector class >> fromPackages: aCollection [
 MLSMethodsCollector class >> sampleFromClasses: aCollection [
 	^self new
 		classes: aCollection ;
-		methodsSample
+		asMethodsSample
 ]
 
 { #category : #'instance creation' }
 MLSMethodsCollector class >> sampleFromPackages: aCollection [
 	^self new
 		packages: aCollection ;
-		methodsSample
+		asMethodsSample
+]
+
+{ #category : #converting }
+MLSMethodsCollector >> asMethodsSample [
+	^MLSMethodsSample methods: self mlsMethods
 ]
 
 { #category : #accessing }
 MLSMethodsCollector >> classes: aCollection [
 	pharoClasses := aCollection 
-]
-
-{ #category : #accessing }
-MLSMethodsCollector >> methodsSample [
-	^MLSMethodsSample methods: self mlsMethods
 ]
 
 { #category : #accessing }

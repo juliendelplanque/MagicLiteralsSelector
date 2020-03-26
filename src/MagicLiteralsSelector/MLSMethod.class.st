@@ -13,13 +13,24 @@ Class {
 		'literalsCandidates',
 		'anyLiteralCandidateStatusChangedBlock'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #'instance creation' }
 MLSMethod class >> compiledMethod: aCompiledMethod [
 	^ self new
 		compiledMethod: aCompiledMethod;
+		yourself
+]
+
+{ #category : #converting }
+MLSMethod >> asSerializedMethod [
+	^ MLSSerializedMethod new
+		methodPackageName: self compiledMethod package name;
+		methodClassName: self methodClass name;
+		methodSelector: self compiledMethod selector;
+		sourceCode: self compiledMethod sourceCode;
+		literalCandidates: (self literalsCandidates collect: #asSerializedLiteralCandidate);
 		yourself
 ]
 
@@ -36,6 +47,18 @@ MLSMethod >> compiledMethod [
 { #category : #accessing }
 MLSMethod >> compiledMethod: anObject [
 	compiledMethod := anObject
+]
+
+{ #category : #accessing }
+MLSMethod >> completionStatusIcon [
+	^ self isCompleted
+		ifTrue: [ #glamorousAccept ]
+		ifFalse: [ #flag ]
+]
+
+{ #category : #displaying }
+MLSMethod >> displayStringOn: aStream [
+	^ self compiledMethod displayStringOn: aStream
 ]
 
 { #category : #private }
