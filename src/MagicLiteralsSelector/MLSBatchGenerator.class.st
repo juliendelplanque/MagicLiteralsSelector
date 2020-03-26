@@ -1,8 +1,11 @@
 "
 A class to generate batches of methods containing literals 
 
-Initialize with:
-  #methodSample: aCollectionOfMLSMethods
+Example of use:
+  MLSBatchGenerator new
+	methodSample: (Object methods asOrderedCollection collect: [ :cm | MLSMethod compiledMethod: cm ]) ;
+	generate ;
+	batches.
 "
 Class {
 	#name : #MLSBatchGenerator,
@@ -10,7 +13,11 @@ Class {
 	#instVars : [
 		'methodSample',
 		'batches',
-		'methodsBatched'
+		'methodsTreated',
+		'numberOfBatches',
+		'numberFirstBatches',
+		'ignoredLiterals',
+		'longStringSize'
 	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
@@ -20,45 +27,79 @@ MLSBatchGenerator >> asQuantity: aPercentage [
 	^ aPercentage / 100 * self batchSize
 ]
 
-{ #category : #run }
-MLSBatchGenerator >> batches [
-	self firstBatches.
-	[ methodSample size > methodsBatched size ]
-		whileTrue: [ self batchesWithRedundancy ].
+{ #category : #accessing }
+MLSBatchGenerator >> batches [ 
+	^batches 
 ]
 
-{ #category : #run }
-MLSBatchGenerator >> batchesWithRedundancy [
-	| batch |
-	batch := Set new: self batchSize .
-	[ batch size >= (self asQuantity: self percentageRedundantMethods) ]
-		whileFalse: [ batch add: methodsBatched atRandom ].
-	^self completeBatchNoRedundancy: batch
+{ #category : #settings }
+MLSBatchGenerator >> defaultIgnoredLiterals [
+	^ #(-1 0 1 2)
 ]
 
-{ #category : #run }
-MLSBatchGenerator >> completeBatchNoRedundancy: aBatch [
-	[ (aBatch collect: #isTest) size >= (self asQuantity: self percentageTestMethods) ]
+{ #category : #settings }
+MLSBatchGenerator >> defaultLongStringSize [
+	^3
 ]
 
-{ #category : #run }
-MLSBatchGenerator >> firstBatches [
-	"generates some batches without looking at redundancy (which does not mean there will not be some)"
-	self numberFirstBatches timesRepeat: [
-		self newBatch 
-				percentageRedundancy: 0 ;
-				fillInFromSample: methodSample alreadyTreated: methodsBatched 
-	]
+{ #category : #settings }
+MLSBatchGenerator >> defaultNumberFirstBatches [
+	^2
+]
+
+{ #category : #settings }
+MLSBatchGenerator >> defaultNumberOfBatches [
+	^ 10
+]
+
+{ #category : #running }
+MLSBatchGenerator >> fillBatch: aBatch [
+	aBatch fillInFromSample: methodSample alreadyTreated: methodsTreated .
+	methodsTreated addAll: aBatch methods
+]
+
+{ #category : #running }
+MLSBatchGenerator >> generate [
+	[ batches size < numberFirstBatches ]
+		whileTrue: [
+			self fillBatch: (self newBatch percentageRedundancy: 0 ; yourself) ].
+	[ batches size < numberOfBatches ]
+		whileTrue: [ self fillBatch: self newBatch 	].
+]
+
+{ #category : #accessing }
+MLSBatchGenerator >> ignoredLiterals: anObject [
+	ignoredLiterals := anObject
+]
+
+{ #category : #initialization }
+MLSBatchGenerator >> initialize [ 
+	super initialize .
+
+	ignoredLiterals := self defaultIgnoredLiterals .
+	longStringSize := self defaultLongStringSize .
+	numberOfBatches := self defaultNumberOfBatches .
+	numberFirstBatches := self defaultNumberFirstBatches .
 
 ]
 
 { #category : #accessing }
+MLSBatchGenerator >> longStringSize: anObject [
+	longStringSize := anObject
+]
+
+{ #category : #accessing }
 MLSBatchGenerator >> methodSample: aSample [
-	methodSample := aSample.
+	methodSample := aSample asOrderedCollection.
 	self reset
 ]
 
-{ #category : #run }
+{ #category : #accessing }
+MLSBatchGenerator >> methodsTreated [
+	^ methodsTreated
+]
+
+{ #category : #running }
 MLSBatchGenerator >> newBatch [
 	| batch |
 	batch := MLSExperimentBatch new.
@@ -67,13 +108,18 @@ MLSBatchGenerator >> newBatch [
 
 ]
 
-{ #category : #settings }
-MLSBatchGenerator >> numberFirstBatches [
-	^2
+{ #category : #accessing }
+MLSBatchGenerator >> numberFirstBatches: anObject [
+	numberFirstBatches := anObject
+]
+
+{ #category : #accessing }
+MLSBatchGenerator >> numberOfBatches: anObject [
+	numberOfBatches := anObject
 ]
 
 { #category : #initialization }
 MLSBatchGenerator >> reset [
-	batches := OrderedCollection new.
-	methodsBatched := methodSample ifNil: [ Set new ] ifNotNil: [ Set new: methodSample size ]
+	batches := numberOfBatches ifNil: [ OrderedCollection new ] ifNotNil: [ OrderedCollection new: numberOfBatches ] .
+	methodsTreated := methodSample ifNil: [ Set new ] ifNotNil: [ Set new: methodSample size ]
 ]

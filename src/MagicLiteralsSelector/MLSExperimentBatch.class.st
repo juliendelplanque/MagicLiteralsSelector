@@ -1,5 +1,11 @@
 "
 A batch of methods with literals that answer to some constraints
+
+This is actually very difficult as the constraints might be conflicting, or the set of methods from which to choose might not itself fulfill the constraints.
+
+Simple example:
+- one wants 20% test methods and there is no test
+- one wants 20% test methods and no string literal but all tests have string literals in them
 "
 Class {
 	#name : #MLSExperimentBatch,
@@ -7,14 +13,33 @@ Class {
 	#instVars : [
 		'methods',
 		'targetSize',
-		'literalsToIgnore',
-		'longStringSize',
 		'percentRedundancy',
-		'percentTest',
-		'thresholdSpecialLiterals'
+		'percentTest'
 	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
+
+{ #category : #running }
+MLSExperimentBatch >> add: aNumber from: aCollection [
+	"adds to the methods of receiver Anumber of elements from aCollection (if possible)"
+	| selected remaining |
+	(aCollection size < aNumber)
+	ifTrue: [ 
+		methods addAll: aCollection.
+		^aCollection ].
+
+	selected := Set new: aNumber.
+	remaining := aCollection copy.
+	[ selected size < aNumber ]
+		whileTrue: [ |elt |
+			elt := remaining atRandom.
+			selected add: elt.
+			methods add: elt.
+			remaining remove: elt
+		].
+	^selected	
+
+]
 
 { #category : #running }
 MLSExperimentBatch >> asQuantity: percentage [
@@ -33,11 +58,6 @@ MLSExperimentBatch >> defaultBatchSize [
 ]
 
 { #category : #'default-settings' }
-MLSExperimentBatch >> defaultIgnoredLiterals [
-	^ #(-1 0 1 2)
-]
-
-{ #category : #'default-settings' }
 MLSExperimentBatch >> defaultPercentageRedundantMethods [
 	"percentage of methods already part of some other batch"
 	^10
@@ -48,29 +68,18 @@ MLSExperimentBatch >> defaultPercentageTestMethods [
 	^10
 ]
 
-{ #category : #'default-settings' }
-MLSExperimentBatch >> defaultPercentageThresholdSpecialLiteral [
-	"batch should not include more than this percentage of specialLiterals
-	 i.e. ignored literals, nil, true, false, array literals, long strings"
-	^15
-]
-
-{ #category : #'default-settings' }
-MLSExperimentBatch >> defaultSizeLongStringLiteral [
-	"minimum size (inclusive) for a string to be considered long"
-	^3
-]
-
 { #category : #running }
 MLSExperimentBatch >> fillInFromSample: methodSample alreadyTreated: methodsTreated [
-	[ methods size < (self asQuantity: percentRedundancy) ]
-		whileTrue: [ methods add: methodSample atRandom ].
+	"adds required amount of redundancy, then required amount of test methods, then fill the rest of the batch"
+	| methodsUntreated |
+	self add: (self asQuantity: percentRedundancy) from: methodsTreated .
 
-]
+	self add: (self asQuantity: percentTest) from: (methodSample select: #isTestMethod).
+	methodsUntreated := methodSample reject: [ :m |
+		(methodsTreated includes: m) or: [ methods includes: m ] ].
 
-{ #category : #accessing }
-MLSExperimentBatch >> ignoredLiterals: anObject [
-	literalsToIgnore := anObject
+	self add: (targetSize - methods size) from: methodsUntreated .
+
 ]
 
 { #category : #initialization }
@@ -78,18 +87,15 @@ MLSExperimentBatch >> initialize [
 	super initialize .
 	
 	targetSize := self defaultBatchSize .
-	literalsToIgnore := self defaultIgnoredLiterals .
-	longStringSize := self defaultSizeLongStringLiteral .
 	percentRedundancy := self defaultPercentageRedundantMethods .
 	percentTest := self defaultPercentageTestMethods .
-	thresholdSpecialLiterals := self defaultPercentageThresholdSpecialLiteral .
 
 	methods := Set new: targetSize .
 ]
 
 { #category : #accessing }
-MLSExperimentBatch >> longStringSize: anObject [
-	longStringSize := anObject
+MLSExperimentBatch >> methods [
+	^methods 
 ]
 
 { #category : #accessing }
@@ -100,9 +106,4 @@ MLSExperimentBatch >> percentageRedundancy: anObject [
 { #category : #accessing }
 MLSExperimentBatch >> percentageTest: anObject [
 	percentTest := anObject
-]
-
-{ #category : #accessing }
-MLSExperimentBatch >> thresholdSpecialLiterals: anObject [
-	thresholdSpecialLiterals := anObject
 ]
