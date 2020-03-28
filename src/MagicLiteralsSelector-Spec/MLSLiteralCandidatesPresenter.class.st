@@ -65,7 +65,9 @@ MLSLiteralCandidatesPresenter >> literalsCandidates [
 
 { #category : #accessing }
 MLSLiteralCandidatesPresenter >> literalsCandidates: aListOfCandidates [
-	literalCandidatesTable items: aListOfCandidates
+	literalCandidatesTable items: aListOfCandidates.
+	literalCandidatesTable unselectAll.
+	literalCandidatesTable selectIndex: 1
 ]
 
 { #category : #accessing }
@@ -76,7 +78,7 @@ MLSLiteralCandidatesPresenter >> refresh [
 { #category : #initialization }
 MLSLiteralCandidatesPresenter >> setCandidate: aLiteralCandidate status: aSelector [
 	aLiteralCandidate perform: aSelector.
-	self refresh.
+	literalCandidatesTable selectItem: aLiteralCandidate.
 	literalCandidateStatusChangeBlock value: aLiteralCandidate
 ]
 

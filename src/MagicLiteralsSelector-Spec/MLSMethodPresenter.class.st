@@ -35,7 +35,7 @@ MLSMethodPresenter class >> defaultSpec [
 MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
 	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
 	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
-		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
+		literalCandidate ifNotNil: [sourceCodePresenter selectionInterval: literalCandidate positionsInterval] ].
 	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
 		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]
 	
@@ -44,8 +44,8 @@ MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
 { #category : #initialization }
 MLSMethodPresenter >> initializePresenters [
 	self initializeSourceCodePresenter.
+	self initializeLiteralCandidatesPresenter.
 	self initializejustificationPresenter.
-	self initializeLiteralCandidatesPresenter
 	
 ]
 
@@ -55,7 +55,7 @@ MLSMethodPresenter >> initializeSourceCodePresenter [
 						label: 'Browse...' ;
 						action: [ pharoMethod ifNotNil: [ pharoMethod browse ] ] ;
 						yourself.
-	sourceCodePresenter := self newCode.
+	sourceCodePresenter := self newCode withSyntaxHighlight ; yourself.
 
 ]
 
