@@ -38,11 +38,11 @@ MLSMethodListPresenter >> initialize [
 MLSMethodListPresenter >> initializePresenters [
 	chkOnlyCompleted :=
 		self newCheckBox
-			label: 'Hide completed methods' ;
+			label: 'Hide completed' ;
 			labelOnRight ;
 			state: false;
-			whenActivatedDo: [ self hideCompletedMethods ];
-			whenDeactivatedDo: [ self showCompletedMethods ];
+			whenActivatedDo: [ self showCompletedMethods ];
+			whenDeactivatedDo: [ self hideCompletedMethods ];
 			yourself.
 			
 	lblMethodCount := self newLabel.
@@ -63,7 +63,7 @@ MLSMethodListPresenter >> methodsSample: aMethodsSample [
 
 	aMethodsSample methods do: [ :m |
 		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
-			"self update" ] ]
+			self update ] ]
 ]
 
 { #category : #accessing }
