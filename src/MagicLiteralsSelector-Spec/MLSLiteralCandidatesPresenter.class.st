@@ -15,37 +15,42 @@ MLSLiteralCandidatesPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+MLSLiteralCandidatesPresenter >> checkBoxColumnWidth [
+	^100
+]
+
 { #category : #initialization }
 MLSLiteralCandidatesPresenter >> initializePresenters [
 	literalCandidateStatusChangeBlock := [ :literalCandidate |  ].
 	literalCandidatesTable := self newTable.
 	literalCandidatesTable
 		addColumn:
-			(SpStringTableColumn
-				title: 'Literal value'
-				evaluated: [ :literalCandidate | literalCandidate literalValue storeString ]);
+			((SpStringTableColumn title: 'Literal value')
+				evaluated: [ :literalCandidate | literalCandidate literalValue storeString ] ;
+				yourself) ;
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Magic'
-				evaluated: [ :literalCandidate | literalCandidate isMagic ])
+			((SpCheckBoxTableColumn title: 'Magic')
+				evaluated: [ :literalCandidate | literalCandidate isMagic ] ;
 				onActivation: [ :literalCandidate |
 					self setCandidate: literalCandidate status: #beMagic ];
 				onDesactivation: [ :literalCandidate | 
 					self setCandidate: literalCandidate status: #beUnknown ];
+				width: self checkBoxColumnWidth ;
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Not magic'
-				evaluated: [ :literalCandidate | literalCandidate isNotMagic ])
+			((SpCheckBoxTableColumn title: 'Not magic')
+				width: self checkBoxColumnWidth ;
+				evaluated: [ :literalCandidate | literalCandidate isNotMagic ] ;
 				onActivation: [ :literalCandidate | 
 					self setCandidate: literalCandidate status: #beNotMagic ];
 				onDesactivation: [ :literalCandidate | 
 					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Can not decide'
-				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ])
+			((SpCheckBoxTableColumn title: 'Can not decide')
+				width: self checkBoxColumnWidth ;
+				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ] ;
 				onActivation: [ :literalCandidate | 
 					self setCandidate: literalCandidate status: #beCanNotDecide ];
 				onDesactivation: [ :literalCandidate | 
