@@ -106,6 +106,11 @@ MLSMethod >> hasLiteral: aSymbol [
 ]
 
 { #category : #testing }
+MLSMethod >> hasLiterals [
+	^self literalsCandidates notEmpty
+]
+
+{ #category : #testing }
 MLSMethod >> hasNilLiteral [
 	^self hasLiteral: #isNilLiteral 
 ]

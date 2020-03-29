@@ -90,7 +90,7 @@ MLSBatchGenerator >> longStringSize: anObject [
 
 { #category : #accessing }
 MLSBatchGenerator >> methodSample: aSample [
-	methodSample := aSample asOrderedCollection.
+	methodSample := (aSample select: #hasLiterals) asOrderedCollection.
 	self reset
 ]
 
