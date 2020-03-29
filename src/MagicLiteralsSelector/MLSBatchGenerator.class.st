@@ -3,7 +3,7 @@ A class to generate batches of methods containing literals
 
 Example of use:
   MLSBatchGenerator new
-	methodSample: (Object methods asOrderedCollection collect: [ :cm | MLSMethod compiledMethod: cm ]) ;
+	methodSample: (MLSMethodsCollector sampleFromClasses: { Object }) ;
 	generate ;
 	batches.
 "
@@ -21,6 +21,16 @@ Class {
 	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
+
+{ #category : #examples }
+MLSBatchGenerator class >> example [
+	<example>
+	^MLSBatchGenerator new
+		methodSample: (MLSMethodsCollector sampleFromClasses: { Object }) ;
+		generate ;
+		inspect.
+
+]
 
 { #category : #'private - utilities' }
 MLSBatchGenerator >> asQuantity: aPercentage [

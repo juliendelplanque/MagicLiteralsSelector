@@ -1,5 +1,12 @@
 "
 Helper class to collect pharo methods from a collection of classes or packages
+
+sample := MLSMethodsCollector sampleFromClasses: { Object }.
+
+sample := MLSMethodsCollector sampleFromClasses: (Collection allSubclasses select: [ :c | c category beginsWith: 'Collections' ]).
+
+sample := MLSMethodsCollector sampleFromPackages: (RPackage organizer packages select: [ :p | p name beginsWith: 'Morphic' ]).
+
 "
 Class {
 	#name : #MLSMethodsCollector,
