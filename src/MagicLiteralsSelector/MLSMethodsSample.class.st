@@ -18,6 +18,11 @@ MLSMethodsSample class >> methods: methods [
 ]
 
 { #category : #converting }
+MLSMethodsSample >> asOrderedCollection [ 
+	^self
+]
+
+{ #category : #converting }
 MLSMethodsSample >> asSerializedMethodsSample [
 	^ MLSSerializedMethodsSample new
 		methods: (self methods collect: #asSerializedMethod);

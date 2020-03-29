@@ -142,6 +142,12 @@ MLSMethod >> methodClass [
 	^ self compiledMethod methodClass
 ]
 
+{ #category : #printing }
+MLSMethod >> printOn: aStream [
+	self compiledMethod printOn: aStream
+	
+]
+
 { #category : #accessing }
 MLSMethod >> sourceCode [
 	^ self compiledMethod sourceCode
