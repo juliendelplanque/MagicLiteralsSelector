@@ -2,10 +2,10 @@ Class {
 	#name : #MLSMethodListPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'chkOnlyCompleted',
 		'lblMethodCount',
 		'methodsList',
-		'methodsSample'
+		'methodsSample',
+		'chkHideCompleted'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
@@ -15,7 +15,7 @@ MLSMethodListPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: (SpBoxLayout newHorizontal
 					add: #lblMethodCount width: 200 ;
-					add: #chkOnlyCompleted ;
+					add: #chkHideCompleted ;
 					yourself)
 		withConstraints: [ :constraints | constraints height: self toolbarHeight ] ;
 		add: #methodsList ;
@@ -36,18 +36,16 @@ MLSMethodListPresenter >> initialize [
 
 { #category : #initialization }
 MLSMethodListPresenter >> initializePresenters [
-	chkOnlyCompleted :=
+	chkHideCompleted :=
 		self newCheckBox
 			label: 'Hide completed' ;
-			labelOnRight ;
-			state: false;
-			whenActivatedDo: [ self showCompletedMethods ];
-			whenDeactivatedDo: [ self hideCompletedMethods ];
+			whenActivatedDo: [ self hideCompletedMethods ];
+			whenDeactivatedDo: [ self showCompletedMethods ];
 			yourself.
 			
 	lblMethodCount := self newLabel.
 	self updateLabel.
-
+	
 	methodsList := self newList.
 	methodsList
 		display: [ :m | m displayString ];
@@ -58,7 +56,7 @@ MLSMethodListPresenter >> initializePresenters [
 { #category : #accessing }
 MLSMethodListPresenter >> methodsSample: aMethodsSample [
 	methodsSample := aMethodsSample.
-	methodsList items: aMethodsSample methods.
+	methodsList items: aMethodsSample.
 	self update.
 
 	aMethodsSample methods do: [ :m |
@@ -84,7 +82,7 @@ MLSMethodListPresenter >> showCompletedMethods [
 
 { #category : #updating }
 MLSMethodListPresenter >> update [	
-	chkOnlyCompleted state
+	chkHideCompleted state
 	ifTrue:  [ self hideCompletedMethods ]
 	ifFalse: [ self showCompletedMethods ].
 

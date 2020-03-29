@@ -9,9 +9,8 @@ Simple example:
 "
 Class {
 	#name : #MLSExperimentBatch,
-	#superclass : #Object,
+	#superclass : #MLSMethodsSample,
 	#instVars : [
-		'methods',
 		'targetSize',
 		'percentRedundancy',
 		'percentTest'

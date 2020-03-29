@@ -17,7 +17,7 @@ MLSLiteralCandidatesPresenter class >> defaultSpec [
 
 { #category : #accessing }
 MLSLiteralCandidatesPresenter >> checkBoxColumnWidth [
-	^100
+	^75
 ]
 
 { #category : #initialization }
@@ -48,7 +48,7 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn title: 'Can not decide')
+			((SpCheckBoxTableColumn title: 'Not sure')
 				width: self checkBoxColumnWidth ;
 				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ] ;
 				onActivation: [ :literalCandidate | 
