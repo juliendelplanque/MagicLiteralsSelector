@@ -24,7 +24,7 @@ MLSMethodListPresenter class >> defaultSpec [
 
 { #category : #updating }
 MLSMethodListPresenter >> hideCompletedMethods [
-	methodsList items: (methodsSample methods reject: #isCompleted).
+	methodsList items: (methodsSample reject: #isCompleted) asOrderedCollection.
 	self updateLabel 
 ]
 
@@ -76,7 +76,7 @@ MLSMethodListPresenter >> nbMethodsTotal [
 
 { #category : #updating }
 MLSMethodListPresenter >> showCompletedMethods [
-	methodsList items: methodsSample methods.
+	methodsList items: methodsSample asOrderedCollection.
 	self updateLabel 
 ]
 

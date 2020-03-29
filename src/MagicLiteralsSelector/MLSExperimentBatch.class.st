@@ -40,10 +40,28 @@ MLSExperimentBatch >> add: aNumber from: aCollection [
 
 ]
 
+{ #category : #converting }
+MLSExperimentBatch >> asOrderedCollection [
+	"Because my methods are in a Set"
+	^MLSMethodsSample methods: self methods
+]
+
 { #category : #running }
 MLSExperimentBatch >> asQuantity: percentage [
 	^ percentage / 100 * targetSize
 
+]
+
+{ #category : #'collection compatibility' }
+MLSExperimentBatch >> at: index [
+	methods doWithIndex: [ :elt :i | i = index ifTrue: [ ^elt ] ].
+	self errorSubscriptBounds: index
+]
+
+{ #category : #'collection compatibility' }
+MLSExperimentBatch >> at: index ifAbsent: aBlock [
+	methods doWithIndex: [ :elt :i | i = index ifTrue: [ ^elt ] ].
+	^aBlock value
 ]
 
 { #category : #accessing }

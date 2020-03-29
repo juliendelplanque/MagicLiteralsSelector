@@ -32,6 +32,16 @@ MLSMethodsSample >> asSerializedMethodsSample [
 ]
 
 { #category : #'collection compatibility' }
+MLSMethodsSample >> at: index [
+	^methods at: index
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> at: index ifAbsent: aBlock [
+	^methods at: index ifAbsent: aBlock
+]
+
+{ #category : #'collection compatibility' }
 MLSMethodsSample >> collect: aBlock [
 	^ self methods collect: aBlock
 ]

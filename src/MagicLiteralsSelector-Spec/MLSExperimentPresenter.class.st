@@ -36,6 +36,11 @@ MLSExperimentPresenter class >> openOnSample: aMethodSample [
     	openWithSpec.
 ]
 
+{ #category : #TOMOVE }
+MLSExperimentPresenter >> initialExtent [
+	^ 900@600
+]
+
 { #category : #initialization }
 MLSExperimentPresenter >> initializePresenters [
 	methodsList := self instantiate: MLSMethodListPresenter.
