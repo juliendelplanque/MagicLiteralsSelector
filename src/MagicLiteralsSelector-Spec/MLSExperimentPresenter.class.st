@@ -47,7 +47,7 @@ MLSExperimentPresenter >> initializePresenters [
 	methodPresenter := self instantiate: MLSMethodPresenter.
 	
 	methodsList whenSelectionChangedDo: [ :selection |
-		methodPresenter method: selection selectedItem ].
+		selection selectedItem ifNotNil: [ :item | methodPresenter method: item] ].
 	
 	progressBar := self newProgressBar.
 	progressBar progress: [ methodsSample ifNil: [ 0 ] ifNotNil: #completionPercentage ] every: 0.5 second.

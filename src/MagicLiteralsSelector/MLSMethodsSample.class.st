@@ -61,6 +61,11 @@ MLSMethodsSample >> do: aBlock [
 	^ self methods do: aBlock
 ]
 
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> indexOf: anIndex ifAbsent: aBlock [
+	^methods indexOf: anIndex ifAbsent: aBlock
+]
+
 { #category : #initialization }
 MLSMethodsSample >> initialize [
 	super initialize.

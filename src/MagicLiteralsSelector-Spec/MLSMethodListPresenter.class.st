@@ -24,8 +24,17 @@ MLSMethodListPresenter class >> defaultSpec [
 
 { #category : #updating }
 MLSMethodListPresenter >> hideCompletedMethods [
-	methodsList items: (methodsSample reject: #isCompleted) asOrderedCollection.
-	self updateLabel 
+	| currentSelected |
+	currentSelected := methodsList selection selectedItem.
+	methodsList
+		items: (methodsSample reject: #isCompleted) asOrderedCollection.
+	self updateLabel.
+	self updateSelection: currentSelected
+]
+
+{ #category : #accessing }
+MLSMethodListPresenter >> hidesCompleted [
+	^chkHideCompleted state
 ]
 
 { #category : #initialization }
@@ -76,22 +85,39 @@ MLSMethodListPresenter >> nbMethodsTotal [
 
 { #category : #updating }
 MLSMethodListPresenter >> showCompletedMethods [
+	| currentSelected |
+	currentSelected := methodsList selection selectedItem.
 	methodsList items: methodsSample asOrderedCollection.
-	self updateLabel 
+	self updateLabel.
+	self updateSelection: currentSelected
 ]
 
 { #category : #updating }
 MLSMethodListPresenter >> update [	
-	chkHideCompleted state
+	self hidesCompleted
 	ifTrue:  [ self hideCompletedMethods ]
 	ifFalse: [ self showCompletedMethods ].
 
-	self updateLabel
 ]
 
 { #category : #updating }
 MLSMethodListPresenter >> updateLabel [
 	lblMethodCount label: (' Showing ' , self nbMethodsShown asString , ' of ' , self nbMethodsTotal asString , ' methods')
+]
+
+{ #category : #updating }
+MLSMethodListPresenter >> updateSelection: previouslySelected [
+	self hidesCompleted
+	ifFalse: [
+		methodsList selectItem: previouslySelected.
+		^self ].
+	previouslySelected ifNil: [ ^ self ].
+	previouslySelected isCompleted
+		ifFalse: [ ^ self ].
+	self nbMethodsShown = 0
+		ifTrue: [ ^ self ].
+	methodsList unselectAll.
+	methodsList selectIndex: 1
 ]
 
 { #category : #events }

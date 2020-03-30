@@ -99,6 +99,12 @@ MLSExperimentBatch >> fillInFromSample: methodSample alreadyTreated: methodsTrea
 
 ]
 
+{ #category : #'collection compatibility' }
+MLSExperimentBatch >> indexOf: index ifAbsent: aBlock [
+	"receiver's methods being a Set starts to be a pain in the ass"
+	self shouldNotImplement 
+]
+
 { #category : #initialization }
 MLSExperimentBatch >> initialize [ 
 	super initialize .
