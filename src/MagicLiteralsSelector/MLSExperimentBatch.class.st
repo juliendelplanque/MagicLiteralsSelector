@@ -127,6 +127,11 @@ MLSExperimentBatch >> methods [
 ]
 
 { #category : #accessing }
+MLSExperimentBatch >> noRedundancy [
+	self percentageRedundancy: 0
+]
+
+{ #category : #accessing }
 MLSExperimentBatch >> percentageRedundancy: anObject [
 	percentRedundancy := anObject
 ]

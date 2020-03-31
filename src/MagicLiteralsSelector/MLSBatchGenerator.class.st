@@ -32,11 +32,6 @@ MLSBatchGenerator class >> example [
 
 ]
 
-{ #category : #'private - utilities' }
-MLSBatchGenerator >> asQuantity: aPercentage [
-	^ aPercentage / 100 * self batchSize
-]
-
 { #category : #accessing }
 MLSBatchGenerator >> batches [ 
 	^batches 
@@ -72,7 +67,7 @@ MLSBatchGenerator >> fillBatch: aBatch [
 MLSBatchGenerator >> generate [
 	[ batches size < numberFirstBatches ]
 		whileTrue: [
-			self fillBatch: (self newBatch percentageRedundancy: 0 ; yourself) ].
+			self fillBatch: (self newBatch noRedundancy ; yourself) ].
 	[ batches size < numberOfBatches ]
 		whileTrue: [ self fillBatch: self newBatch 	].
 ]
