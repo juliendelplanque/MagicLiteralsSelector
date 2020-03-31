@@ -8,7 +8,7 @@ To install this project, run the following script in a Pharo 8.0 image:
 
 ```Smalltalk
 Metacello new
-  repository: 'github://juliendelplanque/MagicLiteralsSelector/src';
+  repository: 'github://NicolasAnquetil/MagicLiteralsSelector/src';
   baseline: 'MagicLiteralsSelector';
   load
 ```
