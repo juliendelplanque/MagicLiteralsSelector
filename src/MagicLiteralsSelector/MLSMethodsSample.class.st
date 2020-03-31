@@ -18,6 +18,11 @@ MLSMethodsSample class >> methods: methods [
 ]
 
 { #category : #converting }
+MLSMethodsSample >> asMethodsSample [
+	^self
+]
+
+{ #category : #converting }
 MLSMethodsSample >> asOrderedCollection [ 
 	^self
 ]

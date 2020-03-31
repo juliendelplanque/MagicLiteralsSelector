@@ -91,6 +91,12 @@ MLSMethod >> hasComment [
 ]
 
 { #category : #testing }
+MLSMethod >> hasDuplicate [
+	^(literalsCandidates groupedBy: #literalValue)
+		anySatisfy: [ :l | l size > 1 ]
+]
+
+{ #category : #testing }
 MLSMethod >> hasFloatLiteral [
 	^self hasLiteral: #isFloatLiteral 
 ]

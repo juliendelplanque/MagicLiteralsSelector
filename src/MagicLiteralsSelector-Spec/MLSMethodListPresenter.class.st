@@ -68,7 +68,7 @@ MLSMethodListPresenter >> methodsSample: aMethodsSample [
 	methodsList items: aMethodsSample.
 	self update.
 
-	aMethodsSample methods do: [ :m |
+	aMethodsSample do: [ :m |
 		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
 			self update ] ]
 ]
@@ -80,7 +80,7 @@ MLSMethodListPresenter >> nbMethodsShown [
 
 { #category : #accessing }
 MLSMethodListPresenter >> nbMethodsTotal [
-	^ methodsSample ifNil: [ 0 ] ifNotNil: [methodsSample methods size]
+	^ methodsSample ifNil: [ 0 ] ifNotNil: [methodsSample size]
 ]
 
 { #category : #updating }

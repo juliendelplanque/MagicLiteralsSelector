@@ -41,9 +41,14 @@ MLSExperimentBatch >> add: aNumber from: aCollection [
 ]
 
 { #category : #converting }
-MLSExperimentBatch >> asOrderedCollection [
-	"Because my methods are in a Set"
+MLSExperimentBatch >> asMethodsSample [
 	^MLSMethodsSample methods: self methods
+]
+
+{ #category : #converting }
+MLSExperimentBatch >> asOrderedCollection [
+	"Because receiver's methods are in a Set"
+	^self asMethodsSample 
 ]
 
 { #category : #running }

@@ -63,7 +63,7 @@ MLSExperimentPresenter >> initializePresenters [
 
 { #category : #accessing }
 MLSExperimentPresenter >> methodsSample: aMethodsSample [
-	methodsSample := aMethodsSample.
+	methodsSample := aMethodsSample asMethodsSample.
 	methodsList methodsSample: aMethodsSample.
 
 ]
