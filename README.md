@@ -14,4 +14,4 @@ Metacello new
 ```
 
 Related publications:
-Julien Delplanque, Stéphane Ducasse, Oleksandr Zaitsev. Magic Literals in Pharo. _IWST19 - International Workshop on Smalltalk Technologies_, Aug 2019, Köln, Germany. [https://hal.inria.fr/hal-02266137]⟨hal-02266137⟩
+Julien Delplanque, Stéphane Ducasse, Oleksandr Zaitsev. Magic Literals in Pharo. _IWST19 - International Workshop on Smalltalk Technologies_, Aug 2019, Köln, Germany. [hal-02266137](https://hal.inria.fr/hal-02266137)
