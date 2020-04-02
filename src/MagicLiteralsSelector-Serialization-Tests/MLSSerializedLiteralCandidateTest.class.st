@@ -9,7 +9,7 @@ Class {
 
 { #category : #'private - utilities' }
 MLSSerializedLiteralCandidateTest >> literalCandidatesFor: aMethod [
-	^(MLSMethod compiledMethod: MLSFakeClassForTestingSerialization >> aMethod) literalsCandidates
+	^(MLSMethod compiledMethod: MLSFakeClassForTestingSerialization >> aMethod) literalCandidates
 ]
 
 { #category : #tests }

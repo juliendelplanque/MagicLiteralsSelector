@@ -3,7 +3,7 @@ A MLSMethodTest is a test class for testing the behavior of MLSMethod
 "
 Class {
 	#name : #MLSMethodTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractTest,
 	#instVars : [
 		'method'
 	],
@@ -12,18 +12,18 @@ Class {
 
 { #category : #running }
 MLSMethodTest >> setUp [ 
-	method := MLSMethod compiledMethod: MLSFakeClassForTesting >> #manyLiterals.
+	method := self methodFor: #manyLiterals.
 ]
 
 { #category : #test }
 MLSMethodTest >> testIsCompleted [
 	self deny: method isCompleted.
 	
-	method literalsCandidates first beMagic.
+	method literalCandidates first beMagic.
 	
 	self deny: method isCompleted.
 	
-	method literalsCandidates do: [ :candidate |
+	method literalCandidates do: [ :candidate |
 		candidate beMagic ].
 	
 	self assert: method isCompleted.
@@ -32,26 +32,26 @@ MLSMethodTest >> testIsCompleted [
 { #category : #test }
 MLSMethodTest >> testLiteralsCandidates [
 
-	self assert: method literalsCandidates size equals: 5.
+	self assert: method literalCandidates size equals: 5.
 	self
-		assertCollection: (method literalsCandidates collect: #literalValue)
+		assertCollection: (method literalCandidates collect: #literalValue)
 		includesAll: {42 . 1 . $a . 'A string' . #one}.
 	self
-		assertCollection: (method literalsCandidates collect: [:c | c literalValue storeString])
+		assertCollection: (method literalCandidates collect: [:c | c literalValue storeString])
 		includesAll: {'42' . '1' . '$a' . '''A string''' . '#one'}.
 	self
-		assert: (method literalsCandidates allSatisfy: [ :l | l status isUnknown ])
+		assert: (method literalCandidates allSatisfy: [ :l | l status isUnknown ])
 ]
 
 { #category : #test }
 MLSMethodTest >> testMethodClass [
-	self assert: method methodClass equals: MLSFakeClassForTesting
+	self assert: method methodClass equals: MLSAbstractTest
 ]
 
 { #category : #test }
 MLSMethodTest >> testSourceCode [
 
-	self assert: method sourceCode equals: (MLSFakeClassForTesting >> #manyLiterals) sourceCode
+	self assert: method sourceCode equals: (MLSAbstractTest >> #manyLiterals) sourceCode
 ]
 
 { #category : #test }
@@ -62,7 +62,7 @@ MLSMethodTest >> testWhenAnyLiteralCandidateStatusChangedDo [
 	
 	self assert: changedLiteral isNil.
 	
-	method literalsCandidates first beMagic.
+	method literalCandidates first beMagic.
 	
-	self assert: changedLiteral equals: method literalsCandidates first
+	self assert: changedLiteral equals: method literalCandidates first
 ]

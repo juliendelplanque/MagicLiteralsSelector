@@ -3,14 +3,9 @@ This class contains tests on the classification APPI of MLSMethod (hasIntegerLit
 "
 Class {
 	#name : #MLSMethodClassificationTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractTest,
 	#category : #'MagicLiteralsSelector-Tests'
 }
-
-{ #category : #'private - utilities' }
-MLSMethodClassificationTest >> methodFor: aSymbol [
-	^MLSMethod compiledMethod: MLSFakeClassForTesting >> aSymbol
-]
 
 { #category : #tests }
 MLSMethodClassificationTest >> testHasBooleanLiteral [

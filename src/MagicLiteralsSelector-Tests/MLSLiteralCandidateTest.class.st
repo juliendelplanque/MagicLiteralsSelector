@@ -3,7 +3,7 @@ A MLSLiteralCandidateTest is a test class for testing the behavior of MLSLiteral
 "
 Class {
 	#name : #MLSLiteralCandidateTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractTest,
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
@@ -62,7 +62,7 @@ MLSLiteralCandidateTest >> testCandidateHasUnknownStatusAfterInstantiation [
 { #category : #tests }
 MLSLiteralCandidateTest >> testPositionsInterval [
 	| literalCandidate |
-	literalCandidate := (MLSMethod compiledMethod: MLSFakeClassForTesting >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (self methodFor: #manyLiterals) literalCandidates detect: [ :l | l literalValue = 42 ].
 	
 	self assert: literalCandidate positionsInterval equals: (44 to: 45)
 ]
@@ -70,7 +70,7 @@ MLSLiteralCandidateTest >> testPositionsInterval [
 { #category : #tests }
 MLSLiteralCandidateTest >> testWhenStatusChangedDo [
 	| literalCandidate newStatus |
-	literalCandidate := (MLSMethod compiledMethod: MLSFakeClassForTesting >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (self methodFor: #manyLiterals) literalCandidates detect: [ :l | l literalValue = 42 ].
 	newStatus := nil.
 	literalCandidate whenStatusChangedDo: [ :candidate | newStatus := candidate status ].
 	

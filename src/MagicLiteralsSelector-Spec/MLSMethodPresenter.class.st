@@ -82,7 +82,7 @@ MLSMethodPresenter >> method: aMethod [
 	sourceCodePresenter
 		behavior: aMethod methodClass;
 		text: aMethod sourceCode.
-	literalCandidatesPresenter literalsCandidates: aMethod literalsCandidates.
+	literalCandidatesPresenter literalsCandidates: aMethod literalCandidates.
 	"self justificationCannotDecideEnabled: false.
 	justificationTextInput text: ''"
 	

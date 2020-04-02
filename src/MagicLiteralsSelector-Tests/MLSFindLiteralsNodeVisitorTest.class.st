@@ -3,13 +3,13 @@ A MLSFindLiteralsNodeVisitorTest is a test class for testing the behavior of MLS
 "
 Class {
 	#name : #MLSFindLiteralsNodeVisitorTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractTest,
 	#category : #'MagicLiteralsSelector-Tests'
 }
 
 { #category : #'private - utilities' }
 MLSFindLiteralsNodeVisitorTest >> literalsFor: aMethod [
-	^MLSFindLiteralsNodeVisitor visit: (MLSFakeClassForTesting >> aMethod) parseTree
+	^MLSFindLiteralsNodeVisitor visit: (MLSAbstractTest >> aMethod) parseTree
 ]
 
 { #category : #tests }

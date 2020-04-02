@@ -17,7 +17,8 @@ Class {
 		'numberOfBatches',
 		'numberFirstBatches',
 		'ignoredLiterals',
-		'longStringSize'
+		'longStringSize',
+		'methodFilters'
 	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
@@ -64,6 +65,11 @@ MLSBatchGenerator >> fillBatch: aBatch [
 ]
 
 { #category : #running }
+MLSBatchGenerator >> filterSample: methodsSample [
+	methodsSample select: #hasLiterals
+]
+
+{ #category : #running }
 MLSBatchGenerator >> generate [
 	[ batches size < numberFirstBatches ]
 		whileTrue: [
@@ -85,6 +91,12 @@ MLSBatchGenerator >> initialize [
 	longStringSize := self defaultLongStringSize .
 	numberOfBatches := self defaultNumberOfBatches .
 	numberFirstBatches := self defaultNumberFirstBatches .
+	methodFilters := {
+		MLSExperimentFilterWithLiteral new . 
+		MLSExperimentFilterLiteralKind new
+			literalKinds: #( isSymbolLiteral isStringLiteral isBooleanLiteral) ;
+			yourself
+	}
 
 ]
 
@@ -94,8 +106,18 @@ MLSBatchGenerator >> longStringSize: anObject [
 ]
 
 { #category : #accessing }
+MLSBatchGenerator >> methodFilters [
+	^ methodFilters
+]
+
+{ #category : #accessing }
+MLSBatchGenerator >> methodFilters: anObject [
+	methodFilters := anObject
+]
+
+{ #category : #accessing }
 MLSBatchGenerator >> methodSample: aSample [
-	methodSample := (aSample select: #hasLiterals) asOrderedCollection.
+	methodSample := (self filterSample: aSample) asOrderedCollection.
 	self reset
 ]
 

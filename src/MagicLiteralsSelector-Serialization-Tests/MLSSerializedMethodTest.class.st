@@ -17,7 +17,7 @@ MLSSerializedMethodTest >> testAsSerializedMethod [
 	self assert: serialized methodPackageName equals: MLSFakeClassForTestingSerialization package name.
 	self assert: serialized methodClassName equals: #MLSFakeClassForTestingSerialization.
 	self assert: serialized methodSelector equals: #sampleMethodWithLiterals2.
-	self assert: serialized literalCandidates size equals: method literalsCandidates size.
+	self assert: serialized literalCandidates size equals: method literalCandidates size.
 	self assert: serialized sourceCode equals: 'sampleMethodWithLiterals2
 	^{ 1 . 2 . $a }'
 ]

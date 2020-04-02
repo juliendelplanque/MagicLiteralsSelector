@@ -59,13 +59,13 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 ]
 
 { #category : #accessing }
-MLSLiteralCandidatesPresenter >> literalCandidatesTable [
-	^ literalCandidatesTable
+MLSLiteralCandidatesPresenter >> literalCandidates [
+	^ literalCandidatesTable items
 ]
 
 { #category : #accessing }
-MLSLiteralCandidatesPresenter >> literalsCandidates [
-	^ literalCandidatesTable items
+MLSLiteralCandidatesPresenter >> literalCandidatesTable [
+	^ literalCandidatesTable
 ]
 
 { #category : #accessing }
@@ -77,7 +77,7 @@ MLSLiteralCandidatesPresenter >> literalsCandidates: aListOfCandidates [
 
 { #category : #accessing }
 MLSLiteralCandidatesPresenter >> refresh [
-	self literalsCandidates: self literalsCandidates
+	self literalsCandidates: self literalCandidates
 ]
 
 { #category : #initialization }

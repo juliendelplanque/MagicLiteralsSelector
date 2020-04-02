@@ -30,7 +30,7 @@ MLSMethod >> asSerializedMethod [
 		methodClassName: self methodClass name;
 		methodSelector: self compiledMethod selector;
 		sourceCode: self compiledMethod sourceCode;
-		literalCandidates: (self literalsCandidates collect: #asSerializedLiteralCandidate);
+		literalCandidates: (self literalCandidates collect: #asSerializedLiteralCandidate);
 		yourself
 ]
 
@@ -108,12 +108,12 @@ MLSMethod >> hasIntegerLiteral [
 
 { #category : #testing }
 MLSMethod >> hasLiteral: aSymbol [ 
-	^self literalsCandidates anySatisfy: aSymbol
+	^self literalCandidates anySatisfy: aSymbol
 ]
 
 { #category : #testing }
 MLSMethod >> hasLiterals [
-	^self literalsCandidates notEmpty
+	^self literalCandidates notEmpty
 ]
 
 { #category : #testing }
@@ -126,6 +126,11 @@ MLSMethod >> hasStringLiteral [
 	^self hasLiteral: #isStringLiteral 
 ]
 
+{ #category : #testing }
+MLSMethod >> hasSymbolLiteral [
+	^self hasLiteral: #isSymbolLiteral 
+]
+
 { #category : #initialization }
 MLSMethod >> initialize [
 	super initialize.
@@ -134,7 +139,7 @@ MLSMethod >> initialize [
 
 { #category : #testing }
 MLSMethod >> isCompleted [
-	^ self literalsCandidates noneSatisfy: [ :candidate |
+	^ self literalCandidates noneSatisfy: [ :candidate |
 		candidate status isUnknown ]
 ]
 
@@ -144,7 +149,7 @@ MLSMethod >> isTestMethod [
 ]
 
 { #category : #api }
-MLSMethod >> literalsCandidates [
+MLSMethod >> literalCandidates [
 	^ literalsCandidates ifNil: [ literalsCandidates := self gatherLiteralsCandidates ]
 ]
 

@@ -119,6 +119,11 @@ MLSLiteralCandidate >> isStringLiteral [
 ]
 
 { #category : #testing }
+MLSLiteralCandidate >> isSymbolLiteral [
+	^self literalValue isSymbol
+]
+
+{ #category : #testing }
 MLSLiteralCandidate >> isUnknown [
 	^ self status isUnknown
 ]
