@@ -66,7 +66,9 @@ MLSBatchGenerator >> fillBatch: aBatch [
 
 { #category : #running }
 MLSBatchGenerator >> filterSample: methodsSample [
-	methodsSample select: #hasLiterals
+	^methodsSample select: [ :meth |
+		methodFilters allSatisfy: [ :filter | filter accept: meth ]
+	]
 ]
 
 { #category : #running }

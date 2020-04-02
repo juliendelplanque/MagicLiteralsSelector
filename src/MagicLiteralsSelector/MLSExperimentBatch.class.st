@@ -20,7 +20,7 @@ Class {
 
 { #category : #running }
 MLSExperimentBatch >> add: aNumber from: aCollection [
-	"adds to the methods of receiver Anumber of elements from aCollection (if possible)"
+	"adds to the methods of receiver aNumber of elements from aCollection (if possible)"
 	| selected remaining |
 	(aCollection size < aNumber)
 	ifTrue: [ 

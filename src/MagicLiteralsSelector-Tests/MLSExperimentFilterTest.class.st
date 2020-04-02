@@ -57,8 +57,10 @@ MLSExperimentFilterTest >> testLiteralKindFilterSeveralKinds [
 
 	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
 	self deny: (filter accept: (self methodFor: #oneLiteralNumberInReturn)).
+	self assert: (filter accept: (self methodFor: #literalsInCurlyBraceArray)).
 	self assert: (filter accept: (self methodFor: #manyLiterals)).
 
 	filter literalKinds: #( isSymbolLiteral  isIntegerLiteral isStringLiteral isCharacterLiteral).
+	self assert: (filter accept: (self methodFor: #literalsInCurlyBraceArray)). "because {1.$a.2} is ONE literal"
 	self deny: (filter accept: (self methodFor: #manyLiterals)).
 ]
