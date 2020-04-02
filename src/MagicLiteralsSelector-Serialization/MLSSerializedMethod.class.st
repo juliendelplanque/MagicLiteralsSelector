@@ -11,6 +11,16 @@ Class {
 	#category : #'MagicLiteralsSelector-Serialization-Core'
 }
 
+{ #category : #converting }
+MLSSerializedMethod >> asMLSMethod [
+	^MLSMethod new
+		compiledMethod: (((RPackage organizer packageNamed: methodPackageName) 
+									definedClasses detect: [ :c | c name = methodClassName ])
+									>> methodSelector ) ;
+		literalCandidates: (literalCandidates collect: #asMLSLiteralCandidate)
+		
+]
+
 { #category : #accessing }
 MLSSerializedMethod >> literalCandidates [
 	^ literalCandidates

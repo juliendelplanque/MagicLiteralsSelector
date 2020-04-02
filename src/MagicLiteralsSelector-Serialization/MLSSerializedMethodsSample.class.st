@@ -9,6 +9,13 @@ Class {
 	#category : #'MagicLiteralsSelector-Serialization-Core'
 }
 
+{ #category : #converting }
+MLSSerializedMethodsSample >> asMethodsSample [
+	^MLSMethodsSample new
+		methods: (methods collect: #asMLSMethod) ;
+		yourself
+]
+
 { #category : #accessing }
 MLSSerializedMethodsSample >> generationDateAndTime [
 	^ generationDateAndTime

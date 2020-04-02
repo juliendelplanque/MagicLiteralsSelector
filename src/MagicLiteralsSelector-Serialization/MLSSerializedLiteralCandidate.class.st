@@ -9,6 +9,24 @@ Class {
 	#category : #'MagicLiteralsSelector-Serialization-Core'
 }
 
+{ #category : #converting }
+MLSSerializedLiteralCandidate >> asMLSLiteralCandidate [
+	^MLSLiteralCandidate new
+	
+		status: status ;
+		yourself
+]
+
+{ #category : #converting }
+MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: aRBTree [
+	| node |
+	node := nil.
+	^MLSLiteralCandidate new
+	
+		status: status ;
+		yourself
+]
+
 { #category : #accessing }
 MLSSerializedLiteralCandidate >> endPosition [
 	^ endPosition

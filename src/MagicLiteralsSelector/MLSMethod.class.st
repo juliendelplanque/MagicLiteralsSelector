@@ -148,9 +148,14 @@ MLSMethod >> isTestMethod [
 	^ self compiledMethod isTestMethod
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 MLSMethod >> literalCandidates [
 	^ literalsCandidates ifNil: [ literalsCandidates := self gatherLiteralsCandidates ]
+]
+
+{ #category : #accessing }
+MLSMethod >> literalCandidates: aCollection [
+	^ literalsCandidates := aCollection 
 ]
 
 { #category : #accessing }
