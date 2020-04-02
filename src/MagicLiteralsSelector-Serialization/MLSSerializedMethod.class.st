@@ -13,11 +13,14 @@ Class {
 
 { #category : #converting }
 MLSSerializedMethod >> asMLSMethod [
-	^MLSMethod new
-		compiledMethod: (((RPackage organizer packageNamed: methodPackageName) 
+	| compiledMethod parseTree |
+	compiledMethod := ((RPackage organizer packageNamed: methodPackageName) 
 									definedClasses detect: [ :c | c name = methodClassName ])
-									>> methodSelector ) ;
-		literalCandidates: (literalCandidates collect: #asMLSLiteralCandidate)
+									>> methodSelector.
+	parseTree := compiledMethod parseTree.
+	^MLSMethod new
+		compiledMethod: compiledMethod ;
+		literalCandidates: (literalCandidates collect: [:c | c asMLSLiteralCandidateInAST: parseTree])
 		
 ]
 

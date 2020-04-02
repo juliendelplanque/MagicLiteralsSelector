@@ -10,19 +10,13 @@ Class {
 }
 
 { #category : #converting }
-MLSSerializedLiteralCandidate >> asMLSLiteralCandidate [
+MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: astTree [
+	| astNode |
+	astNode := RBGenericNodeVisitor
+		visit: astTree
+		detect: [ :node| (node start = startPosition) and: [ node stop = endPosition ] ].
 	^MLSLiteralCandidate new
-	
-		status: status ;
-		yourself
-]
-
-{ #category : #converting }
-MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: aRBTree [
-	| node |
-	node := nil.
-	^MLSLiteralCandidate new
-	
+		astNode: astNode ;
 		status: status ;
 		yourself
 ]
