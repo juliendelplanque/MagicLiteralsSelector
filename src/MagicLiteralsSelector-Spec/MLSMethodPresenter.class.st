@@ -16,18 +16,16 @@ Class {
 MLSMethodPresenter class >> defaultSpec [
 	^SpPanedLayout newVertical
 		add: (SpBoxLayout newVertical
-				"spacing: 5;"
 				add: #btnBrowse height: (self toolbarHeight);
 				add: #sourceCodePresenter ;
 				yourself) ;
-		add: (SpPanedLayout newVertical
-				"spacing: 5;"
+		"add: (SpPanedLayout newVertical"
 				add: #literalCandidatesPresenter ;
-				add: (SpBoxLayout newVertical
+				"add: (SpBoxLayout newVertical
 						add: #lblCannotDecideJustification expand: false ;
 						add: #justificationTextInput ;
 						yourself);
-				yourself ) ;
+				yourself ) ;"
 		yourself
 ]
 
@@ -36,8 +34,8 @@ MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
 	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
 	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
 		literalCandidate ifNotNil: [sourceCodePresenter selectionInterval: literalCandidate positionsInterval] ].
-	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
-		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]
+	"literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
+		self justificationCannotDecideEnabled: literalCandidate isCanNotDecide. ]"
 	
 ]
 
@@ -45,7 +43,7 @@ MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
 MLSMethodPresenter >> initializePresenters [
 	self initializeSourceCodePresenter.
 	self initializeLiteralCandidatesPresenter.
-	self initializejustificationPresenter.
+	"self initializejustificationPresenter."
 	
 ]
 
@@ -85,7 +83,7 @@ MLSMethodPresenter >> method: aMethod [
 		behavior: aMethod methodClass;
 		text: aMethod sourceCode.
 	literalCandidatesPresenter literalsCandidates: aMethod literalsCandidates.
-	self justificationCannotDecideEnabled: false.
-	justificationTextInput text: ''
+	"self justificationCannotDecideEnabled: false.
+	justificationTextInput text: ''"
 	
 ]
