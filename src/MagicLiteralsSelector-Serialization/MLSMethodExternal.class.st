@@ -12,12 +12,7 @@ Class {
 
 { #category : #displaying }
 MLSMethodExternal >> displayStringOn: aStream [
-	^aStream
-		nextPut: $_ ;
-		nextPutAll: serializedMethod methodClassName ;
-		nextPutAll: '>>' ;
-		nextPutAll: serializedMethod methodSelector ;
-		nextPut: $_
+	^self printOn: aStream
 ]
 
 { #category : #testing }
@@ -27,13 +22,18 @@ MLSMethodExternal >> isTestMethod [
 ]
 
 { #category : #accessing }
-MLSMethodExternal >> literalCandidates [
-	^ serializedMethod literalCandidates
-]
-
-{ #category : #accessing }
 MLSMethodExternal >> methodClass [
 	^ serializedMethod methodClassName
+]
+
+{ #category : #displaying }
+MLSMethodExternal >> printOn: aStream [
+	^aStream
+		nextPut: $_ ;
+		nextPutAll: serializedMethod methodClassName ;
+		nextPutAll: '_>>_#' ;
+		nextPutAll: serializedMethod methodSelector ;
+		nextPut: $_
 ]
 
 { #category : #accessing }

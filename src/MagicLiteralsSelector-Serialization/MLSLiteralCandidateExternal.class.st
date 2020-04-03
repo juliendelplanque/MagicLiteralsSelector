@@ -15,12 +15,18 @@ MLSLiteralCandidateExternal >> literalValue [
 
 { #category : #converting }
 MLSLiteralCandidateExternal >> positionsInterval [
-	^ serializedCandidate startPosition to: serializedCandidate endPosition
+	^ serializedCandidate startPosition
+		to: serializedCandidate endPosition
 ]
 
 { #category : #accessing }
 MLSLiteralCandidateExternal >> serializedCandidate: anObject [
 	serializedCandidate := anObject
+]
+
+{ #category : #accessing }
+MLSLiteralCandidateExternal >> status [
+	^serializedCandidate status
 ]
 
 { #category : #accessing }
