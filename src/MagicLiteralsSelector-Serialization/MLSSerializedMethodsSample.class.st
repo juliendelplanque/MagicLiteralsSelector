@@ -14,6 +14,11 @@ Class {
 	#category : #'MagicLiteralsSelector-Serialization-Core'
 }
 
+{ #category : #'instance creation' }
+MLSSerializedMethodsSample class >> fromSerializedStream: aStream [
+	^STON fromStream: aStream
+]
+
 { #category : #converting }
 MLSSerializedMethodsSample >> asMethodsSample [
 	^MLSMethodsSample new

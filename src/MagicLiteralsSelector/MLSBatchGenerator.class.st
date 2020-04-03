@@ -13,12 +13,14 @@ Class {
 	#instVars : [
 		'methodSample',
 		'batches',
+		'name',
 		'methodsTreated',
 		'numberOfBatches',
 		'numberFirstBatches',
 		'ignoredLiterals',
 		'longStringSize',
-		'methodFilters'
+		'methodFilters',
+		'sizeOfBatches'
 	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
@@ -44,11 +46,6 @@ MLSBatchGenerator >> defaultIgnoredLiterals [
 ]
 
 { #category : #settings }
-MLSBatchGenerator >> defaultLongStringSize [
-	^3
-]
-
-{ #category : #settings }
 MLSBatchGenerator >> defaultNumberFirstBatches [
 	^2
 ]
@@ -56,6 +53,11 @@ MLSBatchGenerator >> defaultNumberFirstBatches [
 { #category : #settings }
 MLSBatchGenerator >> defaultNumberOfBatches [
 	^ 10
+]
+
+{ #category : #settings }
+MLSBatchGenerator >> defaultSizeOfBatches [
+	^50
 ]
 
 { #category : #running }
@@ -80,17 +82,11 @@ MLSBatchGenerator >> generate [
 		whileTrue: [ self fillBatch: self newBatch 	].
 ]
 
-{ #category : #accessing }
-MLSBatchGenerator >> ignoredLiterals: anObject [
-	ignoredLiterals := anObject
-]
-
 { #category : #initialization }
 MLSBatchGenerator >> initialize [ 
 	super initialize .
 
-	ignoredLiterals := self defaultIgnoredLiterals .
-	longStringSize := self defaultLongStringSize .
+	sizeOfBatches := self defaultSizeOfBatches.
 	numberOfBatches := self defaultNumberOfBatches .
 	numberFirstBatches := self defaultNumberFirstBatches .
 	methodFilters := {
@@ -100,11 +96,6 @@ MLSBatchGenerator >> initialize [
 			yourself
 	}
 
-]
-
-{ #category : #accessing }
-MLSBatchGenerator >> longStringSize: anObject [
-	longStringSize := anObject
 ]
 
 { #category : #accessing }
@@ -128,10 +119,23 @@ MLSBatchGenerator >> methodsTreated [
 	^ methodsTreated
 ]
 
+{ #category : #accessing }
+MLSBatchGenerator >> name [
+	^ name
+]
+
+{ #category : #accessing }
+MLSBatchGenerator >> name: anObject [
+	name := anObject
+]
+
 { #category : #running }
 MLSBatchGenerator >> newBatch [
 	| batch |
-	batch := MLSExperimentBatch new.
+	batch := MLSExperimentBatch new
+		batchSize: sizeOfBatches ;
+		name: (self name , '-' , batches size asString) ;
+		yourself.
 	batches add: batch.
 	^ batch
 
@@ -151,4 +155,9 @@ MLSBatchGenerator >> numberOfBatches: anObject [
 MLSBatchGenerator >> reset [
 	batches := numberOfBatches ifNil: [ OrderedCollection new ] ifNotNil: [ OrderedCollection new: numberOfBatches ] .
 	methodsTreated := methodSample ifNil: [ Set new ] ifNotNil: [ Set new: methodSample size ]
+]
+
+{ #category : #accessing }
+MLSBatchGenerator >> sizeOfBatches: anInteger [
+	sizeOfBatches := anInteger
 ]

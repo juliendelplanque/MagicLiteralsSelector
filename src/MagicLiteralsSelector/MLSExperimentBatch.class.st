@@ -140,3 +140,11 @@ MLSExperimentBatch >> percentageRedundancy: anObject [
 MLSExperimentBatch >> percentageTest: anObject [
 	percentTest := anObject
 ]
+
+{ #category : #printing }
+MLSExperimentBatch >> printOn: aStream [
+	super printOn: aStream.
+	aStream
+		nextPutAll: ': ' ;
+		nextPutAll: name
+]

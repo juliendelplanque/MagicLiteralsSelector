@@ -5,7 +5,8 @@ Class {
 	#name : #MLSMethodsSample,
 	#superclass : #Object,
 	#instVars : [
-		'methods'
+		'methods',
+		'name'
 	],
 	#category : #'MagicLiteralsSelector-core'
 }
@@ -85,6 +86,16 @@ MLSMethodsSample >> methods [
 { #category : #accessing }
 MLSMethodsSample >> methods: anObject [
 	methods := anObject asOrderedCollection
+]
+
+{ #category : #accessing }
+MLSMethodsSample >> name [
+	^ name
+]
+
+{ #category : #accessing }
+MLSMethodsSample >> name: anObject [
+	name := anObject
 ]
 
 { #category : #'collection compatibility' }
