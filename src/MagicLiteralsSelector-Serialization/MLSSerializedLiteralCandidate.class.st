@@ -1,3 +1,7 @@
+"
+Serialized version of an MLSCandidate
+Does not contain the AST node of the literal, but its position in the method source
+"
 Class {
 	#name : #MLSSerializedLiteralCandidate,
 	#superclass : #Object,
@@ -18,6 +22,14 @@ MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: astTree [
 	^MLSLiteralCandidate new
 		astNode: astNode ;
 		status: status ;
+		yourself
+]
+
+{ #category : #converting }
+MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInSourceCode: aString [
+	^MLSLiteralCandidateExternal new
+		serializedCandidate: self ;
+		value: (aString copyFrom: startPosition to: endPosition) ;
 		yourself
 ]
 

@@ -9,10 +9,10 @@ MLSExperimentFilterTest >> testHasLiteralFilter [
 	| filter |
 	filter := MLSExperimentFilterWithLiteral new.
 
-	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
-	self assert: (filter accept: (self methodFor: #twoLiteralsNumberInExpression)).
-	self assert: (filter accept: (self methodFor: #literalsInCurlyBraceArray)).
-	self deny: (filter accept: (self methodFor: #noLiterals)).
+	self assert: (filter accept: (self mlsMethodFor: #oneLiteralBooleanInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #twoLiteralsNumberInExpression)).
+	self assert: (filter accept: (self mlsMethodFor: #literalsInCurlyBraceArray)).
+	self deny: (filter accept: (self mlsMethodFor: #noLiterals)).
 ]
 
 { #category : #tests }
@@ -20,8 +20,8 @@ MLSExperimentFilterTest >> testLiteralKindFilterEmpty [
 	| filter |
 	filter := MLSExperimentFilterLiteralKind new.
 
-	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
-	self deny: (filter accept: (self methodFor: #noLiterals)).
+	self assert: (filter accept: (self mlsMethodFor: #oneLiteralBooleanInReturn)).
+	self deny: (filter accept: (self mlsMethodFor: #noLiterals)).
 
 ]
 
@@ -31,9 +31,9 @@ MLSExperimentFilterTest >> testLiteralKindFilterOneKindCharcater [
 	filter := MLSExperimentFilterLiteralKind new
 		literalKinds: #( isCharacterLiteral ).
 
-	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
-	self assert: (filter accept: (self methodFor: #manyLiterals )).
-	self deny: (filter accept: (self methodFor: #oneLiteralCharInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #oneLiteralBooleanInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #manyLiterals )).
+	self deny: (filter accept: (self mlsMethodFor: #oneLiteralCharInReturn)).
 
 ]
 
@@ -43,9 +43,9 @@ MLSExperimentFilterTest >> testLiteralKindFilterOneKindInteger [
 	filter := MLSExperimentFilterLiteralKind new
 		literalKinds: #( isIntegerLiteral ).
 
-	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
-	self assert: (filter accept: (self methodFor: #manyLiterals )).
-	self deny: (filter accept: (self methodFor: #oneLiteralNumberInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #oneLiteralBooleanInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #manyLiterals )).
+	self deny: (filter accept: (self mlsMethodFor: #oneLiteralNumberInReturn)).
 
 ]
 
@@ -55,12 +55,12 @@ MLSExperimentFilterTest >> testLiteralKindFilterSeveralKinds [
 	filter := MLSExperimentFilterLiteralKind new
 		literalKinds: #( isSymbolLiteral  isIntegerLiteral isStringLiteral ).
 
-	self assert: (filter accept: (self methodFor: #oneLiteralBooleanInReturn)).
-	self deny: (filter accept: (self methodFor: #oneLiteralNumberInReturn)).
-	self assert: (filter accept: (self methodFor: #literalsInCurlyBraceArray)).
-	self assert: (filter accept: (self methodFor: #manyLiterals)).
+	self assert: (filter accept: (self mlsMethodFor: #oneLiteralBooleanInReturn)).
+	self deny: (filter accept: (self mlsMethodFor: #oneLiteralNumberInReturn)).
+	self assert: (filter accept: (self mlsMethodFor: #literalsInCurlyBraceArray)).
+	self assert: (filter accept: (self mlsMethodFor: #manyLiterals)).
 
 	filter literalKinds: #( isSymbolLiteral  isIntegerLiteral isStringLiteral isCharacterLiteral).
-	self assert: (filter accept: (self methodFor: #literalsInCurlyBraceArray)). "because {1.$a.2} is ONE literal"
-	self deny: (filter accept: (self methodFor: #manyLiterals)).
+	self assert: (filter accept: (self mlsMethodFor: #literalsInCurlyBraceArray)). "because {1.$a.2} is ONE literal"
+	self deny: (filter accept: (self mlsMethodFor: #manyLiterals)).
 ]

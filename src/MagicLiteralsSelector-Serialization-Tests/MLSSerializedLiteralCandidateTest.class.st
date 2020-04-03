@@ -3,13 +3,13 @@ A MLSSerializedLiteralCandidateTest is a test class for testing the behavior of 
 "
 Class {
 	#name : #MLSSerializedLiteralCandidateTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
 { #category : #'private - utilities' }
 MLSSerializedLiteralCandidateTest >> literalCandidatesFor: aMethod [
-	^(MLSMethod compiledMethod: MLSFakeClassForTestingSerialization >> aMethod) literalCandidates
+	^(self mlsMethodFor: aMethod) literalCandidates
 ]
 
 { #category : #tests }

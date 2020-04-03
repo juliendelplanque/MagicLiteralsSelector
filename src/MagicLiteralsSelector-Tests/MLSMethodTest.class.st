@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 MLSMethodTest >> setUp [ 
-	method := self methodFor: #manyLiterals.
+	method := self mlsMethodFor: #manyLiterals.
 ]
 
 { #category : #test }

@@ -1,3 +1,7 @@
+"
+Serialized version of an MLSMethod
+Does not contain the AST tree of the method, but source code as text and information to recover the CompiledMethod (package name, class name, selector) in this image if it exists
+"
 Class {
 	#name : #MLSSerializedMethod,
 	#superclass : #Object,
@@ -14,13 +18,25 @@ Class {
 { #category : #converting }
 MLSSerializedMethod >> asMLSMethod [
 	| compiledMethod parseTree |
-	compiledMethod := ((RPackage organizer packageNamed: methodPackageName) 
+	[compiledMethod := ((RPackage organizer packageNamed: methodPackageName) 
 									definedClasses detect: [ :c | c name = methodClassName ])
-									>> methodSelector.
+									>> methodSelector]
+		on: Error
+		do: [^self asMLSMethodExternal].
 	parseTree := compiledMethod parseTree.
 	^MLSMethod new
 		compiledMethod: compiledMethod ;
-		literalCandidates: (literalCandidates collect: [:c | c asMLSLiteralCandidateInAST: parseTree])
+		literalCandidates: (literalCandidates collect: [:c | c asMLSLiteralCandidateInAST: parseTree]) ;
+		yourself
+		
+]
+
+{ #category : #converting }
+MLSSerializedMethod >> asMLSMethodExternal [
+	^MLSMethodExternal new
+		serializedMethod: self ;
+		literalCandidates: (literalCandidates collect:  [:c | c asMLSLiteralCandidateInSourceCode: self sourceCode]) ;
+		yourself
 		
 ]
 

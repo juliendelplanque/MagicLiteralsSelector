@@ -3,7 +3,7 @@ A MLSSerializedMethodsSampleTest is a test class for testing the behavior of MLS
 "
 Class {
 	#name : #MLSSerializedMethodsSampleTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
@@ -11,8 +11,8 @@ Class {
 MLSSerializedMethodsSampleTest >> testAsSerializedMethodsSample [
 	| sample serialized |
 	sample := MLSMethodsSample methods: { 
-					MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals1.
-					MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals2 }.
+					self mlsMethodFor: #sampleMethodWithLiterals1.
+					self mlsMethodFor: #sampleMethodWithLiterals2 }.
 	
 	serialized := sample asSerializedMethodsSample.
 	

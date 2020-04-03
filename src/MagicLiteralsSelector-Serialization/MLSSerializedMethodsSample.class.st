@@ -1,3 +1,8 @@
+"
+Serialized version of an MLSMethodsSample
+
+Can save the sample on a file
+"
 Class {
 	#name : #MLSSerializedMethodsSample,
 	#superclass : #Object,

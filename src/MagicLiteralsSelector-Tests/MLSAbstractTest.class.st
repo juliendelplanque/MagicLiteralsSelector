@@ -29,7 +29,7 @@ MLSAbstractTest >> manyLiterals [
 ]
 
 { #category : #'private - utilities' }
-MLSAbstractTest >> methodFor: aSymbol [
+MLSAbstractTest >> mlsMethodFor: aSymbol [
 	^MLSMethod compiledMethod: MLSAbstractTest >> aSymbol
 ]
 

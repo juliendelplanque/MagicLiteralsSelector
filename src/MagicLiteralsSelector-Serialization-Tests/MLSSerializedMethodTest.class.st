@@ -3,19 +3,19 @@ A MLSSerializedMethodTest is a test class for testing the behavior of MLSSeriali
 "
 Class {
 	#name : #MLSSerializedMethodTest,
-	#superclass : #TestCase,
+	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
 { #category : #tests }
 MLSSerializedMethodTest >> testAsSerializedMethod [
 	| method serialized |
-	method := MLSMethod compiledMethod: MLSFakeClassForTestingSerialization>>#sampleMethodWithLiterals2.
+	method := self mlsMethodFor: #sampleMethodWithLiterals2.
 	
 	serialized := method asSerializedMethod.
 	
-	self assert: serialized methodPackageName equals: MLSFakeClassForTestingSerialization package name.
-	self assert: serialized methodClassName equals: #MLSFakeClassForTestingSerialization.
+	self assert: serialized methodPackageName equals: MLSAbstractSerializationClassTest package name.
+	self assert: serialized methodClassName equals: #MLSAbstractSerializationClassTest.
 	self assert: serialized methodSelector equals: #sampleMethodWithLiterals2.
 	self assert: serialized literalCandidates size equals: method literalCandidates size.
 	self assert: serialized sourceCode equals: 'sampleMethodWithLiterals2
