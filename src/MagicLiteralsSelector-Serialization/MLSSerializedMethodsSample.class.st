@@ -7,6 +7,7 @@ Class {
 	#name : #MLSSerializedMethodsSample,
 	#superclass : #Object,
 	#instVars : [
+		'name',
 		'methods',
 		'pharoVersionString',
 		'generationDateAndTime'
@@ -22,6 +23,7 @@ MLSSerializedMethodsSample class >> fromSerializedStream: aStream [
 { #category : #converting }
 MLSSerializedMethodsSample >> asMethodsSample [
 	^MLSMethodsSample new
+		name: name ;
 		methods: (methods collect: #asMLSMethod) ;
 		yourself
 ]
@@ -44,6 +46,16 @@ MLSSerializedMethodsSample >> methods [
 { #category : #accessing }
 MLSSerializedMethodsSample >> methods: anObject [
 	methods := anObject
+]
+
+{ #category : #accessing }
+MLSSerializedMethodsSample >> name [
+	^ name
+]
+
+{ #category : #accessing }
+MLSSerializedMethodsSample >> name: anObject [
+	name := anObject
 ]
 
 { #category : #accessing }

@@ -30,7 +30,8 @@ MLSMethodsSample >> asOrderedCollection [
 
 { #category : #converting }
 MLSMethodsSample >> asSerializedMethodsSample [
-	^ MLSSerializedMethodsSample new
+	^MLSSerializedMethodsSample new
+		name: name ;
 		methods: (self methods collect: #asSerializedMethod);
 		pharoVersionString: SystemVersion current imageVersionString;
 		generationDateAndTime: DateAndTime now;

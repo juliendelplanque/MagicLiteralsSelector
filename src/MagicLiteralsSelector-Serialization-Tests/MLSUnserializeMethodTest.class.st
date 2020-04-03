@@ -1,22 +1,11 @@
 Class {
-	#name : #MLSUnserializationTest,
+	#name : #MLSUnserializeMethodTest,
 	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
 }
 
 { #category : #tests }
-MLSUnserializationTest >> testAsMLSLiteralCandidateUnknown [
-	| literal serialized |
-	serialized := self fakeSerializedLiteral.
-	literal	 := serialized asMLSLiteralCandidateInSourceCode: self exampleMethodBody2.
-
-	self assert: literal class equals: MLSLiteralCandidateExternal .
-	self assert: literal value equals: '1'.
-	self assert: literal isMagic
-]
-
-{ #category : #tests }
-MLSUnserializationTest >> testAsMLSMethodInImage [
+MLSUnserializeMethodTest >> testAsMLSMethodInImage [
 	| method serialized |
 	serialized := (self mlsMethodFor: #sampleMethodWithLiterals2) asSerializedMethod.
 	method	 := serialized asMLSMethod.
@@ -26,7 +15,7 @@ MLSUnserializationTest >> testAsMLSMethodInImage [
 ]
 
 { #category : #tests }
-MLSUnserializationTest >> testAsMLSMethodUnknown [
+MLSUnserializeMethodTest >> testAsMLSMethodUnknown [
 	| method serialized |
 	serialized := self fakeSerializedMethod1.
 	method	 := serialized asMLSMethod.
@@ -37,7 +26,7 @@ MLSUnserializationTest >> testAsMLSMethodUnknown [
 ]
 
 { #category : #tests }
-MLSUnserializationTest >> testAsMLSMethodUnknownWithLiterals [
+MLSUnserializeMethodTest >> testAsMLSMethodUnknownWithLiterals [
 	| method serialized literal |
 	serialized := self fakeSerializedMethod2.
 	method	 := serialized asMLSMethod.

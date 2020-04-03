@@ -17,7 +17,7 @@ MLSAbstractSerializationClassTest >> exampleMethodBody2 [
 	^1'
 ]
 
-{ #category : #'example methods' }
+{ #category : #'private - utilities' }
 MLSAbstractSerializationClassTest >> fakeSerializedLiteral [
 	| literalPos |
 	literalPos := self exampleMethodBody2 indexOf: $1.
@@ -28,7 +28,7 @@ MLSAbstractSerializationClassTest >> fakeSerializedLiteral [
 		yourself.
 ]
 
-{ #category : #'example methods' }
+{ #category : #'private - utilities' }
 MLSAbstractSerializationClassTest >> fakeSerializedMethod1 [
 	^MLSSerializedMethod new 
 		methodPackageName: 'Unknown-Package' ;
@@ -39,7 +39,7 @@ MLSAbstractSerializationClassTest >> fakeSerializedMethod1 [
 		yourself.
 ]
 
-{ #category : #'example methods' }
+{ #category : #'private - utilities' }
 MLSAbstractSerializationClassTest >> fakeSerializedMethod2 [
 	^MLSSerializedMethod new 
 		methodPackageName: 'Unknown-Package' ;
