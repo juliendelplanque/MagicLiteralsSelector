@@ -118,7 +118,11 @@ MLSExperimentBatch >> initialize [
 	percentRedundancy := self defaultPercentageRedundantMethods .
 	percentTest := self defaultPercentageTestMethods .
 
-	methods := Set new: targetSize .
+	methods := (PluggableSet new: targetSize)
+		equalBlock: [ :a :b | a compiledMethod == b compiledMethod ];
+		hashBlock: [ :a | a compiledMethod hash ];
+		yourself
+
 ]
 
 { #category : #accessing }
