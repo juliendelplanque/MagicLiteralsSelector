@@ -42,7 +42,10 @@ MLSExperimentBatch >> add: aNumber from: aCollection [
 
 { #category : #converting }
 MLSExperimentBatch >> asMethodsSample [
-	^MLSMethodsSample methods: self methods
+	^MLSMethodsSample new
+		name: name ;
+		methods: self methods ;
+		yourself
 ]
 
 { #category : #converting }
