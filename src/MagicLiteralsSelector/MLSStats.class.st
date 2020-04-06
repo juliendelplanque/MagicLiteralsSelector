@@ -67,12 +67,12 @@ MLSStats >> commentStats [
 	]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #private }
 MLSStats >> csvOn: str class: aString number: anInt over: total [
 	self csvOn: str line: { aString . anInt . (anInt / total * 100) roundTo: 0.1 }
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #private }
 MLSStats >> csvOn: str line: aCollection [
 	str nextPutAll: aCollection first asString.
 	aCollection allButFirst do: [:elt | str nextPut: $, ; nextPutAll: elt asString	].
@@ -89,7 +89,40 @@ MLSStats >> desc: aString [
 	name := aString
 ]
 
+{ #category : #private }
+MLSStats >> literalKinds [
+	^#(isBooleanLiteral isCharacterLiteral isFloatLiteral isIntegerLiteral isNilLiteral isStringLiteral isSymbolLiteral)
+]
+
+{ #category : #accessing }
+MLSStats >> methodsSample [
+	^ methodsSample
+]
+
 { #category : #accessing }
 MLSStats >> methodsSample: mlsSample [
 	methodsSample := mlsSample 
+]
+
+{ #category : #private }
+MLSStats >> percentageOf: kind status: status [
+	| allOfKind  allOfStatus |
+	allOfKind := (methodsSample flatCollect: #literalCandidates) select: kind.
+	allOfStatus := allOfKind select: #status.
+	^allOfStatus / allOfKind * 100 asFloat roundTo: 0.1
+]
+
+{ #category : #api }
+MLSStats >> postXPStats: samples [
+	| allKinds |
+	allKinds := self literalKinds.
+	^String streamContents: [:str |
+		self csvOn: str line: { 'Sample' } , allKinds.
+		samples do: [ :sample |
+			self csvOn: str line: { 
+				sample name .
+				allKinds collect: [ :kind | self percentageOf: kind status: #isMagic ]
+			}
+		]
+	]
 ]
