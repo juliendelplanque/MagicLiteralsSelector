@@ -77,8 +77,9 @@ MLSSerializedMethodsSample >> saveIn: anObject [
 
 { #category : #saving }
 MLSSerializedMethodsSample >> saveInImageDirectory [
-	| fileReference |
-	fileReference := (FileLocator imageDirectory / 'magic-literals.1.ston') nextVersion.
+	| fileReference filename |
+	filename := 'mls-',self name,'.ston'.
+	fileReference := (FileLocator imageDirectory / filename ) resolve.
 	self saveIn: fileReference.
 	^ fileReference
 ]
