@@ -27,7 +27,7 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 	literalCandidatesTable
 		addColumn:
 			((SpStringTableColumn title: 'Literal value')
-				evaluated: [ :literalCandidate | literalCandidate literalValue storeString ] ;
+				evaluated: [ :literalCandidate | String streamContents: [:s | literalCandidate literalValue printOn: s] ] ;
 				yourself) ;
 		addColumn:
 			((SpCheckBoxTableColumn title: 'Magic')
