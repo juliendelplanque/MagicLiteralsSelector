@@ -12,17 +12,17 @@ Helper class to generate statistics from methods
   Some stats on methods having literals of different classes (integer, boolean, string, ...)
 "
 Class {
-	#name : #MLSStats,
+	#name : #MLSRawStats,
 	#superclass : #Object,
 	#instVars : [
 		'methodsSample',
 		'name'
 	],
-	#category : #'MagicLiteralsSelector-experiment'
+	#category : #'MagicLiteralsSelector-analysis'
 }
 
 { #category : #'instance creation' }
-MLSStats class >> desc: aString on: mlsMethods [
+MLSRawStats class >> desc: aString on: mlsMethods [
 	^self new
 		desc: aString ;
 		methodsSample: mlsMethods ;
@@ -30,14 +30,14 @@ MLSStats class >> desc: aString on: mlsMethods [
 ]
 
 { #category : #'instance creation' }
-MLSStats class >> on: mlsMethods [
+MLSRawStats class >> on: mlsMethods [
 	^self new
 		methodsSample: mlsMethods
 		yourself
 ]
 
 { #category : #api }
-MLSStats >> classStats [
+MLSRawStats >> classStats [
 	|lit nbLit |
 	lit := methodsSample reject: #isCompleted.
 	nbLit := lit size.
@@ -54,7 +54,7 @@ MLSStats >> classStats [
 ]
 
 { #category : #api }
-MLSStats >> commentStats [
+MLSRawStats >> commentStats [
 	|lit noLit|
 	lit := methodsSample reject: #isCompleted.
 	noLit :=  methodsSample select: #isCompleted.
@@ -68,44 +68,44 @@ MLSStats >> commentStats [
 ]
 
 { #category : #private }
-MLSStats >> csvOn: str class: aString number: anInt over: total [
+MLSRawStats >> csvOn: str class: aString number: anInt over: total [
 	self csvOn: str line: { aString . anInt . (anInt / total * 100) roundTo: 0.1 }
 ]
 
 { #category : #private }
-MLSStats >> csvOn: str line: aCollection [
+MLSRawStats >> csvOn: str line: aCollection [
 	str nextPutAll: aCollection first asString.
 	aCollection allButFirst do: [:elt | str nextPut: $, ; nextPutAll: elt asString	].
 	str nextPut: Character cr
 ]
 
 { #category : #accessing }
-MLSStats >> desc [
+MLSRawStats >> desc [
 	^name
 ]
 
 { #category : #accessing }
-MLSStats >> desc: aString [ 
+MLSRawStats >> desc: aString [ 
 	name := aString
 ]
 
 { #category : #private }
-MLSStats >> literalKinds [
+MLSRawStats >> literalKinds [
 	^#(isBooleanLiteral isCharacterLiteral isFloatLiteral isIntegerLiteral isNilLiteral isStringLiteral isSymbolLiteral)
 ]
 
 { #category : #accessing }
-MLSStats >> methodsSample [
+MLSRawStats >> methodsSample [
 	^ methodsSample
 ]
 
 { #category : #accessing }
-MLSStats >> methodsSample: mlsSample [
+MLSRawStats >> methodsSample: mlsSample [
 	methodsSample := mlsSample 
 ]
 
 { #category : #private }
-MLSStats >> percentageOf: kind status: status [
+MLSRawStats >> percentageOf: kind status: status [
 	| allOfKind  allOfStatus |
 	allOfKind := (methodsSample flatCollect: #literalCandidates) select: kind.
 	allOfStatus := allOfKind select: #status.
@@ -113,7 +113,7 @@ MLSStats >> percentageOf: kind status: status [
 ]
 
 { #category : #api }
-MLSStats >> postXPStats: samples [
+MLSRawStats >> postXPStats: samples [
 	| allKinds |
 	allKinds := self literalKinds.
 	^String streamContents: [:str |
