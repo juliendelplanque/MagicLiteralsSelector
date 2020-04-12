@@ -36,11 +36,6 @@ MLSExperimentPresenter class >> openOnSample: aMethodSample [
     	openWithSpec.
 ]
 
-{ #category : #TOMOVE }
-MLSExperimentPresenter >> initialExtent [
-	^ 900@600
-]
-
 { #category : #initialization }
 MLSExperimentPresenter >> initializePresenters [
 	methodsList := self instantiate: MLSMethodListPresenter.
@@ -59,6 +54,14 @@ MLSExperimentPresenter >> initializePresenters [
 		action: [ self saveExperimentResults ]
 		yourself.
 
+]
+
+{ #category : #initialization }
+MLSExperimentPresenter >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		title: 'MagicLiterals Experiment' ;
+		initialExtent: 900@600
 ]
 
 { #category : #accessing }

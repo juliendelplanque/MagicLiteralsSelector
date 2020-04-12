@@ -107,10 +107,8 @@ MLSMethodListPresenter >> updateLabel [
 
 { #category : #updating }
 MLSMethodListPresenter >> updateSelection: previouslySelected [
-	self hidesCompleted
-	ifFalse: [
-		methodsList selectItem: previouslySelected.
-		^self ].
+	methodsList selectItem: previouslySelected.
+	self hidesCompleted ifFalse: [ ^self ].
 	previouslySelected ifNil: [ ^ self ].
 	previouslySelected isCompleted
 		ifFalse: [ ^ self ].
