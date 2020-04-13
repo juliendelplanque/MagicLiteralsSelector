@@ -28,6 +28,14 @@ MLSSerializedMethodsSample >> asMethodsSample [
 		yourself
 ]
 
+{ #category : #converting }
+MLSSerializedMethodsSample >> asSampleAnalysis [
+	^MLSAnalysisMethodSample new
+		name: name ;
+		methods: (methods collect: #asAnalysisMethod) ;
+		yourself
+]
+
 { #category : #accessing }
 MLSSerializedMethodsSample >> generationDateAndTime [
 	^ generationDateAndTime

@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #converting }
+MLSSerializedLiteralCandidate >> asAnalysisLiteral [
+	
+]
+
+{ #category : #converting }
 MLSSerializedLiteralCandidate >> asLiteralCandidateInAST: astTree [
 	| astNode |
 	astNode := RBGenericNodeVisitor

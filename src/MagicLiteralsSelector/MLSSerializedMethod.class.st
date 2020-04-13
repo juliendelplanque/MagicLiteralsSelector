@@ -16,6 +16,24 @@ Class {
 }
 
 { #category : #converting }
+MLSSerializedMethod >> asAnalysisMethod [
+	| method |
+	method := self
+		compiledMethodIfFound: [ :compiledMethod |
+			MLSAnalysisMethod new
+				code: compiledMethod
+				yourself
+		]
+		ifAbsent: [
+			MLSAnalysisMethodExternal new
+				code: self sourceCode ;
+				yourself
+		].
+	method literals: (literalCandidates collect: [ :l |
+		l asAnalysisLiteral method: method ; yourself]).
+]
+
+{ #category : #converting }
 MLSSerializedMethod >> asExternalMethod [
 	^MLSMethodExternal new
 		serializedMethod: self ;
