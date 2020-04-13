@@ -4,7 +4,7 @@ A MLSSerializedLiteralCandidateTest is a test class for testing the behavior of 
 Class {
 	#name : #MLSSerializedLiteralCandidateTest,
 	#superclass : #MLSAbstractSerializationClassTest,
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-serialization'
 }
 
 { #category : #'private - utilities' }

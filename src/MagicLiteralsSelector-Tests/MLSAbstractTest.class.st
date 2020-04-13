@@ -4,7 +4,7 @@ Abstract class containing helper methods to est MLS classes and offering some sa
 Class {
 	#name : #MLSAbstractTest,
 	#superclass : #TestCase,
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #'example methods' }

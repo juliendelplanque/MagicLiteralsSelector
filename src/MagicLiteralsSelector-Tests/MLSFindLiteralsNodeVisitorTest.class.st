@@ -4,7 +4,7 @@ A MLSFindLiteralsNodeVisitorTest is a test class for testing the behavior of MLS
 Class {
 	#name : #MLSFindLiteralsNodeVisitorTest,
 	#superclass : #MLSAbstractTest,
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #'private - utilities' }

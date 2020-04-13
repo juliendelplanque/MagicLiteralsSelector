@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'method'
 	],
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #running }

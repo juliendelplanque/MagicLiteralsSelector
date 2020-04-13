@@ -1,7 +1,7 @@
 Class {
 	#name : #MLSExperimentFilterTest,
 	#superclass : #MLSAbstractTest,
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #tests }

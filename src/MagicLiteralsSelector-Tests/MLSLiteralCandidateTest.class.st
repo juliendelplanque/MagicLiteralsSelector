@@ -4,7 +4,7 @@ A MLSLiteralCandidateTest is a test class for testing the behavior of MLSLiteral
 Class {
 	#name : #MLSLiteralCandidateTest,
 	#superclass : #MLSAbstractTest,
-	#category : #'MagicLiteralsSelector-Tests'
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #tests }

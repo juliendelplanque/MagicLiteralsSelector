@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #converting }
-MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: astTree [
+MLSSerializedLiteralCandidate >> asLiteralCandidateInAST: astTree [
 	| astNode |
 	astNode := RBGenericNodeVisitor
 		visit: astTree
@@ -26,7 +26,7 @@ MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInAST: astTree [
 ]
 
 { #category : #converting }
-MLSSerializedLiteralCandidate >> asMLSLiteralCandidateInSourceCode: aString [
+MLSSerializedLiteralCandidate >> asLiteralCandidateInSourceCode: aString [
 	^MLSLiteralCandidateExternal new
 		serializedCandidate: self ;
 		value: (aString copyFrom: startPosition to: endPosition) ;

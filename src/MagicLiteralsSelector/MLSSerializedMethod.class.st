@@ -16,28 +16,48 @@ Class {
 }
 
 { #category : #converting }
-MLSSerializedMethod >> asMLSMethod [
-	| compiledMethod parseTree |
-	[compiledMethod := ((RPackage organizer packageNamed: methodPackageName) 
-									definedClasses detect: [ :c | c name = methodClassName ])
-									>> methodSelector]
-		on: Error
-		do: [^self asMLSMethodExternal].
-	parseTree := compiledMethod parseTree.
-	^MLSMethod new
-		compiledMethod: compiledMethod ;
-		literalCandidates: (literalCandidates collect: [:c | c asMLSLiteralCandidateInAST: parseTree]) ;
+MLSSerializedMethod >> asExternalMethod [
+	^MLSMethodExternal new
+		serializedMethod: self ;
+		literalCandidates:
+			(literalCandidates collect:  [:c |
+				c asLiteralCandidateInSourceCode: self sourceCode]) ;
 		yourself
 		
 ]
 
 { #category : #converting }
-MLSSerializedMethod >> asMLSMethodExternal [
-	^MLSMethodExternal new
-		serializedMethod: self ;
-		literalCandidates: (literalCandidates collect:  [:c | c asMLSLiteralCandidateInSourceCode: self sourceCode]) ;
-		yourself
+MLSSerializedMethod >> asMLSMethod [
+	^self
+		compiledMethodIfFound: [ :compiledMethod |
+			MLSMethod new
+				compiledMethod: compiledMethod ;
+				literalCandidates:
+					(literalCandidates collect: [:c |
+						c asLiteralCandidateInAST: compiledMethod parseTree]) ;
+				yourself
+		]
+		ifAbsent: [
+			MLSMethodExternal new
+				serializedMethod: self ;
+				literalCandidates:
+					(literalCandidates collect:  [:c |
+						c asLiteralCandidateInSourceCode: self sourceCode]) ;
+				yourself
+		].
 		
+]
+
+{ #category : #converting }
+MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
+	| pckg clazz |
+	pckg := RPackage organizer packageNamed: methodPackageName ifAbsent: absentBlock.
+	clazz := pckg definedClasses detect: [ :c | c name = methodClassName ] ifNone: absentBlock.
+	^clazz
+		compiledMethodAt: methodSelector
+		ifPresent: [ :m | foundBlock value: m]
+		ifAbsent: absentBlock
+
 ]
 
 { #category : #accessing }
