@@ -9,14 +9,9 @@ Class {
 	#category : #'MagicLiteralsSelector-analysis'
 }
 
-{ #category : #accessing }
-MLSAnalysisMethod >> code [
-	^ code
-]
-
-{ #category : #accessing }
-MLSAnalysisMethod >> code: anObject [
-	code := anObject
+{ #category : #'accessing - private' }
+MLSAnalysisMethod >> compiledMethod [
+	^code
 ]
 
 { #category : #accessing }
@@ -25,8 +20,8 @@ MLSAnalysisMethod >> literals [
 ]
 
 { #category : #accessing }
-MLSAnalysisMethod >> literals: anObject [
-	literals := anObject
+MLSAnalysisMethod >> literals: aCollection [
+	literals := aCollection 
 ]
 
 { #category : #accessing }
@@ -37,4 +32,9 @@ MLSAnalysisMethod >> methodSample [
 { #category : #accessing }
 MLSAnalysisMethod >> methodSample: anObject [
 	methodSample := anObject
+]
+
+{ #category : #accessing }
+MLSAnalysisMethod >> sourceCode [ 
+	^self compiledMethod sourceCode
 ]

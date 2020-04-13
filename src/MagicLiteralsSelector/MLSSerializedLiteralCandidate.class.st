@@ -14,8 +14,11 @@ Class {
 }
 
 { #category : #converting }
-MLSSerializedLiteralCandidate >> asAnalysisLiteral [
-	
+MLSSerializedLiteralCandidate >> asAnalysisLiteralInMethod: aMethod [
+	^MLSAnalysisLiteral new
+		method: aMethod ;
+		value: (self valueInSourceCode: aMethod sourceCode) ;
+		yourself
 ]
 
 { #category : #converting }
@@ -34,7 +37,7 @@ MLSSerializedLiteralCandidate >> asLiteralCandidateInAST: astTree [
 MLSSerializedLiteralCandidate >> asLiteralCandidateInSourceCode: aString [
 	^MLSLiteralCandidateExternal new
 		serializedCandidate: self ;
-		value: (aString copyFrom: startPosition to: endPosition) ;
+		value: (self valueInSourceCode: aString) ;
 		yourself
 ]
 
@@ -66,4 +69,9 @@ MLSSerializedLiteralCandidate >> status [
 { #category : #accessing }
 MLSSerializedLiteralCandidate >> status: anObject [
 	status := anObject
+]
+
+{ #category : #converting }
+MLSSerializedLiteralCandidate >> valueInSourceCode: aString [
+	^aString copyFrom: startPosition to: endPosition
 ]
