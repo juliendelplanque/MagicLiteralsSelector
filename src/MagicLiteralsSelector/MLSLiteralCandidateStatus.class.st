@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #testing }
-MLSLiteralCandidateStatus >> isCanNotDecide [
+MLSLiteralCandidateStatus >> isCannotDecide [
 	^ false
 ]
 

@@ -50,7 +50,7 @@ MLSLiteralCandidatesPresenter >> initializePresenters [
 		addColumn:
 			((SpCheckBoxTableColumn title: 'Not sure')
 				width: self checkBoxColumnWidth ;
-				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ] ;
+				evaluated: [ :literalCandidate | literalCandidate isCannotDecide ] ;
 				onActivation: [ :literalCandidate | 
 					self setCandidate: literalCandidate status: #beCanNotDecide ];
 				onDesactivation: [ :literalCandidate | 

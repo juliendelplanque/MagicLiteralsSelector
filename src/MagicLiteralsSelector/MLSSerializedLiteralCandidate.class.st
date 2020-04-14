@@ -18,6 +18,7 @@ MLSSerializedLiteralCandidate >> asAnalysisLiteralInMethod: aMethod [
 	^MLSAnalysisLiteral new
 		method: aMethod ;
 		value: (self valueInSourceCode: aMethod sourceCode) ;
+		status: status ;
 		yourself
 ]
 

@@ -43,7 +43,7 @@ MLSLiteralCandidate >> astNode: anObject [
 
 { #category : #'status setting' }
 MLSLiteralCandidate >> beCanNotDecide [
-	self status: MLSCanNotDecide new
+	self status: MLSCannotDecide new
 ]
 
 { #category : #'status setting' }
@@ -79,8 +79,8 @@ MLSLiteralCandidate >> isBooleanLiteral [
 ]
 
 { #category : #testing }
-MLSLiteralCandidate >> isCanNotDecide [
-	^ self status isCanNotDecide
+MLSLiteralCandidate >> isCannotDecide [
+	^ self status isCannotDecide
 ]
 
 { #category : #testing }

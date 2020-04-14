@@ -2,7 +2,7 @@
 I model the fact that a user can not decide whether the literal candidate is magic or not.
 "
 Class {
-	#name : #MLSCanNotDecide,
+	#name : #MLSCannotDecide,
 	#superclass : #MLSLiteralCandidateStatus,
 	#instVars : [
 		'justification'
@@ -11,16 +11,16 @@ Class {
 }
 
 { #category : #testing }
-MLSCanNotDecide >> isCanNotDecide [
+MLSCannotDecide >> isCannotDecide [
 	^ true
 ]
 
 { #category : #accessing }
-MLSCanNotDecide >> justification [
+MLSCannotDecide >> justification [
 	^ justification
 ]
 
 { #category : #accessing }
-MLSCanNotDecide >> justification: anObject [
+MLSCannotDecide >> justification: anObject [
 	justification := anObject
 ]

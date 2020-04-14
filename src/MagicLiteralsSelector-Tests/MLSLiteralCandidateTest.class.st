@@ -14,8 +14,8 @@ MLSLiteralCandidateTest >> testBeCanNotDecide [
 	
 	candidate beCanNotDecide.
 	
-	self assert: candidate status class equals: MLSCanNotDecide.
-	self assert: candidate isCanNotDecide
+	self assert: candidate status class equals: MLSCannotDecide.
+	self assert: candidate isCannotDecide
 ]
 
 { #category : #tests }
