@@ -1,7 +1,7 @@
 Class {
 	#name : #MLSAnalysisMethodSampleTest,
 	#superclass : #MLSAbstractSerializationClassTest,
-	#category : #'MagicLiteralsSelector-Tests-analysis'
+	#category : #'MagicLiteralsSelector-Tests-serialization'
 }
 
 { #category : #tests }

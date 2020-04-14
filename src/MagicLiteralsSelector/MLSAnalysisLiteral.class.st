@@ -9,6 +9,62 @@ Class {
 	#category : #'MagicLiteralsSelector-analysis'
 }
 
+{ #category : #testing }
+MLSAnalysisLiteral >> isBooleanLiteral [
+	^(self value = 'true') or: [ self value = 'false' ]
+
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isCannotDecide [
+	^ self status isCannotDecide
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isCharacterLiteral [
+	^self value isCharacter
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isFloatLiteral [
+	^self value isFloat 
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isIntegerLiteral [
+	^self value isInteger 
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isMagic [
+	^ self status isMagic
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isNilLiteral [
+	^self value isNil
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isNotMagic [
+	^ self status isNotMagic
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isStringLiteral [
+	^self value isString
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isSymbolLiteral [
+	^self value isSymbol
+]
+
+{ #category : #testing }
+MLSAnalysisLiteral >> isUnknown [
+	^ self status isUnknown
+]
+
 { #category : #accessing }
 MLSAnalysisLiteral >> method [
 	^ method
