@@ -1,11 +1,11 @@
 Class {
-	#name : #MLSAnalysisMethodSampleTest,
+	#name : #MLSUnserializeToAnalysisMethodSampleTest,
 	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Tests-serialization'
 }
 
 { #category : #tests }
-MLSAnalysisMethodSampleTest >> testAsSampleAnalysis [
+MLSUnserializeToAnalysisMethodSampleTest >> testAsSampleAnalysis [
 	| sample serialized |
 	serialized := MLSSerializedMethodsSample new
 		name: 'test sample' ;

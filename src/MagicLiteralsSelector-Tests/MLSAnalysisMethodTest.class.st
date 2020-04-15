@@ -1,34 +1,19 @@
 Class {
 	#name : #MLSAnalysisMethodTest,
-	#superclass : #MLSAbstractSerializationClassTest,
-	#category : #'MagicLiteralsSelector-Tests-serialization'
+	#superclass : #MLSAbstractAnalysisTest,
+	#category : #'MagicLiteralsSelector-Tests-analysis'
 }
 
 { #category : #tests }
-MLSAnalysisMethodTest >> testInImageAsAnalysisMethod [
-	| method serialized |
-	serialized := MLSSerializedMethod new
-		methodPackageName: 'MagicLiteralsSelector-Tests-serialization' ;
-		methodClassName: 'MLSAbstractSerializationClassTest' ;
-		methodSelector: #sampleMethodWithLiterals2 ;
-		sourceCode: 'some code' ;
-		literalCandidates: #() ;
-		yourself.
-	method	 := serialized asAnalysisMethod.
+MLSAnalysisMethodTest >> testSampleName [
+	| mth sample lit |
+	lit := self simpleAnalysisLiteral1.
+	mth := lit method.
+	sample := Mock new.
+	sample stub name willReturn: 'sample-1'.
+	mth methodSample: sample.
 
-	self assert: method literals size equals: 0.
-	self
-		assert: method sourceCode
-		equals: 'some code'
-]
+	self assert: lit sampleName equals: 'sample-1'.
+	self assert: mth sampleName equals: 'sample-1'.
 
-{ #category : #tests }
-MLSAnalysisMethodTest >> testUnknownAsAnalysisMethod [
-	| method  |
-	method	 := self fakeSerializedMethod1 asAnalysisMethod.
-
-	self assert: method literals size equals: 0.
-	self
-		assert: method sourceCode
-		equals: self exampleMethodBody1
 ]

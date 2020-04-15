@@ -1,11 +1,11 @@
 Class {
-	#name : #MLSAnalysisLiteralTest,
+	#name : #MLSUnserializeToAnalysisLiteralTest,
 	#superclass : #MLSAbstractSerializationClassTest,
 	#category : #'MagicLiteralsSelector-Tests-serialization'
 }
 
 { #category : #tests }
-MLSAnalysisLiteralTest >> testAsAnalysisLiteralUnknown [
+MLSUnserializeToAnalysisLiteralTest >> testAsAnalysisLiteralUnknown [
 	| literal serialized method |
 	serialized := MLSSerializedLiteralCandidate new 
 		startPosition: 17 ;

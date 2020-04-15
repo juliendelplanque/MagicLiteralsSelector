@@ -24,7 +24,7 @@ MLSAnalysisMethod >> literals: aCollection [
 	literals := aCollection 
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - private' }
 MLSAnalysisMethod >> methodSample [
 	^ methodSample
 ]
@@ -32,6 +32,11 @@ MLSAnalysisMethod >> methodSample [
 { #category : #accessing }
 MLSAnalysisMethod >> methodSample: anObject [
 	methodSample := anObject
+]
+
+{ #category : #accessing }
+MLSAnalysisMethod >> sampleName [
+	^ self methodSample name
 ]
 
 { #category : #accessing }

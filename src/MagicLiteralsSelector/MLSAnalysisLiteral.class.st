@@ -76,6 +76,11 @@ MLSAnalysisLiteral >> method: anObject [
 ]
 
 { #category : #accessing }
+MLSAnalysisLiteral >> sampleName [
+	^ self method sampleName
+]
+
+{ #category : #accessing }
 MLSAnalysisLiteral >> status [
 	^ status
 ]
