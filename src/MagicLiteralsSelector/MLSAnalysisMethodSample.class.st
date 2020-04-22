@@ -8,6 +8,15 @@ Class {
 	#category : #'MagicLiteralsSelector-analysis'
 }
 
+{ #category : #'instance creation' }
+MLSAnalysisMethodSample class >> fromFileReference: aFileRef [
+	^ aFileRef readStreamDo: [ :s |
+		(MLSSerializedMethodsSample fromSerializedStream: s)
+			name: (aFileRef basename copyUpTo: $.) ;
+			asSampleAnalysis
+	]
+]
+
 { #category : #accessing }
 MLSAnalysisMethodSample >> methods [
 	^ methods

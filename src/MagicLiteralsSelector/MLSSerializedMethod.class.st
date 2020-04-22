@@ -18,11 +18,9 @@ Class {
 { #category : #converting }
 MLSSerializedMethod >> asAnalysisMethod [
 	| method |
-	method := self
-		compiledMethodIfFound: [ :compiledMethod | MLSAnalysisMethod new ]
-		ifAbsent: [ MLSAnalysisMethodExternal new ].
+	method := MLSAnalysisMethod new.
 	method
-		code: self sourceCode ;
+		sourceCode: self sourceCode ;
 		literals: (literalCandidates collect: [ :l | l asAnalysisLiteralInMethod: method]).
 	^method
 ]
@@ -70,6 +68,12 @@ MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
 		ifPresent: [ :m | foundBlock value: m]
 		ifAbsent: absentBlock
 
+]
+
+{ #category : #converting }
+MLSSerializedMethod >> fixStonErrors [
+	"correct ston issues in CanNotDecide statuses"
+	literalCandidates do: #fixStonErrors
 ]
 
 { #category : #accessing }

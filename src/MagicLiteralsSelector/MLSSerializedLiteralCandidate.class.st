@@ -52,6 +52,13 @@ MLSSerializedLiteralCandidate >> endPosition: anObject [
 	endPosition := anObject
 ]
 
+{ #category : #converting }
+MLSSerializedLiteralCandidate >> fixStonErrors [
+	"correct ston issues in CanNotDecide statuses"
+	status isDictionary
+	ifTrue: [ self status: MLSCannotDecide new ]
+]
+
 { #category : #accessing }
 MLSSerializedLiteralCandidate >> startPosition [
 	^ startPosition

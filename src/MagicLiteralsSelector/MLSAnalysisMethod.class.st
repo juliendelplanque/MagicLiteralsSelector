@@ -4,14 +4,15 @@ Class {
 	#instVars : [
 		'methodSample',
 		'literals',
-		'code'
+		'code',
+		'sourceCode'
 	],
 	#category : #'MagicLiteralsSelector-analysis'
 }
 
 { #category : #'accessing - private' }
 MLSAnalysisMethod >> compiledMethod [
-	^code
+	^sourceCode
 ]
 
 { #category : #accessing }
@@ -41,5 +42,10 @@ MLSAnalysisMethod >> sampleName [
 
 { #category : #accessing }
 MLSAnalysisMethod >> sourceCode [ 
-	^self compiledMethod sourceCode
+	^sourceCode
+]
+
+{ #category : #accessing }
+MLSAnalysisMethod >> sourceCode: aString [ 
+	sourceCode := aString 
 ]
