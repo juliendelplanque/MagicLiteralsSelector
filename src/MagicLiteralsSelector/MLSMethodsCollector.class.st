@@ -62,7 +62,7 @@ MLSMethodsCollector >> mlsMethods [
 
 { #category : #accessing }
 MLSMethodsCollector >> packages: aCollection [
-	pharoClasses := aCollection flatCollect: #classes
+	pharoClasses := aCollection flatCollect: [ :p | p classes select: [:c | c category beginsWith: p name]]
 ]
 
 { #category : #accessing }
