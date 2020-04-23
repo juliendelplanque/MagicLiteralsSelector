@@ -22,6 +22,9 @@ Class {
 		'methodFilters',
 		'sizeOfBatches'
 	],
+	#classInstVars : [
+		'preparedSamples'
+	],
 	#category : #'MagicLiteralsSelector-experiment'
 }
 
@@ -33,6 +36,22 @@ MLSBatchGenerator class >> example [
 		generate ;
 		inspect.
 
+]
+
+{ #category : #adding }
+MLSBatchGenerator class >> noPreparedSamples [
+	preparedSamples := OrderedCollection new
+]
+
+{ #category : #adding }
+MLSBatchGenerator class >> preparedSample: aSample [
+	preparedSamples ifNil: [ preparedSamples := OrderedCollection new ].
+	preparedSamples add: aSample
+]
+
+{ #category : #adding }
+MLSBatchGenerator class >> preparedSamples [
+	^preparedSamples
 ]
 
 { #category : #accessing }
@@ -75,6 +94,7 @@ MLSBatchGenerator >> filterSample: methodsSample [
 
 { #category : #running }
 MLSBatchGenerator >> generate [
+	self recoverPreparedSamples.
 	[ batches size < numberFirstBatches ]
 		whileTrue: [
 			self fillBatch: (self newBatch noRedundancy ; yourself) ].
@@ -149,6 +169,18 @@ MLSBatchGenerator >> numberFirstBatches: anObject [
 { #category : #accessing }
 MLSBatchGenerator >> numberOfBatches: anObject [
 	numberOfBatches := anObject
+]
+
+{ #category : #running }
+MLSBatchGenerator >> recoverPreparedSamples [
+	self class preparedSamples
+		ifNil: [ ^ self ]
+		ifNotNil: [ :preparedSamples |
+			preparedSamples do: [ :prepared |
+				self newBatch add: prepared size from: prepared.
+				methodsTreated addAll: prepared
+			]
+		].
 ]
 
 { #category : #initialization }
