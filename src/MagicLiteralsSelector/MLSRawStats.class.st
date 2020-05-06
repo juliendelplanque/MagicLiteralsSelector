@@ -93,17 +93,17 @@ MLSRawStats >> literalKinds [
 
 { #category : #api }
 MLSRawStats >> methodAvgLiteralByKindStats [
-	| allLit nbMth |
-	nbMth := methodsSample size.
-	allLit := methodsSample methods flatCollect: #literalCandidates.
+	| allLit allMth |
+	allMth := methodsSample select: #hasLiterals.
+	allLit := allMth flatCollect: #literalCandidates.
 
 	^String streamContents: [:str |
 		self csvOn: str line: { 'kind', self desc . 'avg Number' }.
-		self csvOn: str line: { 'all' . self roundedPercent: ((allLit size) / nbMth) }.
+		self csvOn: str line: { 'all' . self roundedPercent: ((allLit size) / (allMth size)) }.
 		self literalKinds do: [ :kind || nb |
 			nb := (allLit select: (self isKindSelector: kind)) size.
 			self
-				csvOn: str  line: { kind . self roundedPercent: nb / nbMth }.
+				csvOn: str  line: { kind . self roundedPercent: nb / (allMth size) }.
 		].
 		str
 	]
