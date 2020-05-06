@@ -109,6 +109,23 @@ MLSRawStats >> methodAvgLiteralByKindStats [
 	]
 ]
 
+{ #category : #api }
+MLSRawStats >> methodMedianLiteralByKindStats [
+	| allMth |
+	allMth := methodsSample select: #hasLiterals.
+
+	^String streamContents: [:str |
+		self csvOn: str line: { 'kind', self desc . 'avg Number' }.
+		self csvOn: str line: { 'all' . (allMth collect: [:mth | mth literalCandidates size]) median }.
+		self literalKinds do: [ :kind || allKind |
+			allKind := allMth collect: [:mth |( mth literalCandidates select: (self isKindSelector: kind)) size].
+			self
+				csvOn: str  line: { kind . allKind median }.
+		].
+		str
+	]
+]
+
 { #category : #accessing }
 MLSRawStats >> methodsSample [
 	^ methodsSample
