@@ -37,23 +37,6 @@ MLSRawStats class >> on: mlsMethods [
 ]
 
 { #category : #api }
-MLSRawStats >> classStats [
-	|lit nbLit |
-	lit := methodsSample reject: #isCompleted.
-	nbLit := lit size.
-	^String streamContents: [:str |
-		self csvOn: str line: { 'class', self desc . '#' . '%' }.
-		self csvOn: str class: 'int'   number: (lit select: #hasIntegerLiteral) size over: nbLit.
-		self csvOn: str class: 'string' number: (lit select: #hasStringLiteral) size over: nbLit.
-		self csvOn: str class: 'bool'  number: (lit select: #hasBooleanLiteral) size over: nbLit.
-		self csvOn: str class: 'char'  number: (lit select: #hasCharacterLiteral) size over: nbLit.
-		self csvOn: str class: 'float' number: (lit select: #hasFloatLiteral) size over: nbLit.
-		self csvOn: str class: 'nil'   number: (lit select: #hasNilLiteral) size over: nbLit.
-		str
-	]
-]
-
-{ #category : #api }
 MLSRawStats >> commentStats [
 	|lit noLit|
 	lit := methodsSample reject: #isCompleted.
@@ -90,8 +73,40 @@ MLSRawStats >> desc: aString [
 ]
 
 { #category : #private }
+MLSRawStats >> hasKindSelector: kind [
+	^({'bool' -> #hasBooleanLiteral . 'char' -> #hasCharacterLiteral . 'float' -> #hasFloatLiteral . 'int' -> #hasIntegerLiteral . 'nil' -> #hasNilLiteral . 'string' -> #hasStringLiteral . 'symb' -> #hasSymbolLiteral}
+		detect: [ :e | e key = kind ]) value
+
+]
+
+{ #category : #private }
+MLSRawStats >> isKindSelector: kind [
+	^({'bool' -> #isBooleanLiteral . 'char' -> #isCharacterLiteral . 'float' -> #isFloatLiteral . 'int' -> #isIntegerLiteral . 'nil' -> #isNilLiteral . 'string' -> #isStringLiteral . 'symb' -> #isSymbolLiteral}
+		detect: [ :e | e key = kind ]) value
+
+]
+
+{ #category : #private }
 MLSRawStats >> literalKinds [
-	^#(isBooleanLiteral isCharacterLiteral isFloatLiteral isIntegerLiteral isNilLiteral isStringLiteral isSymbolLiteral)
+	^#('bool' 'char' 'float' 'int' 'nil' 'string' 'symb')
+]
+
+{ #category : #api }
+MLSRawStats >> methodAvgLiteralByKindStats [
+	| allLit nbMth |
+	nbMth := methodsSample size.
+	allLit := methodsSample methods flatCollect: #literalCandidates.
+
+	^String streamContents: [:str |
+		self csvOn: str line: { 'kind', self desc . 'avg Number' }.
+		self csvOn: str line: { 'all' . self roundedPercent: ((allLit size) / nbMth) }.
+		self literalKinds do: [ :kind || nb |
+			nb := (allLit select: (self isKindSelector: kind)) size.
+			self
+				csvOn: str  line: { kind . self roundedPercent: nb / nbMth }.
+		].
+		str
+	]
 ]
 
 { #category : #accessing }
@@ -104,12 +119,29 @@ MLSRawStats >> methodsSample: mlsSample [
 	methodsSample := mlsSample 
 ]
 
+{ #category : #api }
+MLSRawStats >> nbMethByKindStats [
+	|lit nbLit |
+	lit := methodsSample reject: #isCompleted.
+	nbLit := lit size.
+	^String streamContents: [:str |
+		self csvOn: str line: { 'class', self desc . '#' . '%' }.
+		self literalKinds do: [ :kind |
+			self
+				csvOn: str class: kind
+				number: (lit select: (self hasKindSelector: kind)) size
+				over: nbLit.
+		].
+		str
+	]
+]
+
 { #category : #private }
 MLSRawStats >> percentageOf: kind status: status [
 	| allOfKind  allOfStatus |
-	allOfKind := (methodsSample flatCollect: #literalCandidates) select: kind.
+	allOfKind := (methodsSample flatCollect: #literalCandidates) select: kind value.
 	allOfStatus := allOfKind select: #status.
-	^allOfStatus / allOfKind * 100 asFloat roundTo: 0.1
+	^self roundedPercent: allOfStatus / allOfKind
 ]
 
 { #category : #api }
@@ -125,4 +157,9 @@ MLSRawStats >> postXPStats: samples [
 			}
 		]
 	]
+]
+
+{ #category : #private }
+MLSRawStats >> roundedPercent: frac [
+	^frac * 100 asFloat roundTo: 0.1
 ]
