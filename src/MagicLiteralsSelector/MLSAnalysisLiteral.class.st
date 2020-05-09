@@ -4,65 +4,56 @@ Class {
 	#instVars : [
 		'value',
 		'status',
-		'method'
+		'kind',
+		'method',
+		'project',
+		'expert',
+		'experimentId'
 	],
 	#category : #'MagicLiteralsSelector-analysis'
 }
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isBooleanLiteral [
-	^(self value = 'true') or: [ self value = 'false' ]
-
+{ #category : #'instance creation' }
+MLSAnalysisLiteral class >> fromSerialized: serializedLiteral project: projectName expert: expertName id: anInt [
+	^self new
+		fromSerialized: serializedLiteral ;
+		project: projectName ;
+		expert: expertName ;
+		experimentId: anInt ;
+		yourself
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isCannotDecide [
-	^ self status isCannotDecide
+{ #category : #'instance creation' }
+MLSAnalysisLiteral class >> fromSerialized: serializedLiteral project: projectName id: anInt [
+	^self new
+		fromSerialized: serializedLiteral ;
+		project: projectName ;
+		experimentId: anInt ;
+		yourself
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isCharacterLiteral [
-	^self value isCharacter
+{ #category : #accessing }
+MLSAnalysisLiteral >> experimentId [
+	^ experimentId
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isFloatLiteral [
-	^self value isFloat 
+{ #category : #accessing }
+MLSAnalysisLiteral >> experimentId: anObject [
+	experimentId := anObject
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isIntegerLiteral [
-	^self value isInteger 
+{ #category : #accessing }
+MLSAnalysisLiteral >> expert [
+	^ expert
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isMagic [
-	^ self status isMagic
+{ #category : #accessing }
+MLSAnalysisLiteral >> expert: anObject [
+	expert := anObject
 ]
 
-{ #category : #testing }
-MLSAnalysisLiteral >> isNilLiteral [
-	^self value isNil
-]
-
-{ #category : #testing }
-MLSAnalysisLiteral >> isNotMagic [
-	^ self status isNotMagic
-]
-
-{ #category : #testing }
-MLSAnalysisLiteral >> isStringLiteral [
-	^self value isString
-]
-
-{ #category : #testing }
-MLSAnalysisLiteral >> isSymbolLiteral [
-	^self value isSymbol
-]
-
-{ #category : #testing }
-MLSAnalysisLiteral >> isUnknown [
-	^ self status isUnknown
+{ #category : #accessing }
+MLSAnalysisLiteral >> fromSerialized: serializedLiteral [
 ]
 
 { #category : #accessing }
@@ -71,13 +62,13 @@ MLSAnalysisLiteral >> method [
 ]
 
 { #category : #accessing }
-MLSAnalysisLiteral >> method: anObject [
-	method := anObject
+MLSAnalysisLiteral >> project [
+	^ project
 ]
 
 { #category : #accessing }
-MLSAnalysisLiteral >> sampleName [
-	^ self method sampleName
+MLSAnalysisLiteral >> project: anObject [
+	project := anObject
 ]
 
 { #category : #accessing }
@@ -86,16 +77,6 @@ MLSAnalysisLiteral >> status [
 ]
 
 { #category : #accessing }
-MLSAnalysisLiteral >> status: anObject [
-	status := anObject
-]
-
-{ #category : #accessing }
 MLSAnalysisLiteral >> value [
 	^ value
-]
-
-{ #category : #accessing }
-MLSAnalysisLiteral >> value: anObject [
-	value := anObject
 ]
