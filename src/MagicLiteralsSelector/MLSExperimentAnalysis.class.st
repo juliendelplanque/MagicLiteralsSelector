@@ -68,7 +68,12 @@ MLSExperimentAnalysis >> importLiteralsFromDirectory: aName [
 	directory exists ifFalse: [ ^ nil ].
 	directory isDirectory  ifFalse: [ ^ nil ].
 	directory entries
-		do: [ :e | (e basename endsWith: '.ston') ifTrue: [ self importLiteralsFromFile: e ] ]
+		do: [ :e | 
+			(e basename endsWith: '.ston')
+			ifTrue: [ self importLiteralsFromFile: e ]
+			ifFalse: [
+				(e basename endsWith: '.csv')
+				ifTrue: [ self importExpertsFromFile: e ] ] ]
 	
 	
 	
