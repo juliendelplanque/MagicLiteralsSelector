@@ -13,17 +13,6 @@ MLSSTONFormatTest >> stonParse: aString [
 ]
 
 { #category : #tests }
-MLSSTONFormatTest >> testLiteralCanNotDecide [
-	| obj |
-	obj := self stonParse:
-		'MLSSerializedLiteralCandidate{#status:MLSCanNotDecide{},#startPosition:123,#endPosition:456}'.
-	self assert: obj class equals: MLSSerializedLiteralCandidate.
-	self assert: obj status isDictionary.
-	obj fixStonErrors.
-	self assert: obj status isCannotDecide.
-]
-
-{ #category : #tests }
 MLSSTONFormatTest >> testLiteralCannotDecide [
 	| obj |
 	obj := self stonParse:

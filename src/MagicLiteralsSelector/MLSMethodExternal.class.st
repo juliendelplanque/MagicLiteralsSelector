@@ -3,45 +3,65 @@ Fallback solution to represent a MLSMethod that was exported from another image 
 "
 Class {
 	#name : #MLSMethodExternal,
-	#superclass : #MLSMethod,
+	#superclass : #Object,
 	#instVars : [
-		'serializedMethod'
+		'methodClass',
+		'methodSelector'
 	],
-	#category : #'MagicLiteralsSelector-serialization'
+	#classInstVars : [
+		'instances'
+	],
+	#category : #'MagicLiteralsSelector-analysis'
 }
+
+{ #category : #'instance creation' }
+MLSMethodExternal class >> fromSerialized: aSerializedMethod [
+	^instances
+		at: (aSerializedMethod methodClassName / aSerializedMethod methodSelector)
+		ifAbsentPut: [self new
+			fromSerialized: aSerializedMethod ;
+			yourself]
+]
+
+{ #category : #'class initialization' }
+MLSMethodExternal class >> initialize [ 
+	super initialize.
+	self resetInstances 
+]
+
+{ #category : #initialization }
+MLSMethodExternal class >> resetInstances [
+	instances := Dictionary new
+]
 
 { #category : #displaying }
 MLSMethodExternal >> displayStringOn: aStream [
 	^self printOn: aStream
 ]
 
+{ #category : #'instance creation' }
+MLSMethodExternal >> fromSerialized: aSerializedMethod [
+	methodClass := aSerializedMethod methodClassName.
+	methodSelector := aSerializedMethod methodSelector
+]
+
 { #category : #testing }
 MLSMethodExternal >> isTestMethod [
-	^ (serializedMethod methodSelector beginsWith: 'test') and:
-		[serializedMethod methodClassName endsWith: 'Test']
+	^ (methodSelector beginsWith: 'test') and:
+		[methodClass endsWith: 'Test']
 ]
 
 { #category : #accessing }
 MLSMethodExternal >> methodClass [
-	^ serializedMethod methodClassName
+	^ methodClass
 ]
 
 { #category : #displaying }
 MLSMethodExternal >> printOn: aStream [
 	^aStream
 		nextPut: $_ ;
-		nextPutAll: serializedMethod methodClassName ;
+		nextPutAll: methodClass ;
 		nextPutAll: '_>>_#' ;
-		nextPutAll: serializedMethod methodSelector ;
+		nextPutAll: methodSelector ;
 		nextPut: $_
-]
-
-{ #category : #accessing }
-MLSMethodExternal >> serializedMethod: anObject [
-	serializedMethod := anObject
-]
-
-{ #category : #accessing }
-MLSMethodExternal >> sourceCode [
-	^ serializedMethod sourceCode
 ]

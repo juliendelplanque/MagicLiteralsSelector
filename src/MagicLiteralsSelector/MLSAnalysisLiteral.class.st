@@ -14,21 +14,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-MLSAnalysisLiteral class >> fromSerialized: serializedLiteral project: projectName expert: expertName id: anInt [
+MLSAnalysisLiteral class >> fromSerialized: serializedLiteral inMethod: serializedMethod [
 	^self new
-		fromSerialized: serializedLiteral ;
-		project: projectName ;
-		expert: expertName ;
-		experimentId: anInt ;
-		yourself
-]
-
-{ #category : #'instance creation' }
-MLSAnalysisLiteral class >> fromSerialized: serializedLiteral project: projectName id: anInt [
-	^self new
-		fromSerialized: serializedLiteral ;
-		project: projectName ;
-		experimentId: anInt ;
+		fromSerialized: serializedLiteral inMethod: serializedMethod
 		yourself
 ]
 
@@ -53,7 +41,14 @@ MLSAnalysisLiteral >> expert: anObject [
 ]
 
 { #category : #accessing }
-MLSAnalysisLiteral >> fromSerialized: serializedLiteral [
+MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMethod [
+	value := serializedMethod sourceCode
+		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
+	status := serializedLiteral status.
+	kind := MLSLiteralKind fromValue: value.
+	method := serializedMethod
+		compiledMethodIfFound: #yourself
+		ifAbsent: [ MLSMethodExternal fromSerialized: serializedMethod]
 ]
 
 { #category : #accessing }

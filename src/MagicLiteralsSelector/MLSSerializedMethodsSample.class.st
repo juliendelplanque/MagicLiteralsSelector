@@ -26,22 +26,6 @@ MLSSerializedMethodsSample class >> fromSerializedStream: aStream [
 ]
 
 { #category : #converting }
-MLSSerializedMethodsSample >> asMethodsSample [
-	^MLSMethodsSample new
-		name: name ;
-		methods: (methods collect: #asMLSMethod) ;
-		yourself
-]
-
-{ #category : #converting }
-MLSSerializedMethodsSample >> asSampleAnalysis [
-	^MLSAnalysisMethodSample new
-		name: name ;
-		methods: (methods collect: #asAnalysisMethod) ;
-		yourself
-]
-
-{ #category : #converting }
 MLSSerializedMethodsSample >> fixStonErrors [
 	"correct ston issues in CanNotDecide statuses"
 	methods do: #fixStonErrors

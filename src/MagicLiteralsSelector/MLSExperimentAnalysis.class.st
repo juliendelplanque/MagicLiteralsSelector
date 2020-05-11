@@ -67,13 +67,15 @@ MLSExperimentAnalysis >> importFromDirectory: aName [
 { #category : #importing }
 MLSExperimentAnalysis >> importLiterals: project xp: id fromStream: aStream [
 	(self stonToSerializedSample: aStream)
-		allLiterals do: [ :lit |
-			literals
-				add:
-					(MLSAnalysisLiteral
-						fromSerialized: lit
-						project: project
-						id: id)
+		methods do: [ :serializedMeth |
+			serializedMeth literalCandidates do: [ :lit |
+				literals
+					add:
+						((MLSAnalysisLiteral fromSerialized: lit inMethod: serializedMeth)
+							project: project ;
+							experimentId: id ;
+							yourself)
+			]
 		]
 ]
 

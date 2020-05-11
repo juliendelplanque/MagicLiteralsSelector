@@ -16,53 +16,10 @@ Class {
 }
 
 { #category : #converting }
-MLSSerializedMethod >> asAnalysisMethod [
-	| method |
-	method := MLSAnalysisMethod new.
-	method
-		sourceCode: self sourceCode ;
-		literals: (literalCandidates collect: [ :l | l asAnalysisLiteralInMethod: method]).
-	^method
-]
-
-{ #category : #converting }
-MLSSerializedMethod >> asExternalMethod [
-	^MLSMethodExternal new
-		serializedMethod: self ;
-		literalCandidates:
-			(literalCandidates collect:  [:c |
-				c asLiteralCandidateInSourceCode: self sourceCode]) ;
-		yourself
-		
-]
-
-{ #category : #converting }
-MLSSerializedMethod >> asMLSMethod [
-	^self
-		compiledMethodIfFound: [ :compiledMethod |
-			MLSMethod new
-				compiledMethod: compiledMethod ;
-				literalCandidates:
-					(literalCandidates collect: [:c |
-						c asLiteralCandidateInAST: compiledMethod parseTree]) ;
-				yourself
-		]
-		ifAbsent: [
-			MLSMethodExternal new
-				serializedMethod: self ;
-				literalCandidates:
-					(literalCandidates collect:  [:c |
-						c asLiteralCandidateInSourceCode: self sourceCode]) ;
-				yourself
-		].
-		
-]
-
-{ #category : #converting }
 MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
 	| pckg clazz |
 	pckg := RPackage organizer packageNamed: methodPackageName ifAbsent: [ ^ absentBlock value].
-	clazz := pckg definedClasses detect: [ :c | c name = methodClassName ] ifNone: absentBlock.
+	clazz := pckg definedClasses detect: [ :c | c name = methodClassName ] ifNone: [ MLSClassExternal forPackage: methodPackageName name: methodClassName].
 	^clazz
 		compiledMethodAt: methodSelector
 		ifPresent: [ :m | foundBlock value: m]
