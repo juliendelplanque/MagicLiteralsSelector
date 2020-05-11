@@ -1,3 +1,6 @@
+"
+Fallback solution to represent a MLSLiteralCandidate that was exported from another image and whose method could not be found in the current image
+"
 Class {
 	#name : #MLSLiteralCandidateExternal,
 	#superclass : #MLSLiteralCandidate,
@@ -5,7 +8,7 @@ Class {
 		'serializedCandidate',
 		'value'
 	],
-	#category : #'MagicLiteralsSelector-Serialization-Core'
+	#category : #'MagicLiteralsSelector-serialization'
 }
 
 { #category : #converting }

@@ -12,12 +12,17 @@ Class {
 		'pharoVersionString',
 		'generationDateAndTime'
 	],
-	#category : #'MagicLiteralsSelector-Serialization-Core'
+	#category : #'MagicLiteralsSelector-serialization'
 }
 
 { #category : #'instance creation' }
 MLSSerializedMethodsSample class >> fromSerializedStream: aStream [
-	^STON fromStream: aStream
+	^(STON reader
+		acceptUnknownClasses: true ;
+		on: aStream)
+		next
+			fixStonErrors ;
+			yourself
 ]
 
 { #category : #converting }
@@ -26,6 +31,12 @@ MLSSerializedMethodsSample >> asMethodsSample [
 		name: name ;
 		methods: (methods collect: #asMLSMethod) ;
 		yourself
+]
+
+{ #category : #converting }
+MLSSerializedMethodsSample >> fixStonErrors [
+	"correct ston issues in CanNotDecide statuses"
+	methods do: #fixStonErrors
 ]
 
 { #category : #accessing }

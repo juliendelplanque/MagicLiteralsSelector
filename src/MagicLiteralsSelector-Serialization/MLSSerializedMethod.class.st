@@ -12,7 +12,7 @@ Class {
 		'literalCandidates',
 		'sourceCode'
 	],
-	#category : #'MagicLiteralsSelector-Serialization-Core'
+	#category : #'MagicLiteralsSelector-serialization'
 }
 
 { #category : #converting }
@@ -38,6 +38,24 @@ MLSSerializedMethod >> asMLSMethodExternal [
 		literalCandidates: (literalCandidates collect:  [:c | c asMLSLiteralCandidateInSourceCode: self sourceCode]) ;
 		yourself
 		
+]
+
+{ #category : #converting }
+MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
+	| clazz |
+	clazz := Smalltalk at: methodClassName asSymbol ifAbsent: absentBlock.
+	^clazz
+		compiledMethodAt: methodSelector
+		ifPresent: [ :m | foundBlock value: m]
+		ifAbsent: absentBlock
+
+]
+
+{ #category : #converting }
+MLSSerializedMethod >> fixStonErrors [
+	"correct ston issues in CanNotDecide statuses"
+	literalCandidates do: #fixStonErrors.
+
 ]
 
 { #category : #accessing }
