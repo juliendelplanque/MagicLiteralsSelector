@@ -10,6 +10,8 @@ Class {
 
 { #category : #'instance creation' }
 MLSExperimentAnalysis class >> importDirectory: aName [
+	MLSClassExternal resetInstances .
+	MLSMethodExternal resetInstances .
 	^self new importFromDirectory: aName
 ]
 

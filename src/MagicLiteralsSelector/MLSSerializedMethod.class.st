@@ -30,7 +30,10 @@ MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
 { #category : #converting }
 MLSSerializedMethod >> fixStonErrors [
 	"correct ston issues in CanNotDecide statuses"
-	literalCandidates do: #fixStonErrors
+	| newBody |
+	literalCandidates do: #fixStonErrors.
+	newBody := MLSSerializationProblem method: methodSelector inClass: methodClassName inPackage: methodPackageName.
+	newBody ifNotNil: [ self sourceCode: newBody body]
 ]
 
 { #category : #accessing }

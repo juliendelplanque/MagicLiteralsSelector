@@ -15,7 +15,7 @@ Class {
 MLSClassExternal class >> forPackage: packageName name: className [
 	^instances
 		at: className
-		ifAbsentPut: [ self new forPackage: packageName name: className ]
+		ifAbsentPut: [ self new package: packageName ; name: className ; yourself ]
 
 ]
 

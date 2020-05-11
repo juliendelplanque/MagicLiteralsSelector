@@ -7,7 +7,6 @@ Class {
 		'kind',
 		'method',
 		'project',
-		'expert',
 		'experimentId'
 	],
 	#category : #'MagicLiteralsSelector-analysis'
@@ -28,16 +27,6 @@ MLSAnalysisLiteral >> experimentId [
 { #category : #accessing }
 MLSAnalysisLiteral >> experimentId: anObject [
 	experimentId := anObject
-]
-
-{ #category : #accessing }
-MLSAnalysisLiteral >> expert [
-	^ expert
-]
-
-{ #category : #accessing }
-MLSAnalysisLiteral >> expert: anObject [
-	expert := anObject
 ]
 
 { #category : #accessing }

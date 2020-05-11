@@ -17,7 +17,7 @@ Class {
 { #category : #'instance creation' }
 MLSMethodExternal class >> fromSerialized: aSerializedMethod [
 	^instances
-		at: (aSerializedMethod methodClassName / aSerializedMethod methodSelector)
+		at: (aSerializedMethod methodClassName -> aSerializedMethod methodSelector)
 		ifAbsentPut: [self new
 			fromSerialized: aSerializedMethod ;
 			yourself]
