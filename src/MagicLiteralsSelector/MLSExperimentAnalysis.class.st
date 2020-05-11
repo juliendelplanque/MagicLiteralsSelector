@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-MLSExperimentAnalysis class >> expertsBase: aName [
-	^self new importExpertsFromFile: aName
+MLSExperimentAnalysis class >> importDirectory: aName [
+	^self new importFromDirectory: aName
 ]
 
 { #category : #'instance creation' }
-MLSExperimentAnalysis class >> fromDirectory: aName [
-	^self new importLiteralsFromDirectory: aName
+MLSExperimentAnalysis class >> importExpertsBase: aName [
+	^self new importExpertsFromFile: aName
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importExperiment: record [
+MLSExperimentAnalysis >> importExpertExperiment: record [
 	(record third) ifNotNil: [ |tokens|
 		tokens := record first findBetweenSubstrings: '-'.
 		experiments add:
@@ -43,9 +43,25 @@ MLSExperimentAnalysis >> importExpertsFromStream: aStream [
 	3 timesRepeat: [ csv skipHeader ].
 	csv do: [ :record |
 		1 to: record size by: 3 do: [ :i |
-			self importExperiment: (record copyFrom: i to: i+2)
+			self importExpertExperiment: (record copyFrom: i to: i+2)
 		]
 	]
+]
+
+{ #category : #importing }
+MLSExperimentAnalysis >> importFromDirectory: aName [
+	| directory |
+	directory := aName asFileReference.
+	directory exists ifFalse: [ ^ nil ].
+	directory isDirectory  ifFalse: [ ^ nil ].
+	directory entries
+		do: [ :e | 
+			(e basename endsWith: '.ston')
+			ifTrue: [ self importLiteralsFromFile: e ]
+			ifFalse: [
+				(e basename endsWith: '.csv')
+				ifTrue: [ self importExpertsFromFile: e ] ] ]
+		displayingProgress: [ :e | e basename ]
 ]
 
 { #category : #importing }
@@ -59,24 +75,6 @@ MLSExperimentAnalysis >> importLiterals: project xp: id fromStream: aStream [
 						project: project
 						id: id)
 		]
-]
-
-{ #category : #importing }
-MLSExperimentAnalysis >> importLiteralsFromDirectory: aName [
-	| directory |
-	directory := aName asFileReference.
-	directory exists ifFalse: [ ^ nil ].
-	directory isDirectory  ifFalse: [ ^ nil ].
-	directory entries
-		do: [ :e | 
-			(e basename endsWith: '.ston')
-			ifTrue: [ self importLiteralsFromFile: e ]
-			ifFalse: [
-				(e basename endsWith: '.csv')
-				ifTrue: [ self importExpertsFromFile: e ] ] ]
-	
-	
-	
 ]
 
 { #category : #importing }
