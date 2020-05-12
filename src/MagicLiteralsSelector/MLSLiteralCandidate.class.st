@@ -130,7 +130,7 @@ MLSLiteralCandidate >> isUnknown [
 
 { #category : #accessing }
 MLSLiteralCandidate >> literalValue [
-	^ self astNode value
+	^ self value
 ]
 
 { #category : #accessing }
@@ -146,6 +146,11 @@ MLSLiteralCandidate >> status [
 { #category : #accessing }
 MLSLiteralCandidate >> status: anObject [
 	status := anObject
+]
+
+{ #category : #accessing }
+MLSLiteralCandidate >> value [
+	^ self astNode value
 ]
 
 { #category : #events }
