@@ -4,7 +4,7 @@ A class to load ston files resulting from experiments and export them in CSV for
 MLSExperimentAnalysis importDirectory: '/path/to/directory'
 "
 Class {
-	#name : #MLSExperimentAnalysis,
+	#name : #MLSResultsAnalysis,
 	#superclass : #Object,
 	#instVars : [
 		'literals',
@@ -14,49 +14,49 @@ Class {
 }
 
 { #category : #'instance creation' }
-MLSExperimentAnalysis class >> importDirectory: aName [
+MLSResultsAnalysis class >> importDirectory: aName [
 	MLSClassExternal resetInstances .
 	MLSMethodExternal resetInstances .
 	^self new importFromDirectory: aName
 ]
 
 { #category : #'instance creation' }
-MLSExperimentAnalysis class >> importExpertsBase: aName [
+MLSResultsAnalysis class >> importExpertsBase: aName [
 	^self new importExpertsFromFile: aName
 ]
 
 { #category : #enumerating }
-MLSExperimentAnalysis >> do: aBlock [
+MLSResultsAnalysis >> do: aBlock [
 	"iterates on all literals"
 	literals do: aBlock
 ]
 
 { #category : #accessing }
-MLSExperimentAnalysis >> experimentForProject: project id: id [
+MLSResultsAnalysis >> experimentForProject: project id: id [
 	^experiments
 		detect: [ :exp | exp project =project and: [ exp experiment = id ] ]
 		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
-MLSExperimentAnalysis >> expertForProject: project experiment: experimentId [
+MLSResultsAnalysis >> expertForProject: project experiment: experimentId [
 	^(self experimentForProject: project id: experimentId) expert
 ]
 
 { #category : #accessing }
-MLSExperimentAnalysis >> expertiseForProject: project experiment: experimentId [
+MLSResultsAnalysis >> expertiseForProject: project experiment: experimentId [
 	^(self experimentForProject: project id: experimentId) expertise
 ]
 
 { #category : #exporting }
-MLSExperimentAnalysis >> exportToCsvFile: aFilename [
+MLSResultsAnalysis >> exportToCsvFile: aFilename [
 	aFilename asFileReference writeStreamDo: [ :st |
 		self exportToCsvStream: st
 	]
 ]
 
 { #category : #exporting }
-MLSExperimentAnalysis >> exportToCsvStream: stream [
+MLSResultsAnalysis >> exportToCsvStream: stream [
 	(NeoCSVWriter on: stream)
 		fieldWriter: #quoted ;
 		writeHeader: #(literal status project expert expertise) ;
@@ -69,7 +69,7 @@ MLSExperimentAnalysis >> exportToCsvStream: stream [
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importExpertExperiment: record [
+MLSResultsAnalysis >> importExpertExperiment: record [
 	(record third) ifNotNil: [ |tokens|
 		tokens := record first findBetweenSubstrings: '-'.
 		experiments add:
@@ -82,12 +82,12 @@ MLSExperimentAnalysis >> importExpertExperiment: record [
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importExpertsFromFile: aFilename [
+MLSResultsAnalysis >> importExpertsFromFile: aFilename [
 	aFilename asFileReference readStreamDo: [ :st | self importExpertsFromStream: st ]
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importExpertsFromStream: aStream [
+MLSResultsAnalysis >> importExpertsFromStream: aStream [
 	| csv |
 	csv := NeoCSVReader on: aStream contents readStream.
 	3 timesRepeat: [ csv skipHeader ].
@@ -99,7 +99,7 @@ MLSExperimentAnalysis >> importExpertsFromStream: aStream [
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importFromDirectory: aName [
+MLSResultsAnalysis >> importFromDirectory: aName [
 	| directory |
 	directory := aName asFileReference.
 	directory exists ifFalse: [ ^ nil ].
@@ -115,7 +115,7 @@ MLSExperimentAnalysis >> importFromDirectory: aName [
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importLiterals: project xp: id fromStream: aStream [
+MLSResultsAnalysis >> importLiterals: project xp: id fromStream: aStream [
 	(MLSReader on: aStream) next
 		methods do: [ :serializedMeth |
 			serializedMeth literalCandidates do: [ :lit |
@@ -130,7 +130,7 @@ MLSExperimentAnalysis >> importLiterals: project xp: id fromStream: aStream [
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> importLiteralsFromFile: aFileRef [
+MLSResultsAnalysis >> importLiteralsFromFile: aFileRef [
 	| tokens xpId projectName |
 	tokens := aFileRef basename findBetweenSubstrings: '-.'.
 	projectName := tokens second.
@@ -141,13 +141,13 @@ MLSExperimentAnalysis >> importLiteralsFromFile: aFileRef [
 ]
 
 { #category : #'instance creation' }
-MLSExperimentAnalysis >> initialize [
+MLSResultsAnalysis >> initialize [
 	literals := OrderedCollection new.
 	experiments := OrderedCollection new
 ]
 
 { #category : #importing }
-MLSExperimentAnalysis >> stonToSerializedSample: aStream [
+MLSResultsAnalysis >> stonToSerializedSample: aStream [
 	^(STON reader
 		acceptUnknownClasses: true ;
 		on: aStream)
