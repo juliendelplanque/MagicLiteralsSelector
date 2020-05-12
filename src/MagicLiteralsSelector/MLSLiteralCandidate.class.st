@@ -26,6 +26,7 @@ MLSLiteralCandidate class >> astNode: aLiteralASTNode [
 MLSLiteralCandidate >> asSerializedLiteralCandidate [
 	^ MLSSerializedLiteralCandidate new
 		status: self status;
+		kind: self kind ;
 		startPosition: self astNode start;
 		endPosition: self astNode stop;
 		yourself
@@ -126,6 +127,11 @@ MLSLiteralCandidate >> isSymbolLiteral [
 { #category : #testing }
 MLSLiteralCandidate >> isUnknown [
 	^ self status isUnknown
+]
+
+{ #category : #accessing }
+MLSLiteralCandidate >> kind [
+ ^MLSLiteralKind fromMLSLiteral: self
 ]
 
 { #category : #accessing }

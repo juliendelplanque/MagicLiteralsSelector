@@ -36,6 +36,7 @@ MLSAnalysisLiteral >> experimentId: anObject [
 MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMethod [
 	value := serializedMethod sourceCode
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
+	kind := serializedLiteral kind.
 	status := serializedLiteral status.
 	kind := MLSLiteralKind fromValue: value.
 	method := serializedMethod
