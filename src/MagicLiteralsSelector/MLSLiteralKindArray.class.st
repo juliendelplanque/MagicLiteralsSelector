@@ -7,7 +7,7 @@ Class {
 { #category : #'instance creation' }
 MLSLiteralKindArray class >> tester [
 	"dynamic array considered as one literal if it conatins only literals"
-	^[:val | val isArray or: [val isDynamicArray]]
+	^ #isArray
 ]
 
 { #category : #converting }
