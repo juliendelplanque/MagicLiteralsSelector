@@ -1,3 +1,6 @@
+"
+Represent a class containing a MLSMethodExternal
+"
 Class {
 	#name : #MLSClassExternal,
 	#superclass : #Object,

@@ -1,3 +1,6 @@
+"
+A literal analysed in one experiment contains the literal, its owning method, its status (magic or not), the project and experimentId where it was analysed
+"
 Class {
 	#name : #MLSAnalysisLiteral,
 	#superclass : #Object,

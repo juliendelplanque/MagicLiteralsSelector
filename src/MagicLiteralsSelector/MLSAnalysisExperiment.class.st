@@ -1,3 +1,6 @@
+"
+On experiment on a project, with an id, done by one expert with a given expertise level in this project
+"
 Class {
 	#name : #MLSAnalysisExperiment,
 	#superclass : #Object,

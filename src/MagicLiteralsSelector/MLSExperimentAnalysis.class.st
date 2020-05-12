@@ -1,3 +1,8 @@
+"
+A class to load ston files resulting from experiments and export them in CSV for analysis in R
+
+MLSExperimentAnalysis importDirectory: '/path/to/directory'
+"
 Class {
 	#name : #MLSExperimentAnalysis,
 	#superclass : #Object,
@@ -18,6 +23,41 @@ MLSExperimentAnalysis class >> importDirectory: aName [
 { #category : #'instance creation' }
 MLSExperimentAnalysis class >> importExpertsBase: aName [
 	^self new importExpertsFromFile: aName
+]
+
+{ #category : #enumerating }
+MLSExperimentAnalysis >> do: aBlock [
+	"iterates on all literals"
+	literals do: aBlock
+]
+
+{ #category : #accessing }
+MLSExperimentAnalysis >> experimentForProject: project id: id [
+	^experiments
+		detect: [ :exp | exp project =project and: [ exp experiment = id ] ]
+		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
+MLSExperimentAnalysis >> expertForProject: project experiment: experimentId [
+	^(self experimentForProject: project id: experimentId) expert
+]
+
+{ #category : #accessing }
+MLSExperimentAnalysis >> expertiseForProject: project experiment: experimentId [
+	^(self experimentForProject: project id: experimentId) expertise
+]
+
+{ #category : #exporting }
+MLSExperimentAnalysis >> exportToCsvStream: stream [
+	(NeoCSVWriter on: stream)
+		fieldWriter: #quoted ;
+		writeHeader: #('literal' 'project' 'expert' 'expertise') ;
+		addField: [ :lit | lit value asString] ;
+		addField: [ :lit | lit project ] ;
+		addField: [ :lit | self expertForProject: lit project experiment: lit experimentId ] ;
+		addField: [ :lit | self expertiseForProject: lit project experiment: lit experimentId ] ;
+		nextPutAll: self
 ]
 
 { #category : #importing }

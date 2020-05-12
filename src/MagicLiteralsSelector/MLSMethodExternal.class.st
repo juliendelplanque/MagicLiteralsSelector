@@ -1,5 +1,5 @@
 "
-Fallback solution to represent a MLSMethod that was exported from another image and could not be found in the current image
+Fallback solution to represent a CompiledMethod that was exported from another image and could not be found in the current image
 "
 Class {
 	#name : #MLSMethodExternal,
