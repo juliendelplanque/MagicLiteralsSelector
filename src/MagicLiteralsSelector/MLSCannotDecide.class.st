@@ -10,6 +10,11 @@ Class {
 	#category : #'MagicLiteralsSelector-core'
 }
 
+{ #category : #converting }
+MLSCannotDecide >> asString [
+	^'undecidedStatus'
+]
+
 { #category : #testing }
 MLSCannotDecide >> isCannotDecide [
 	^ true

@@ -10,6 +10,11 @@ Class {
 	#category : #'MagicLiteralsSelector-core'
 }
 
+{ #category : #converting }
+MLSLiteralCandidateStatus >> asString [
+	self subclassResponsibility 
+]
+
 { #category : #testing }
 MLSLiteralCandidateStatus >> isCannotDecide [
 	^ false

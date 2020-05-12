@@ -49,11 +49,19 @@ MLSExperimentAnalysis >> expertiseForProject: project experiment: experimentId [
 ]
 
 { #category : #exporting }
+MLSExperimentAnalysis >> exportToCsvFile: aFilename [
+	aFilename asFileReference writeStreamDo: [ :st |
+		self exportToCsvStream: st
+	]
+]
+
+{ #category : #exporting }
 MLSExperimentAnalysis >> exportToCsvStream: stream [
 	(NeoCSVWriter on: stream)
 		fieldWriter: #quoted ;
-		writeHeader: #('literal' 'project' 'expert' 'expertise') ;
+		writeHeader: #(literal status project expert expertise) ;
 		addField: [ :lit | lit value asString] ;
+		addField: [ :lit | lit status ] ;
 		addField: [ :lit | lit project ] ;
 		addField: [ :lit | self expertForProject: lit project experiment: lit experimentId ] ;
 		addField: [ :lit | self expertiseForProject: lit project experiment: lit experimentId ] ;

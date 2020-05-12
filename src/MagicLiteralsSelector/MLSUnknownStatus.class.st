@@ -10,6 +10,11 @@ Class {
 	#category : #'MagicLiteralsSelector-core'
 }
 
+{ #category : #converting }
+MLSUnknownStatus >> asString [
+	^'unknownStatus'
+]
+
 { #category : #testing }
 MLSUnknownStatus >> isUnknown [
 	^ true

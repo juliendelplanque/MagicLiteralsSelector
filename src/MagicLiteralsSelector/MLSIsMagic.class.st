@@ -7,6 +7,11 @@ Class {
 	#category : #'MagicLiteralsSelector-core'
 }
 
+{ #category : #converting }
+MLSIsMagic >> asString [
+	^'isMagic'
+]
+
 { #category : #testing }
 MLSIsMagic >> isMagic [
 	^ true
