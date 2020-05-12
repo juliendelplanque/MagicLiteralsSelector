@@ -38,7 +38,6 @@ MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMeth
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
 	kind := serializedLiteral kind.
 	status := serializedLiteral status.
-	kind := MLSLiteralKind fromValue: value.
 	method := serializedMethod
 		compiledMethodIfFound: #yourself
 		ifAbsent: [ MLSMethodExternal fromSerialized: serializedMethod]
