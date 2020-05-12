@@ -50,6 +50,11 @@ MLSAnalysisExperiment >> expertise: anObject [
 	expertise := anObject
 ]
 
+{ #category : #printing }
+MLSAnalysisExperiment >> printOn: aStream [
+		aStream << project << '-' << experiment asString << ' ' << expert
+]
+
 { #category : #accessing }
 MLSAnalysisExperiment >> project [
 	^ project

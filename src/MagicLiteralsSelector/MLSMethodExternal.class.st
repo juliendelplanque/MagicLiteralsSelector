@@ -57,11 +57,17 @@ MLSMethodExternal >> methodClass [
 ]
 
 { #category : #displaying }
+MLSMethodExternal >> name [
+	^ String streamContents: [ :stream | self printOn: stream ]
+
+]
+
+{ #category : #displaying }
 MLSMethodExternal >> printOn: aStream [
 	^aStream
-		nextPut: $_ ;
+		nextPut: $/ ;
 		nextPutAll: methodClass ;
-		nextPutAll: '_>>_#' ;
+		nextPutAll: '>>#' ;
 		nextPutAll: methodSelector ;
-		nextPut: $_
+		nextPut: $/
 ]

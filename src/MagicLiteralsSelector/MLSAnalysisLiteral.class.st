@@ -45,6 +45,11 @@ MLSAnalysisLiteral >> method [
 	^ method
 ]
 
+{ #category : #printing }
+MLSAnalysisLiteral >> printOn: aStream [
+		aStream << method name << ' ' << value
+]
+
 { #category : #accessing }
 MLSAnalysisLiteral >> project [
 	^ project
