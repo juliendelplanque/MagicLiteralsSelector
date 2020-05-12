@@ -9,10 +9,7 @@ Class {
 
 { #category : #'instance creation' }
 MLSLiteralKind class >> fromMLSLiteral: aLiteral [
-	^(self subclasses
-		detect: [ :c | c tester value: aLiteral value ]
-		ifNone: [ self ])
-		new
+	^self fromValue: aLiteral value
 ]
 
 { #category : #'instance creation' }

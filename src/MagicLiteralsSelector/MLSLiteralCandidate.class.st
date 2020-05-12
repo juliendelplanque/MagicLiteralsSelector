@@ -131,7 +131,7 @@ MLSLiteralCandidate >> isUnknown [
 
 { #category : #accessing }
 MLSLiteralCandidate >> kind [
- ^MLSLiteralKind fromMLSLiteral: self
+ ^MLSLiteralKind fromValue: self value
 ]
 
 { #category : #accessing }

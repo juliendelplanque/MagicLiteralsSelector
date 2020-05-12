@@ -9,6 +9,10 @@ This corrector assumes the methods are all loaded in image so that we can get th
 Class {
 	#name : #MLSSerializationErrorCorrector,
 	#superclass : #Object,
+	#instVars : [
+		'updateMethodBody',
+		'updateLiteralsKind'
+	],
 	#category : #'MagicLiteralsSelector-serialization'
 }
 
@@ -19,10 +23,28 @@ MLSSerializationErrorCorrector class >> onFile: aFileName [
 ]
 
 { #category : #running }
-MLSSerializationErrorCorrector >> runOn: fileName [
-	| fileRef |
-	fileRef := fileName asFileReference.
-	
+MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiledMethod [
+	updateLiteralsKind ifFalse: [ ^self ].
+	serializedMeth literalCandidates
+		with: (MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)) 
+		do: [ :serialized :node | serialized kind: (MLSLiteralKind fromMLSLiteral: node)]
+
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> correctMethod: serializedMeth [
+	serializedMeth
+		compiledMethodIfFound: [ :compiledMethod |
+			updateMethodBody ifTrue: [serializedMeth sourceCode: compiledMethod sourceCode].
+			self correctLiterals: serializedMeth with: compiledMethod ]
+		ifAbsent: [ NotFound signal: serializedMeth ]
+]
+
+{ #category : #initialization }
+MLSSerializationErrorCorrector >> initialize [
+	super initialize .
+	updateMethodBody := false.
+	updateLiteralsKind := false
 ]
 
 { #category : #running }
@@ -36,11 +58,16 @@ MLSSerializationErrorCorrector >> runOnFile: fileName [
 MLSSerializationErrorCorrector >> runOnStream: aStream [
 	| serializedSample |
 	serializedSample := (MLSReader on: aStream) next.
-	serializedSample methods do: [ :serializedMeth |
-			serializedMeth
-				compiledMethodIfFound: [ :compiledMethod |
-					serializedMeth sourceCode: compiledMethod sourceCode ]
-				ifAbsent: [ NotFound signal: serializedMeth ]
-		].
+	serializedSample methods do: [ :serializedMeth | self correctMethod: serializedMeth ].
 	^serializedSample
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> updateLiteralsKind [
+	updateLiteralsKind := true
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> updateMethodBody [
+	updateMethodBody := true
 ]
