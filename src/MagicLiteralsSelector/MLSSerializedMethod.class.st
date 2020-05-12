@@ -17,9 +17,10 @@ Class {
 
 { #category : #converting }
 MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
-	| pckg clazz |
-	pckg := RPackage organizer packageNamed: methodPackageName ifAbsent: [ ^ absentBlock value].
-	clazz := pckg definedClasses detect: [ :c | c name = methodClassName ] ifNone: [ MLSClassExternal forPackage: methodPackageName name: methodClassName].
+	| clazz |
+	clazz := Smalltalk
+		at: methodClassName
+		ifAbsent: [ MLSClassExternal forPackage: methodPackageName name: methodClassName].
 	^clazz
 		compiledMethodAt: methodSelector
 		ifPresent: [ :m | foundBlock value: m]

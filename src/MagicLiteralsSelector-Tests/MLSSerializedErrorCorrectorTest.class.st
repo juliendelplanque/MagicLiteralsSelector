@@ -8,8 +8,8 @@ Class {
 MLSSerializedErrorCorrectorTest >> testCorrectMethodBody [
 	| method |
 	method := MLSSerializedMethod new
-		methodPackageName: 'MagicLiteralsSelector-Tests' ;
-		methodClassName: 'MLSAbstractSerializationClassTest' ;
+		methodPackageName: #'MagicLiteralsSelector-Tests' ;
+		methodClassName: #MLSAbstractSerializationClassTest ;
 		methodSelector: #sampleMethodWithLiterals2 ;
 		sourceCode: 'wrong' ;
 		yourself.
@@ -32,8 +32,8 @@ MLSSerializedErrorCorrectorTest >> testUpdateLiteralsKind [
 	| method literal |
 	literal := MLSSerializedLiteralCandidate new.
 	method := MLSSerializedMethod new
-		methodPackageName: 'MagicLiteralsSelector-Tests' ;
-		methodClassName: 'MLSAbstractSerializationClassTest' ;
+		methodPackageName: #'MagicLiteralsSelector-Tests' ;
+		methodClassName: #MLSAbstractSerializationClassTest ;
 		methodSelector: #sampleMethodWithLiterals2 ;
 		literalCandidates: { literal } ;
 		yourself.
