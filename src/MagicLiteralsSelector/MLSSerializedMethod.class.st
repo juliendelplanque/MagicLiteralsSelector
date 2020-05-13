@@ -18,9 +18,8 @@ Class {
 { #category : #converting }
 MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
 	| clazz |
-	clazz := Smalltalk
-		at: methodClassName
-		ifAbsent: [ MLSClassExternal forPackage: methodPackageName name: methodClassName].
+	clazz := (Smalltalk classNamed: methodClassName)
+		ifNil: [ MLSClassExternal forPackage: methodPackageName name: methodClassName].
 	^clazz
 		compiledMethodAt: methodSelector
 		ifPresent: [ :m | foundBlock value: m]

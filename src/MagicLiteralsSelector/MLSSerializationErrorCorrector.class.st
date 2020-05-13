@@ -55,23 +55,39 @@ MLSSerializationErrorCorrector >> initialize [
 
 { #category : #running }
 MLSSerializationErrorCorrector >> runOnDirectory: aString [
+	self runOnDirectory: aString filesMatching: [:fref | (fref basename endsWith: '.ston')]
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> runOnDirectory: aString filesMatching: aBlock [
 	| directory |
 	directory := aString asFileReference.
 	directory exists ifFalse: [ ^ nil ].
 	directory isDirectory  ifFalse: [ ^ nil ].
-	directory entries
-		do: [ :e | 
-			(e basename endsWith: '.ston')
-			ifTrue: [ self runOnFile: e ]
-		]
+	(directory entries select: aBlock)
+		do: [ :fref | self runOnFileReference: fref ]
+		displayingProgress: [ :e | e basename]
 ]
 
 { #category : #running }
 MLSSerializationErrorCorrector >> runOnFile: fileName [
-	fileName asFileReference readStreamDo: [ :s |
-		(self runOnStream: s)
-			saveIn: fileName
+	self runOnFileReference: fileName asFileReference
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> runOnFileReference: aFileReference [
+	aFileReference readStreamDo: [ :s || corrected |
+		corrected := self runOnStream: s.
+		(updateMethodBody | updateLiteralsKind) 
+			ifTrue: [corrected saveIn: aFileReference fullName ]
 	]
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> runOnFiles: fileReferences [
+	fileReferences
+		do: [ :fref | self runOnFileReference: fref ]
+	 	displayingProgress:  [ :e | e basename ]
 ]
 
 { #category : #running }
