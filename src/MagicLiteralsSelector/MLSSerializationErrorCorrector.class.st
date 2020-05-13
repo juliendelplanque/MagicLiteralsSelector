@@ -17,9 +17,15 @@ Class {
 }
 
 { #category : #running }
+MLSSerializationErrorCorrector class >> onDirectory: aString [
+	self new
+		runOnDirectory: aString
+]
+
+{ #category : #running }
 MLSSerializationErrorCorrector class >> onFile: aFileName [
 	self new
-		runOn: aFileName
+		runOnFile: aFileName
 ]
 
 { #category : #running }
@@ -48,9 +54,23 @@ MLSSerializationErrorCorrector >> initialize [
 ]
 
 { #category : #running }
+MLSSerializationErrorCorrector >> runOnDirectory: aString [
+	| directory |
+	directory := aString asFileReference.
+	directory exists ifFalse: [ ^ nil ].
+	directory isDirectory  ifFalse: [ ^ nil ].
+	directory entries
+		do: [ :e | 
+			(e basename endsWith: '.ston')
+			ifTrue: [ self runOnFile: e ]
+		]
+]
+
+{ #category : #running }
 MLSSerializationErrorCorrector >> runOnFile: fileName [
 	fileName asFileReference readStreamDo: [ :s |
-		(self runOnStream: s) saveIn: (fileName , '-c')
+		(self runOnStream: s)
+			saveIn: fileName
 	]
 ]
 
