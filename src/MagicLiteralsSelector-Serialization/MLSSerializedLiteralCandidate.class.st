@@ -7,6 +7,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'status',
+		'kind',
 		'startPosition',
 		'endPosition'
 	],
@@ -77,6 +78,16 @@ MLSSerializedLiteralCandidate >> fixStonErrors [
 	"correct ston issues in CanNotDecide statuses"
 	status isDictionary
 	ifTrue: [ self status: MLSCannotDecide new ]
+]
+
+{ #category : #accessing }
+MLSSerializedLiteralCandidate >> kind [
+	^ kind
+]
+
+{ #category : #accessing }
+MLSSerializedLiteralCandidate >> kind: anObject [
+	kind := anObject
 ]
 
 { #category : #accessing }
