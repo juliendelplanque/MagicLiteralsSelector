@@ -6,24 +6,24 @@ Class {
 
 { #category : #tests }
 MLSSerializedErrorCorrectorTest >> testComputeCommentLength [
+	"running on myself because I have comments in my body"
 	| method |
 	method := MLSSerializedMethod new
 		methodPackageName: #'MagicLiteralsSelector-Tests' ;
-		methodClassName: #MLSAbstractSerializationClassTest ;
-		methodSelector: #sampleMethodWithLiterals2 ;
-		sourceCode: 'fakeBodyWithComment
-	"a comment"
+		methodClassName: #MLSSerializedErrorCorrectorTest ;
+		methodSelector: #testComputeCommentLength ;  "look this is me"
+		sourceCode: 'fakeBodyWithouComment
 	^nil' ;
 		yourself.
 
 	MLSSerializationErrorCorrector new
 		correctMethod: method.
-	self assert: method commentLength equals: 9.  "always computed"
+	self assert: method commentLength isNil.
 
-	self deny: MLSSerializationErrorCorrector new doesAlterSomething.
-	self assert: (MLSSerializationErrorCorrector new
+	MLSSerializationErrorCorrector new
 		setComputeCommentLength ;
-		doesAlterSomething).
+		correctMethod: method.
+	self assert: method commentLength equals: 83. "this is it"
 	
 ]
 

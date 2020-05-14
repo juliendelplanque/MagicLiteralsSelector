@@ -18,7 +18,12 @@ Class {
 
 { #category : #accessing }
 MLSSerializedMethod >> commentLength [
-	^sourceCode ifNil: [0] ifNotNil: [commentLength := self countComments]
+	^commentLength
+]
+
+{ #category : #accessing }
+MLSSerializedMethod >> commentLength: anInt [
+	commentLength := anInt
 ]
 
 { #category : #converting }
@@ -31,25 +36,6 @@ MLSSerializedMethod >> compiledMethodIfFound: foundBlock ifAbsent: absentBlock [
 		ifPresent: [ :m | foundBlock value: m]
 		ifAbsent: absentBlock
 
-]
-
-{ #category : #private }
-MLSSerializedMethod >> countComments [
-	"Note we do not count double doublequote ("") but it does not seem to make a big difference"
-	| i |
-	i:= 1.
-	commentLength := 0.
-	[true] whileTrue: [ | j |
-		i := sourceCode indexOf: $" startingAt: i ifAbsent: [ ^ commentLength ].
-		((i > 1) and: [
-			(sourceCode at: i-1) = $$])
-		ifTrue: [  i:= i+1 ]
-		ifFalse: [
-			j := sourceCode indexOf: $" startingAt: i+1.
-			commentLength := commentLength + j - i -1.
-			i := j+1
-		]
-	]
 ]
 
 { #category : #converting }

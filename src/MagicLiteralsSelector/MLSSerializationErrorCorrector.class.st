@@ -28,8 +28,21 @@ MLSSerializationErrorCorrector class >> onFile: aFileName [
 ]
 
 { #category : #running }
+MLSSerializationErrorCorrector >> computeCommentLength: serializedMeth with: compiledMethod [
+	self shouldComputeCommentLength
+		ifTrue: [ | length |
+			length := 0.
+			RBCommentNodeVisitor
+				visit: compiledMethod parseTree
+				do: [ :comment | length := length + comment size].
+			serializedMeth commentLength: length
+		]
+]
+
+{ #category : #running }
 MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiledMethod [
-	self shouldUpdateLiteralsKind ifFalse: [ ^self ].
+	self shouldUpdateLiteralsKind
+		ifFalse: [ ^self ].
 	serializedMeth literalCandidates
 		with: (MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)) 
 		do: [ :serialized :node | serialized kind: (MLSLiteralKind fromMLSLiteral: node)]
@@ -40,7 +53,8 @@ MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiled
 MLSSerializationErrorCorrector >> correctMethod: serializedMeth [
 	serializedMeth
 		compiledMethodIfFound: [ :compiledMethod |
-			self shouldUpdateMethodBody ifTrue: [serializedMeth sourceCode: compiledMethod sourceCode].
+			self updateMethodBody: serializedMeth with: compiledMethod.
+			self computeCommentLength: serializedMeth with: compiledMethod.
 			self correctLiterals: serializedMeth with: compiledMethod ]
 		ifAbsent: [ NotFound signal: serializedMeth ]
 ]
@@ -155,4 +169,10 @@ MLSSerializationErrorCorrector >> shouldUpdateLiteralsKind [
 { #category : #settings }
 MLSSerializationErrorCorrector >> shouldUpdateMethodBody [
 	^self isSet: self settingForUpdateMethodBody 
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> updateMethodBody: serializedMeth with: compiledMethod [
+	self shouldUpdateMethodBody
+		ifTrue: [serializedMeth sourceCode: compiledMethod sourceCode]
 ]
