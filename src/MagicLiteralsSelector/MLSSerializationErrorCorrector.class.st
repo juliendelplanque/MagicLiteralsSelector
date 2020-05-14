@@ -127,8 +127,7 @@ MLSSerializationErrorCorrector >> set: aSetting [
 
 { #category : #settings }
 MLSSerializationErrorCorrector >> setComputeCommentLength [
-	self set: self settingForComputeCommentLength. "actually does nothing"
-	self setUpdateMethodBody
+	self set: self settingForComputeCommentLength.
 ]
 
 { #category : #settings }
