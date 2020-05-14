@@ -140,6 +140,11 @@ MLSLiteralCandidate >> literalValue [
 ]
 
 { #category : #accessing }
+MLSLiteralCandidate >> location [
+	
+]
+
+{ #category : #accessing }
 MLSLiteralCandidate >> positionsInterval [
 	^ self astNode start to: self astNode stop
 ]
