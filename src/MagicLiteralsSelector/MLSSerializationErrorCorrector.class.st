@@ -10,8 +10,7 @@ Class {
 	#name : #MLSSerializationErrorCorrector,
 	#superclass : #Object,
 	#instVars : [
-		'updateMethodBody',
-		'updateLiteralsKind'
+		'settings'
 	],
 	#category : #'MagicLiteralsSelector-serialization'
 }
@@ -30,7 +29,7 @@ MLSSerializationErrorCorrector class >> onFile: aFileName [
 
 { #category : #running }
 MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiledMethod [
-	updateLiteralsKind ifFalse: [ ^self ].
+	self shouldUpdateLiteralsKind ifFalse: [ ^self ].
 	serializedMeth literalCandidates
 		with: (MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)) 
 		do: [ :serialized :node | serialized kind: (MLSLiteralKind fromMLSLiteral: node)]
@@ -41,16 +40,25 @@ MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiled
 MLSSerializationErrorCorrector >> correctMethod: serializedMeth [
 	serializedMeth
 		compiledMethodIfFound: [ :compiledMethod |
-			updateMethodBody ifTrue: [serializedMeth sourceCode: compiledMethod sourceCode].
+			self shouldUpdateMethodBody ifTrue: [serializedMeth sourceCode: compiledMethod sourceCode].
 			self correctLiterals: serializedMeth with: compiledMethod ]
 		ifAbsent: [ NotFound signal: serializedMeth ]
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> doesAlterSomething [
+	^settings notEmpty
 ]
 
 { #category : #initialization }
 MLSSerializationErrorCorrector >> initialize [
 	super initialize .
-	updateMethodBody := false.
-	updateLiteralsKind := false
+	settings := Set new: 2.
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> isSet: aSetting [
+	^settings includes: aSetting
 ]
 
 { #category : #running }
@@ -78,7 +86,7 @@ MLSSerializationErrorCorrector >> runOnFile: fileName [
 MLSSerializationErrorCorrector >> runOnFileReference: aFileReference [
 	aFileReference readStreamDo: [ :s || corrected |
 		corrected := self runOnStream: s.
-		(updateMethodBody | updateLiteralsKind) 
+		self doesAlterSomething 
 			ifTrue: [corrected saveIn: aFileReference fullName ]
 	]
 ]
@@ -99,11 +107,51 @@ MLSSerializationErrorCorrector >> runOnStream: aStream [
 ]
 
 { #category : #settings }
-MLSSerializationErrorCorrector >> updateLiteralsKind [
-	updateLiteralsKind := true
+MLSSerializationErrorCorrector >> set: aSetting [
+	settings add: aSetting
 ]
 
 { #category : #settings }
-MLSSerializationErrorCorrector >> updateMethodBody [
-	updateMethodBody := true
+MLSSerializationErrorCorrector >> setComputeCommentLength [
+	self set: self settingForComputeCommentLength
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> setUpdateLiteralsKind [
+	self set: self settingForUpdateLiteralsKind
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> setUpdateMethodBody [
+	self set: self settingForUpdateMethodBody
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> settingForComputeCommentLength [
+	^#methodCommentLength
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> settingForUpdateLiteralsKind [
+	^#updateLiteralsKind
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> settingForUpdateMethodBody [
+	^#updateMethodBody
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> shouldComputeCommentLength [
+	^self isSet: self settingForComputeCommentLength 
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> shouldUpdateLiteralsKind [
+	^self isSet: self settingForUpdateLiteralsKind
+]
+
+{ #category : #settings }
+MLSSerializationErrorCorrector >> shouldUpdateMethodBody [
+	^self isSet: self settingForUpdateMethodBody 
 ]

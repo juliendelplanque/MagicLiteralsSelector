@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #tests }
+MLSSerializedErrorCorrectorTest >> testComputeCommentLength [
+	| method |
+	method := MLSSerializedMethod new
+		methodPackageName: #'MagicLiteralsSelector-Tests' ;
+		methodClassName: #MLSAbstractSerializationClassTest ;
+		methodSelector: #sampleMethodWithLiterals2 ;
+		sourceCode: 'fakeBodyWithComment
+	"a comment"
+	^nil' ;
+		yourself.
+
+	MLSSerializationErrorCorrector new
+		correctMethod: method.
+	self assert: method commentLength equals: 9.  "always computed"
+
+	self deny: MLSSerializationErrorCorrector new doesAlterSomething.
+	self assert: (MLSSerializationErrorCorrector new
+		setComputeCommentLength ;
+		doesAlterSomething).
+	
+]
+
+{ #category : #tests }
 MLSSerializedErrorCorrectorTest >> testCorrectMethodBody [
 	| method |
 	method := MLSSerializedMethod new
@@ -20,7 +43,7 @@ MLSSerializedErrorCorrectorTest >> testCorrectMethodBody [
 	^{ 1 . 2 . $a }'.
 
 	MLSSerializationErrorCorrector new
-		updateMethodBody ;
+		setUpdateMethodBody ;
 		correctMethod: method.
 	self assert: method sourceCode equals: 'sampleMethodWithLiterals2
 	^{ 1 . 2 . $a }'.
@@ -43,7 +66,7 @@ MLSSerializedErrorCorrectorTest >> testUpdateLiteralsKind [
 	self assert: literal kind isNil.
 
 	MLSSerializationErrorCorrector new
-		updateLiteralsKind ;
+		setUpdateLiteralsKind ;
 		correctLiterals: method with: MLSAbstractSerializationClassTest>>#sampleMethodWithLiterals2.
 	self assert: literal kind class equals: MLSLiteralKindArray .
 	
