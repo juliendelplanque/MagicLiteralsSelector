@@ -41,10 +41,15 @@ MLSSerializedMethod >> countComments [
 	commentLength := 0.
 	[true] whileTrue: [ | j |
 		i := sourceCode indexOf: $" startingAt: i ifAbsent: [ ^ commentLength ].
-		j := sourceCode indexOf: $" startingAt: i+1.
-		commentLength := commentLength + j - i -1.
-		i := j+1
-	   	]
+		((i > 1) and: [
+			(sourceCode at: i-1) = $$])
+		ifTrue: [  i:= i+1 ]
+		ifFalse: [
+			j := sourceCode indexOf: $" startingAt: i+1.
+			commentLength := commentLength + j - i -1.
+			i := j+1
+		]
+	]
 ]
 
 { #category : #converting }

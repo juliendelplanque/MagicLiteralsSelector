@@ -36,6 +36,17 @@ MLSSerializedMethodTest >> testCommentLengthCommentsWithDoubleQuoteInIt [
 ]
 
 { #category : #tests }
+MLSSerializedMethodTest >> testCommentLengthDoubleQuoteCharacter [
+	self
+		assert:
+			(MLSSerializedMethod new
+				sourceCode: 'blah
+				^ $" ';
+				yourself) commentLength
+		equals: 0
+]
+
+{ #category : #tests }
 MLSSerializedMethodTest >> testCommentLengthMultipleComments [
 	self
 		assert:
