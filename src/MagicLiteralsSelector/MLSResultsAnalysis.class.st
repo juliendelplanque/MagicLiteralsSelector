@@ -61,7 +61,7 @@ MLSResultsAnalysis >> exportToCsvStream: stream [
 		fieldWriter: #quoted ;
 		writeHeader: #(literal kind status project expert expertise) ;
 		addField: [ :lit | lit value asString] ;
-		addField: [ :lit | lit kind ] ;
+		addField: [ :lit | lit kind asString ] ;
 		addField: [ :lit | lit status ] ;
 		addField: [ :lit | lit project ] ;
 		addField: [ :lit | self expertForProject: lit project experiment: lit experimentId ] ;

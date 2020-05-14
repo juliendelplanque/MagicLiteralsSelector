@@ -44,6 +44,11 @@ MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMeth
 ]
 
 { #category : #accessing }
+MLSAnalysisLiteral >> kind [ 
+	^kind
+]
+
+{ #category : #accessing }
 MLSAnalysisLiteral >> method [
 	^ method
 ]
