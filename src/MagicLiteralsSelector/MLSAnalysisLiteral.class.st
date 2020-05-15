@@ -8,8 +8,9 @@ Class {
 		'value',
 		'status',
 		'kind',
-		'commentLength',
+		'mid',
 		'method',
+		'commentLength',
 		'project',
 		'experimentId'
 	],
@@ -23,9 +24,14 @@ MLSAnalysisLiteral class >> fromSerialized: serializedLiteral inMethod: serializ
 		yourself
 ]
 
-{ #category : #accessing }
-MLSAnalysisLiteral >> commentLength [
-	^ commentLength
+{ #category : #private }
+MLSAnalysisLiteral >> commentLength: compiledMethod [
+	| length |
+	length := 0.
+	RBCommentNodeVisitor
+		visit: compiledMethod parseTree
+		do: [ :comment | length := length + comment size].
+	^length
 ]
 
 { #category : #accessing }
@@ -38,16 +44,33 @@ MLSAnalysisLiteral >> experimentId: anObject [
 	experimentId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #private }
+MLSAnalysisLiteral >> findSerialized: serialized inNodes: literalNodes [
+	^literalNodes
+		detect: [ :node |
+			(serialized startPosition = node start) and: [
+			(serialized endPosition = node stop) ]
+		]
+		ifNone: [ AssertionFailure signal: 'Literal not found in compiled method' ]
+
+]
+
+{ #category : #initialisation }
 MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMethod [
 	value := serializedMethod sourceCode
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
 	kind := serializedLiteral kind.
 	status := serializedLiteral status.
-	commentLength := serializedMethod commentLength.
-	method := serializedMethod
-		compiledMethodIfFound: #yourself
-		ifAbsent: [ MLSMethodExternal fromSerialized: serializedMethod]
+	serializedMethod
+		compiledMethodIfFound: [ :compiled || node |
+			method := compiled.
+			commentLength := self commentLength: compiled.
+			node := self
+				findSerialized: serializedLiteral
+				inNodes: (MLSFindLiteralsNodeVisitor visit: (compiled parseTree)).
+			kind := MLSLiteralKind fromMLSLiteral: node.
+		]
+		ifAbsent: [ NotFound signal: serializedMethod name]
 ]
 
 { #category : #accessing }

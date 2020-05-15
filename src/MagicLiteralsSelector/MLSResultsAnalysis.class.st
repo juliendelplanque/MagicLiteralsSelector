@@ -59,11 +59,10 @@ MLSResultsAnalysis >> exportToCsvFile: aFilename [
 MLSResultsAnalysis >> exportToCsvStream: stream [
 	(NeoCSVWriter on: stream)
 		fieldWriter: #quoted ;
-		writeHeader: #(literal kind status comment project expert expertise) ;
+		writeHeader: #(literal kind status project expert expertise) ;
 		addField: [ :lit | lit value asString] ;
 		addField: [ :lit | lit kind asString ] ;
 		addField: [ :lit | lit status ] ;
-		addField: [ :lit | lit commentLength ] ;
 		addField: [ :lit | lit project ] ;
 		addField: [ :lit | self expertForProject: lit project experiment: lit experimentId ] ;
 		addField: [ :lit | self expertiseForProject: lit project experiment: lit experimentId ] ;

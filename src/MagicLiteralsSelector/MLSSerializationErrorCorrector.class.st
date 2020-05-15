@@ -28,24 +28,15 @@ MLSSerializationErrorCorrector class >> onFile: aFileName [
 ]
 
 { #category : #running }
-MLSSerializationErrorCorrector >> computeCommentLength: serializedMeth with: compiledMethod [
-	self shouldComputeCommentLength
-		ifTrue: [ | length |
-			length := 0.
-			RBCommentNodeVisitor
-				visit: compiledMethod parseTree
-				do: [ :comment | length := length + comment size].
-			serializedMeth commentLength: length
-		]
-]
-
-{ #category : #running }
-MLSSerializationErrorCorrector >> correctLiterals: serializedMeth with: compiledMethod [
-	self shouldUpdateLiteralsKind
+MLSSerializationErrorCorrector >> checkLiterals: serializedMeth with: compiledMethod [
+	| literalNodes |
+	self shouldCheckLiterals
 		ifFalse: [ ^self ].
+		literalNodes := MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree).
 	serializedMeth literalCandidates
-		with: (MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree)) 
-		do: [ :serialized :node | serialized kind: (MLSLiteralKind fromMLSLiteral: node)]
+		do: [ :serialized |
+			(self findLiteral: serialized inNode: literalNodes)
+		]
 
 ]
 
@@ -54,14 +45,25 @@ MLSSerializationErrorCorrector >> correctMethod: serializedMeth [
 	serializedMeth
 		compiledMethodIfFound: [ :compiledMethod |
 			self updateMethodBody: serializedMeth with: compiledMethod.
-			self computeCommentLength: serializedMeth with: compiledMethod.
-			self correctLiterals: serializedMeth with: compiledMethod ]
+			self checkLiterals: serializedMeth with: compiledMethod. ]
 		ifAbsent: [ NotFound signal: serializedMeth ]
 ]
 
 { #category : #settings }
 MLSSerializationErrorCorrector >> doesAlterSomething [
-	^settings notEmpty
+	^(settings reject: [:s | s = self settingForCheckLiterals]) notEmpty
+]
+
+{ #category : #running }
+MLSSerializationErrorCorrector >> findLiteral: serialized inNode: literalNodes [
+	^literalNodes
+		detect: [ :node |
+			(serialized startPosition = node start) and: [
+			(serialized endPosition = node stop) ]
+		]
+		ifNone: [ AssertionFailure signal: 'Literal not found in compiled method' ]
+			
+
 ]
 
 { #category : #initialization }
@@ -126,13 +128,8 @@ MLSSerializationErrorCorrector >> set: aSetting [
 ]
 
 { #category : #settings }
-MLSSerializationErrorCorrector >> setComputeCommentLength [
-	self set: self settingForComputeCommentLength.
-]
-
-{ #category : #settings }
-MLSSerializationErrorCorrector >> setUpdateLiteralsKind [
-	self set: self settingForUpdateLiteralsKind
+MLSSerializationErrorCorrector >> setCheckLiterals [
+	self set: self settingForCheckLiterals
 ]
 
 { #category : #settings }
@@ -141,13 +138,8 @@ MLSSerializationErrorCorrector >> setUpdateMethodBody [
 ]
 
 { #category : #settings }
-MLSSerializationErrorCorrector >> settingForComputeCommentLength [
-	^#methodCommentLength
-]
-
-{ #category : #settings }
-MLSSerializationErrorCorrector >> settingForUpdateLiteralsKind [
-	^#updateLiteralsKind
+MLSSerializationErrorCorrector >> settingForCheckLiterals [
+	^#checkLiterals
 ]
 
 { #category : #settings }
@@ -156,13 +148,8 @@ MLSSerializationErrorCorrector >> settingForUpdateMethodBody [
 ]
 
 { #category : #settings }
-MLSSerializationErrorCorrector >> shouldComputeCommentLength [
-	^self isSet: self settingForComputeCommentLength 
-]
-
-{ #category : #settings }
-MLSSerializationErrorCorrector >> shouldUpdateLiteralsKind [
-	^self isSet: self settingForUpdateLiteralsKind
+MLSSerializationErrorCorrector >> shouldCheckLiterals [
+	^self isSet: self settingForCheckLiterals
 ]
 
 { #category : #settings }
