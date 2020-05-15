@@ -64,7 +64,10 @@ MLSResultsAnalysis >> exportToCsvStream: stream [
 	exportedFields := self exportedFields.
 	csvWriter writeHeader: (exportedFields collect: #key).
 	exportedFields do: [ :fieldToExport | csvWriter addField: fieldToExport value ].
-	csvWriter nextPutAll: self
+	literals
+		do: [ :lit | csvWriter nextPut: lit ]
+		displayingProgress: 'CSV export'
+	
 ]
 
 { #category : #exporting }
@@ -73,6 +76,7 @@ MLSResultsAnalysis >> exportedFields [
 		(#literal -> [ :lit | lit value asString]) .
 		(#kind -> [ :lit | lit kind asString ]) .
 		(#status -> [ :lit | lit status ]) .
+		(#mid -> [ :lit | lit mid]) .
 		(#commentLength -> [:lit | lit commentLength]) .
 		(#project -> [ :lit | lit project ]) .
 		(#expert -> [ :lit | self expertForProject: lit project experiment: lit experimentId ]) .
