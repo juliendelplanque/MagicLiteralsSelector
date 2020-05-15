@@ -10,7 +10,6 @@ Class {
 		'kind',
 		'mid',
 		'method',
-		'commentLength',
 		'project',
 		'experimentId'
 	],
@@ -24,12 +23,12 @@ MLSAnalysisLiteral class >> fromSerialized: serializedLiteral inMethod: serializ
 		yourself
 ]
 
-{ #category : #private }
-MLSAnalysisLiteral >> commentLength: compiledMethod [
+{ #category : #accessing }
+MLSAnalysisLiteral >> commentLength [
 	| length |
 	length := 0.
 	RBCommentNodeVisitor
-		visit: compiledMethod parseTree
+		visit: method parseTree
 		do: [ :comment | length := length + comment size].
 	^length
 ]
@@ -46,11 +45,15 @@ MLSAnalysisLiteral >> experimentId: anObject [
 
 { #category : #private }
 MLSAnalysisLiteral >> findSerialized: serialized inNodes: literalNodes [
-	^literalNodes
+	| index |
+	index := 0.
+	literalNodes
 		detect: [ :node |
+			index := index + 1.
 			(serialized startPosition = node start) and: [
 			(serialized endPosition = node stop) ]
 		]
+		ifOne: [ :node | ^ node -> index ]
 		ifNone: [ AssertionFailure signal: 'Literal not found in compiled method' ]
 
 ]
@@ -59,16 +62,15 @@ MLSAnalysisLiteral >> findSerialized: serialized inNodes: literalNodes [
 MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMethod [
 	value := serializedMethod sourceCode
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
-	kind := serializedLiteral kind.
 	status := serializedLiteral status.
 	serializedMethod
-		compiledMethodIfFound: [ :compiled || node |
+		compiledMethodIfFound: [ :compiled || nodeAndId |
 			method := compiled.
-			commentLength := self commentLength: compiled.
-			node := self
+			nodeAndId := self
 				findSerialized: serializedLiteral
 				inNodes: (MLSFindLiteralsNodeVisitor visit: (compiled parseTree)).
-			kind := MLSLiteralKind fromMLSLiteral: node.
+			kind := MLSLiteralKind fromMLSLiteral: nodeAndId key.
+			mid := nodeAndId value
 		]
 		ifAbsent: [ NotFound signal: serializedMethod name]
 ]

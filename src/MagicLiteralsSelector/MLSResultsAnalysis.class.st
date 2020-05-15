@@ -57,16 +57,27 @@ MLSResultsAnalysis >> exportToCsvFile: aFilename [
 
 { #category : #exporting }
 MLSResultsAnalysis >> exportToCsvStream: stream [
-	(NeoCSVWriter on: stream)
+	| csvWriter exportedFields |
+	csvWriter := (NeoCSVWriter on: stream)
 		fieldWriter: #quoted ;
-		writeHeader: #(literal kind status project expert expertise) ;
-		addField: [ :lit | lit value asString] ;
-		addField: [ :lit | lit kind asString ] ;
-		addField: [ :lit | lit status ] ;
-		addField: [ :lit | lit project ] ;
-		addField: [ :lit | self expertForProject: lit project experiment: lit experimentId ] ;
-		addField: [ :lit | self expertiseForProject: lit project experiment: lit experimentId ] ;
-		nextPutAll: self
+		yourself.
+	exportedFields := self exportedFields.
+	csvWriter writeHeader: (exportedFields collect: #key).
+	exportedFields do: [ :fieldToExport | csvWriter addField: fieldToExport value ].
+	csvWriter nextPutAll: self
+]
+
+{ #category : #exporting }
+MLSResultsAnalysis >> exportedFields [
+	^{
+		(#literal -> [ :lit | lit value asString]) .
+		(#kind -> [ :lit | lit kind asString ]) .
+		(#status -> [ :lit | lit status ]) .
+		(#commentLength -> [:lit | lit commentLength]) .
+		(#project -> [ :lit | lit project ]) .
+		(#expert -> [ :lit | self expertForProject: lit project experiment: lit experimentId ]) .
+		(#expertise -> [ :lit | self expertiseForProject: lit project experiment: lit experimentId ])
+	}
 ]
 
 { #category : #importing }
