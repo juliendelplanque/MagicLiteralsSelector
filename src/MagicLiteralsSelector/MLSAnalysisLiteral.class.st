@@ -11,7 +11,8 @@ Class {
 		'mid',
 		'method',
 		'project',
-		'experimentId'
+		'experimentId',
+		'methodLiterals'
 	],
 	#category : #'MagicLiteralsSelector-analysis'
 }
@@ -64,11 +65,13 @@ MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMeth
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
 	status := serializedLiteral status.
 	serializedMethod
-		compiledMethodIfFound: [ :compiled || nodeAndId |
+		compiledMethodIfFound: [ :compiled || allLiterals nodeAndId |
 			method := compiled.
+			allLiterals := MLSFindLiteralsNodeVisitor visit: (compiled parseTree).
 			nodeAndId := self
 				findSerialized: serializedLiteral
-				inNodes: (MLSFindLiteralsNodeVisitor visit: (compiled parseTree)).
+				inNodes: allLiterals.
+			methodLiterals := allLiterals size.
 			kind := MLSLiteralKind fromMLSLiteral: nodeAndId key.
 			mid := nodeAndId value
 		]
@@ -86,7 +89,13 @@ MLSAnalysisLiteral >> method [
 ]
 
 { #category : #accessing }
+MLSAnalysisLiteral >> methodLiterals [
+	^methodLiterals
+]
+
+{ #category : #accessing }
 MLSAnalysisLiteral >> mid [
+	"Id of the literal in the method"
 	^mid
 ]
 

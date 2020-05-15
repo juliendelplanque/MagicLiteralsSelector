@@ -50,13 +50,24 @@ MLSResultsAnalysis >> expertiseForProject: project experiment: experimentId [
 
 { #category : #exporting }
 MLSResultsAnalysis >> exportToCsvFile: aFilename [
+	 self exportToCsvFile: aFilename withFilter: [ :lit | true ]
+]
+
+{ #category : #exporting }
+MLSResultsAnalysis >> exportToCsvFile: aFilename withFilter: aBlock [
 	aFilename asFileReference writeStreamDo: [ :st |
-		self exportToCsvStream: st
+		self exportToCsvStream: st withFilter: aBlock
 	]
 ]
 
 { #category : #exporting }
 MLSResultsAnalysis >> exportToCsvStream: stream [
+	self exportToCsvStream: stream withFilter: [ :lit | true ]
+	
+]
+
+{ #category : #exporting }
+MLSResultsAnalysis >> exportToCsvStream: stream withFilter: filterBlock [
 	| csvWriter exportedFields |
 	csvWriter := (NeoCSVWriter on: stream)
 		fieldWriter: #quoted ;
@@ -64,7 +75,7 @@ MLSResultsAnalysis >> exportToCsvStream: stream [
 	exportedFields := self exportedFields.
 	csvWriter writeHeader: (exportedFields collect: #key).
 	exportedFields do: [ :fieldToExport | csvWriter addField: fieldToExport value ].
-	literals
+	(literals select: filterBlock)
 		do: [ :lit | csvWriter nextPut: lit ]
 		displayingProgress: 'CSV export'
 	
@@ -77,7 +88,9 @@ MLSResultsAnalysis >> exportedFields [
 		(#kind -> [ :lit | lit kind asString ]) .
 		(#status -> [ :lit | lit status ]) .
 		(#mid -> [ :lit | lit mid]) .
+		(#method -> [ :lit | lit method name]) .
 		(#commentLength -> [:lit | lit commentLength]) .
+		(#mthodLiterals -> [:lit | lit methodLiterals]) .
 		(#project -> [ :lit | lit project ]) .
 		(#expert -> [ :lit | self expertForProject: lit project experiment: lit experimentId ]) .
 		(#expertise -> [ :lit | self expertiseForProject: lit project experiment: lit experimentId ])
