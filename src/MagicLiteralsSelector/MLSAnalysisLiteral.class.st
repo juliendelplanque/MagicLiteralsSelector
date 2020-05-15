@@ -8,6 +8,7 @@ Class {
 		'value',
 		'status',
 		'kind',
+		'commentLength',
 		'method',
 		'project',
 		'experimentId'
@@ -20,6 +21,11 @@ MLSAnalysisLiteral class >> fromSerialized: serializedLiteral inMethod: serializ
 	^self new
 		fromSerialized: serializedLiteral inMethod: serializedMethod
 		yourself
+]
+
+{ #category : #accessing }
+MLSAnalysisLiteral >> commentLength [
+	^ commentLength
 ]
 
 { #category : #accessing }
@@ -38,6 +44,7 @@ MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMeth
 		copyFrom: serializedLiteral startPosition to: serializedLiteral endPosition.
 	kind := serializedLiteral kind.
 	status := serializedLiteral status.
+	commentLength := serializedMethod commentLength.
 	method := serializedMethod
 		compiledMethodIfFound: #yourself
 		ifAbsent: [ MLSMethodExternal fromSerialized: serializedMethod]
