@@ -35,7 +35,7 @@ MLSSerializationErrorCorrector >> checkLiterals: serializedMeth with: compiledMe
 		literalNodes := MLSFindLiteralsNodeVisitor visit: (compiledMethod parseTree).
 	serializedMeth literalCandidates
 		do: [ :serialized |
-			(self findLiteral: serialized inNode: literalNodes)
+			(self findLiteral: serialized inNodes: literalNodes)
 		]
 
 ]
@@ -55,7 +55,7 @@ MLSSerializationErrorCorrector >> doesAlterSomething [
 ]
 
 { #category : #running }
-MLSSerializationErrorCorrector >> findLiteral: serialized inNode: literalNodes [
+MLSSerializationErrorCorrector >> findLiteral: serialized inNodes: literalNodes [
 	^literalNodes
 		detect: [ :node |
 			(serialized startPosition = node start) and: [

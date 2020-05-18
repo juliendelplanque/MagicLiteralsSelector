@@ -85,9 +85,10 @@ MLSResultsAnalysis >> exportToCsvStream: stream withFilter: filterBlock [
 MLSResultsAnalysis >> exportedFields [
 	^{
 		(#literal -> [ :lit | lit value asString]) .
-		(#kind -> [ :lit | lit kind asString ]) .
+		(#kind -> [ :lit | (MLSLiteralKind fromMLSLiteral: lit) asString ]) .
 		(#status -> [ :lit | lit status ]) .
 		(#mid -> [ :lit | lit mid]) .
+		(#location -> [ :lit | self nodeLocation: lit node]) .
 		(#method -> [ :lit | lit method name]) .
 		(#commentLength -> [:lit | lit commentLength]) .
 		(#mthodLiterals -> [:lit | lit methodLiterals]) .
@@ -169,10 +170,14 @@ MLSResultsAnalysis >> importLiteralsFromFile: aFileRef [
 	]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 MLSResultsAnalysis >> initialize [
 	literals := OrderedCollection new.
 	experiments := OrderedCollection new
+]
+
+{ #category : #private }
+MLSResultsAnalysis >> modeLocation: aRBNode [
 ]
 
 { #category : #importing }

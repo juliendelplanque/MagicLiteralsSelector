@@ -7,12 +7,12 @@ Class {
 	#instVars : [
 		'value',
 		'status',
-		'kind',
 		'mid',
 		'method',
 		'project',
 		'experimentId',
-		'methodLiterals'
+		'methodLiterals',
+		'node'
 	],
 	#category : #'MagicLiteralsSelector-analysis'
 }
@@ -72,15 +72,10 @@ MLSAnalysisLiteral >> fromSerialized: serializedLiteral inMethod: serializedMeth
 				findSerialized: serializedLiteral
 				inNodes: allLiterals.
 			methodLiterals := allLiterals size.
-			kind := MLSLiteralKind fromMLSLiteral: nodeAndId key.
+			node := nodeAndId key.
 			mid := nodeAndId value
 		]
 		ifAbsent: [ NotFound signal: serializedMethod name]
-]
-
-{ #category : #accessing }
-MLSAnalysisLiteral >> kind [ 
-	^kind
 ]
 
 { #category : #accessing }
@@ -97,6 +92,11 @@ MLSAnalysisLiteral >> methodLiterals [
 MLSAnalysisLiteral >> mid [
 	"Id of the literal in the method"
 	^mid
+]
+
+{ #category : #accessing }
+MLSAnalysisLiteral >> node [
+	^node
 ]
 
 { #category : #printing }
