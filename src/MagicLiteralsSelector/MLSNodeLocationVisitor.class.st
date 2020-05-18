@@ -1,3 +1,15 @@
+"
+a RBNodeVisitor that finds the  'location' of a node(literal) in the AST of its containing method 
+
+possible locations are (see MLSAbstractNodeLocation hierarchy):
+- ExpressionValue -- rhs of an assignement ('x := 42'), or member of an array (ex: '{$a . x}')
+- BinaryArgument  -- ex: 'x + 1'
+- KeywordArgument -- ex: 'set new: 5'
+- PragmaArgument  -- ex: '<primitive: 0>'
+- MessageReceiver -- ex: '1 * 2' or '1 to: aCollection size do:'
+- ReturnValue     -- ex: '^nil'
+
+"
 Class {
 	#name : #MLSNodeLocationVisitor,
 	#superclass : #RBProgramNodeVisitor,
@@ -15,7 +27,7 @@ MLSNodeLocationVisitor class >> on: aRBNode [
 
 { #category : #'as yet unclassified' }
 MLSNodeLocationVisitor >> binarySelector: aSymbol [
-	^aSymbol asString allSatisfy: [:c | '+-*/&=>|<~@' includes: c]
+	^aSymbol asString allSatisfy: [:c | '+-*\/&=>|<~@' includes: c]
 ]
 
 { #category : #'as yet unclassified' }
@@ -49,6 +61,8 @@ MLSNodeLocationVisitor >> visitMessageNode: aRBNode [
 
 	(self binarySelector: aRBNode selector)
 		ifTrue: [ ^MLSNodeLocationBinaryArgument new].
+		
+	Error signal: 'Unknown case in MessageNode visit'
 ]
 
 { #category : #visiting }
