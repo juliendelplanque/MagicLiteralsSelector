@@ -44,6 +44,7 @@ NodeLocationVisitorTest >> testBinarySelector [
 	self assert: (MLSNodeLocationVisitor new binarySelector: #\\).
 	self assert: (MLSNodeLocationVisitor new binarySelector: #>=).
 	self assert: (MLSNodeLocationVisitor new binarySelector: #@).
+	self assert: (MLSNodeLocationVisitor new binarySelector: #,).
 	self deny: (MLSNodeLocationVisitor new binarySelector: #whatever).
 ]
 

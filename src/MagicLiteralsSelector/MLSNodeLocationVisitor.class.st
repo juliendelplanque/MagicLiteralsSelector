@@ -27,7 +27,7 @@ MLSNodeLocationVisitor class >> on: aRBNode [
 
 { #category : #'as yet unclassified' }
 MLSNodeLocationVisitor >> binarySelector: aSymbol [
-	^aSymbol asString allSatisfy: [:c | '+-*\/&=>|<~@' includes: c]
+	^aSymbol asString allSatisfy: [:c | '+-*\/&=>|<~@,' includes: c]
 ]
 
 { #category : #'as yet unclassified' }
@@ -53,6 +53,7 @@ MLSNodeLocationVisitor >> visitAssignmentNode: aRBNode [
 
 { #category : #visiting }
 MLSNodeLocationVisitor >> visitMessageNode: aRBNode [
+
 	(aRBNode receiver = targetNode)
 	ifTrue: [ ^MLSNodeLocationMessageReceiver new ].
 
@@ -61,7 +62,7 @@ MLSNodeLocationVisitor >> visitMessageNode: aRBNode [
 
 	(self binarySelector: aRBNode selector)
 		ifTrue: [ ^MLSNodeLocationBinaryArgument new].
-		
+1halt.
 	Error signal: 'Unknown case in MessageNode visit'
 ]
 
