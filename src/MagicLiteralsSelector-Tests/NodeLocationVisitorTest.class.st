@@ -17,8 +17,8 @@ NodeLocationVisitorTest >> sampleMethod [
 	"a colection of literal nodes in doifferent 'locations'"
 	<apragma: #yes argument: #(a 2)>
 	| w x y z a |
-	w := $a.
-	x := 42.
+	w := 42.
+	x := { w . $a }.
 	y := x + 1.
 	z := 2 * y ; - 7.
 	a := 'receiver' asString.
@@ -40,7 +40,7 @@ NodeLocationVisitorTest >> testBinaryArgumentLocation [
 
 { #category : #tests }
 NodeLocationVisitorTest >> testExpressionValueLocationAssignement [
-	self assert: (self nodeLocation: nodes third) equals: MLSNodeLocationExpressionValue .
+	self assert: (self nodeLocation: nodes third) equals: MLSNodeLocationExpressionValue.
 	self assert: (self nodeLocation: nodes fourth) equals: MLSNodeLocationExpressionValue.
 ]
 

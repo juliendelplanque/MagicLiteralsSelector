@@ -30,6 +30,11 @@ MLSNodeLocationVisitor >> on: aRBNode [
 ]
 
 { #category : #visiting }
+MLSNodeLocationVisitor >> visitArrayNode: aRBNode [
+	^MLSNodeLocationExpressionValue new
+]
+
+{ #category : #visiting }
 MLSNodeLocationVisitor >> visitAssignmentNode: aRBNode [
 	^MLSNodeLocationExpressionValue new
 ]
