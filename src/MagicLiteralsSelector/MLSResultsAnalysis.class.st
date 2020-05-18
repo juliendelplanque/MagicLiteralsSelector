@@ -89,6 +89,7 @@ MLSResultsAnalysis >> exportedFields [
 		(#status -> [ :lit | lit status ]) .
 		(#mid -> [ :lit | lit mid]) .
 		(#location -> [ :lit | self nodeLocation: lit node]) .
+		(#valueOfConstantMethod -> [ :lit | self valueOfConstantMethod: lit node]) .
 		(#method -> [ :lit | lit method name]) .
 		(#commentLength -> [:lit | lit commentLength]) .
 		(#mthodLiterals -> [:lit | lit methodLiterals]) .
@@ -177,7 +178,8 @@ MLSResultsAnalysis >> initialize [
 ]
 
 { #category : #private }
-MLSResultsAnalysis >> modeLocation: aRBNode [
+MLSResultsAnalysis >> nodeLocation: aRBNode [
+	^MLSNodeLocationVisitor on: aRBNode
 ]
 
 { #category : #importing }
@@ -188,4 +190,12 @@ MLSResultsAnalysis >> stonToSerializedSample: aStream [
 		next
 			fixStonErrors ;
 			yourself
+]
+
+{ #category : #private }
+MLSResultsAnalysis >> valueOfConstantMethod: aRBNode [
+	^(aRBNode parent class = RBReturnNode) and:
+	[ (aRBNode parent parent class = RBSequenceNode) and:
+	[ (aRBNode parent parent statements size = 1) and:
+	[ aRBNode parent parent parent class = RBMethodNode ] ] ]
 ]

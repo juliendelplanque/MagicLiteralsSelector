@@ -12,7 +12,7 @@ NodeLocationVisitorTest >> nodeLocation: aRBNode [
 	^(MLSNodeLocationVisitor on: aRBNode) class
 ]
 
-{ #category : #running }
+{ #category : #samples }
 NodeLocationVisitorTest >> sampleMethod [
 	"a colection of literal nodes in doifferent 'locations'"
 	<apragma: #yes argument: #(a 2)>
