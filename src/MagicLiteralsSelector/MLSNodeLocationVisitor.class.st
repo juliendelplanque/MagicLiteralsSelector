@@ -27,7 +27,7 @@ MLSNodeLocationVisitor class >> on: aRBNode [
 
 { #category : #'as yet unclassified' }
 MLSNodeLocationVisitor >> binarySelector: aSymbol [
-	^aSymbol asString allSatisfy: [:c | '+-*\/&=>|<~@,' includes: c]
+	^aSymbol asString allSatisfy: [:c | '+-*\/&=>|<~@,%' includes: c]
 ]
 
 { #category : #'as yet unclassified' }
