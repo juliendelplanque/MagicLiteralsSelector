@@ -62,7 +62,7 @@ MLSNodeLocationVisitor >> visitMessageNode: aRBNode [
 
 	(self binarySelector: aRBNode selector)
 		ifTrue: [ ^MLSNodeLocationBinaryArgument new].
-1halt.
+
 	Error signal: 'Unknown case in MessageNode visit'
 ]
 
