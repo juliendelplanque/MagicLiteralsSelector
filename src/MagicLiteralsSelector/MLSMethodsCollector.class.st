@@ -18,6 +18,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+MLSMethodsCollector class >> allClasses [
+	^self fromClasses: Smalltalk allClasses
+]
+
+{ #category : #'instance creation' }
 MLSMethodsCollector class >> fromClasses: aCollection [
 	^self new
 		classes: aCollection ;

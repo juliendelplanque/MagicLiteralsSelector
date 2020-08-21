@@ -74,6 +74,11 @@ MLSLiteralCandidate >> initialize [
 ]
 
 { #category : #testing }
+MLSLiteralCandidate >> isArrayLiteral [
+	^self literalValue isArray
+]
+
+{ #category : #testing }
 MLSLiteralCandidate >> isBooleanLiteral [
 	^(self literalValue = true) or: [ self literalValue = false ]
 

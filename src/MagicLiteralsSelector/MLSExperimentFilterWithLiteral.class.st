@@ -1,3 +1,6 @@
+"
+Accepts methods that have literals (rejects others)
+"
 Class {
 	#name : #MLSExperimentFilterWithLiteral,
 	#superclass : #MLSExperimentFilter,
