@@ -96,7 +96,7 @@ MLSLiteralCandidate >> isCharacterLiteral [
 
 { #category : #testing }
 MLSLiteralCandidate >> isFloatLiteral [
-	^self literalValue isFloat 
+	^(self literalValue isFloat ) or: [ self literalValue class = ScaledDecimal ]
 ]
 
 { #category : #testing }
