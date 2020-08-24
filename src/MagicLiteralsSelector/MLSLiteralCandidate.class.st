@@ -75,7 +75,7 @@ MLSLiteralCandidate >> initialize [
 
 { #category : #testing }
 MLSLiteralCandidate >> isArrayLiteral [
-	^self literalValue isArray
+	^(self literalValue isArray) or: [ self literalValue class == ByteArray ]
 ]
 
 { #category : #testing }
@@ -121,7 +121,7 @@ MLSLiteralCandidate >> isNotMagic [
 
 { #category : #testing }
 MLSLiteralCandidate >> isStringLiteral [
-	^self literalValue isString
+	^(self literalValue isString) and: [ self literalValue isSymbol not ]
 ]
 
 { #category : #testing }
