@@ -14,8 +14,7 @@ Class {
 { #category : #specs }
 MLSExperimentPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal
-					spacing: 5;
+		add: (SpPanedLayout newHorizontal
 					add: #methodsList;
 					add: #methodPresenter;
 					yourself);
@@ -25,16 +24,25 @@ MLSExperimentPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #specs }
+MLSExperimentPresenter class >> openOnPharoMethods: aCollection [
+	self openOnSample: (MLSMethodsSample methods: (aCollection collect: [ :m | MLSMethod compiledMethod: m ]))
+]
+
+{ #category : #specs }
+MLSExperimentPresenter class >> openOnSample: aMethodSample [
+	self new 
+		methodsSample: aMethodSample ;
+    	openWithSpec.
+]
+
 { #category : #initialization }
 MLSExperimentPresenter >> initializePresenters [
-	methodsList := self newList.
-	methodsList
-		display: [ :m | m displayString ];
-		icons: [ :m | self iconNamed: m completionStatusIcon ].
+	methodsList := self instantiate: MLSMethodListPresenter.
 	methodPresenter := self instantiate: MLSMethodPresenter.
 	
 	methodsList whenSelectionChangedDo: [ :selection |
-		methodPresenter method: selection selectedItem ].
+		selection selectedItem ifNotNil: [ :item | methodPresenter method: item] ].
 	
 	progressBar := self newProgressBar.
 	progressBar progress: [ methodsSample ifNil: [ 0 ] ifNotNil: #completionPercentage ] every: 0.5 second.
@@ -48,14 +56,19 @@ MLSExperimentPresenter >> initializePresenters [
 
 ]
 
+{ #category : #initialization }
+MLSExperimentPresenter >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		title: 'MagicLiterals Experiment' ;
+		initialExtent: 900@600
+]
+
 { #category : #accessing }
 MLSExperimentPresenter >> methodsSample: aMethodsSample [
-	methodsSample := aMethodsSample.
-	methodsList items: aMethodsSample methods.
-	
-	aMethodsSample methods do: [ :m |
-		m whenAnyLiteralCandidateStatusChangedDo: [ :method :literal |
-			methodsList items: aMethodsSample methods ] ]
+	methodsSample := aMethodsSample asMethodsSample.
+	methodsList methodsSample: aMethodsSample.
+
 ]
 
 { #category : #actions }

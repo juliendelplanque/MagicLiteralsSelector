@@ -2,43 +2,75 @@ Class {
 	#name : #MLSMethodPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
+		'btnBrowse',
 		'sourceCodePresenter',
 		'literalCandidatesPresenter',
-		'justificationTextInput'
+		'explanations',
+		'lblCannotDecideJustification',
+		'pharoMethod'
 	],
 	#category : #'MagicLiteralsSelector-Spec'
 }
 
 { #category : #specs }
 MLSMethodPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		spacing: 5;
-		add: #sourceCodePresenter;
-		add: #literalCandidatesPresenter height: (self inputTextHeight * 2) ;
-		add: 'Choice justification (in case you answered "Can not decide"):' expand: false;
-		add: #justificationTextInput height: (self inputTextHeight * 3);
+	^SpPanedLayout newVertical
+		add: (SpBoxLayout newVertical
+				add: #btnBrowse height: (self toolbarHeight);
+				add: #sourceCodePresenter ;
+				yourself) ;
+	   add: (SpBoxLayout newVertical
+				add: #literalCandidatesPresenter ;
+				add: #explanations height: (self defaultFont height * 5) ; "why 5 since there are only 3 lines??? bug in 'defaultFont height'?"
+				yourself ) ;
 		yourself
 ]
 
 { #category : #initialization }
-MLSMethodPresenter >> initializePresenters [
-	sourceCodePresenter := self newCode.
-	justificationTextInput := self newText.
-	justificationTextInput enabled: false. 
+MLSMethodPresenter >> initializeExplanationsPresenter [
+	explanations := self newText.
+	explanations
+		enabled: false ;
+		text:
+'Note:
+  A _magic_ literal is a literal that you don''t really understand
+  (Why this value? What happens if you change it?)'
 	
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> initializeLiteralCandidatesPresenter [
 	literalCandidatesPresenter := self instantiate: MLSLiteralCandidatesPresenter.
 	literalCandidatesPresenter whenLiteralCandidateSelectedChange: [ :literalCandidate | 
-		sourceCodePresenter selectionInterval: literalCandidate positionsInterval ].
-	literalCandidatesPresenter whenLiteralCandidateStatusChange: [ :literalCandidate |
-		justificationTextInput enabled: literalCandidate isCanNotDecide ]
+		literalCandidate ifNotNil: [sourceCodePresenter selectionInterval: literalCandidate positionsInterval] ].
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> initializePresenters [
+	self initializeSourceCodePresenter.
+	self initializeLiteralCandidatesPresenter.
+	self initializeExplanationsPresenter.
 	
+]
+
+{ #category : #initialization }
+MLSMethodPresenter >> initializeSourceCodePresenter [
+	btnBrowse := self newButton
+						label: 'Browse...' ;
+						action: [ pharoMethod ifNotNil: [ pharoMethod browse ] ] ;
+						yourself.
+	sourceCodePresenter := self newCode withSyntaxHighlight ; yourself.
+
 ]
 
 { #category : #accessing }
 MLSMethodPresenter >> method: aMethod [
+	pharoMethod := aMethod compiledMethod .
 	sourceCodePresenter
 		behavior: aMethod methodClass;
 		text: aMethod sourceCode.
-	literalCandidatesPresenter literalsCandidates: aMethod literalsCandidates.
+	literalCandidatesPresenter literalsCandidates: aMethod literalCandidates.
+	"self justificationCannotDecideEnabled: false.
+	justificationTextInput text: ''"
 	
 ]

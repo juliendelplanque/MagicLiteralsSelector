@@ -5,9 +5,10 @@ Class {
 	#name : #MLSMethodsSample,
 	#superclass : #Object,
 	#instVars : [
-		'methods'
+		'methods',
+		'name'
 	],
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
 
 { #category : #'instance creation' }
@@ -17,9 +18,59 @@ MLSMethodsSample class >> methods: methods [
 		yourself
 ]
 
+{ #category : #converting }
+MLSMethodsSample >> asMethodsSample [
+	^self
+]
+
+{ #category : #converting }
+MLSMethodsSample >> asOrderedCollection [ 
+	^self
+]
+
+{ #category : #converting }
+MLSMethodsSample >> asSerializedMethodsSample [
+	^MLSSerializedMethodsSample new
+		name: name ;
+		methods: (self methods collect: #asSerializedMethod);
+		pharoVersionString: SystemVersion current imageVersionString;
+		generationDateAndTime: DateAndTime now;
+		yourself
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> at: index [
+	^methods at: index
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> at: index ifAbsent: aBlock [
+	^methods at: index ifAbsent: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> collect: aBlock [
+	^ self methods collect: aBlock
+]
+
 { #category : #accessing }
 MLSMethodsSample >> completionPercentage [
 	^ (self methods select: [ :m | m isCompleted ]) size / self methods size
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> detect: aBlock [
+	^ self methods detect: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> do: aBlock [
+	^ self methods do: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> indexOf: anIndex ifAbsent: aBlock [
+	^methods indexOf: anIndex ifAbsent: aBlock
 ]
 
 { #category : #initialization }
@@ -36,4 +87,29 @@ MLSMethodsSample >> methods [
 { #category : #accessing }
 MLSMethodsSample >> methods: anObject [
 	methods := anObject asOrderedCollection
+]
+
+{ #category : #accessing }
+MLSMethodsSample >> name [
+	^ name
+]
+
+{ #category : #accessing }
+MLSMethodsSample >> name: anObject [
+	name := anObject
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> reject: aBlock [
+	^ self methods reject: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> select: aBlock [
+	^ self methods select: aBlock
+]
+
+{ #category : #'collection compatibility' }
+MLSMethodsSample >> size [
+	^ self methods size
 ]

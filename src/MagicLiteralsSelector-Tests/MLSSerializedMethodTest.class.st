@@ -4,7 +4,7 @@ A MLSSerializedMethodTest is a test class for testing the behavior of MLSSeriali
 Class {
 	#name : #MLSSerializedMethodTest,
 	#superclass : #MLSAbstractSerializationClassTest,
-	#category : #'MagicLiteralsSelector-Serialization-Tests-Core'
+	#category : #'MagicLiteralsSelector-Tests-serialization'
 }
 
 { #category : #tests }

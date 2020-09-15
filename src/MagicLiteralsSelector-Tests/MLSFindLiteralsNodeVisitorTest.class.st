@@ -3,13 +3,25 @@ A MLSFindLiteralsNodeVisitorTest is a test class for testing the behavior of MLS
 "
 Class {
 	#name : #MLSFindLiteralsNodeVisitorTest,
-	#superclass : #TestCase,
-	#category : #'MagicLiteralsSelector-Tests'
+	#superclass : #MLSAbstractTest,
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
 { #category : #'private - utilities' }
 MLSFindLiteralsNodeVisitorTest >> literalsFor: aMethod [
-	^MLSFindLiteralsNodeVisitor visit: (MLSTestCases >> aMethod) parseTree
+	^MLSFindLiteralsNodeVisitor visit: (MLSAbstractTest >> aMethod) parseTree
+]
+
+{ #category : #tests }
+MLSFindLiteralsNodeVisitorTest >> testCurlyBraceArrayWithMixedLiteralAndNot [
+	self assert: (self literalsFor: #curlyBraceArrayWithMixedLiteralAndNot) size equals: 5
+
+]
+
+{ #category : #tests }
+MLSFindLiteralsNodeVisitorTest >> testLiteralsInCurlyBraceArray [
+	self assert: (self literalsFor: #literalsInCurlyBraceArray) size equals: 1
+
 ]
 
 { #category : #tests }

@@ -7,8 +7,13 @@ When a new literal candidate is instantiated, its status inst. var. is set to be
 Class {
 	#name : #MLSUnknownStatus,
 	#superclass : #MLSLiteralCandidateStatus,
-	#category : #MagicLiteralsSelector
+	#category : #'MagicLiteralsSelector-core'
 }
+
+{ #category : #converting }
+MLSUnknownStatus >> asString [
+	^'unknownStatus'
+]
 
 { #category : #testing }
 MLSUnknownStatus >> isUnknown [

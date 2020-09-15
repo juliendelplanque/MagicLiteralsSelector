@@ -14,7 +14,5 @@ BaselineOfMagicLiteralsSelector >> baseline: spec [
 			spec
 				package: 'MagicLiteralsSelector';
 				package: 'MagicLiteralsSelector-Tests' with: [ spec requires: #('MagicLiteralsSelector') ];
-				package: 'MagicLiteralsSelector-Serialization' with: [ spec requires: #('MagicLiteralsSelector') ];
-				package: 'MagicLiteralsSelector-Serialization-Tests' with: [ spec requires: #('MagicLiteralsSelector-Serialization') ];
 				package: 'MagicLiteralsSelector-Spec'  with: [ spec requires: #('MagicLiteralsSelector') ]  ]
 ]

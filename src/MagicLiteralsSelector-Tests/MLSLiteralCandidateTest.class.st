@@ -3,22 +3,22 @@ A MLSLiteralCandidateTest is a test class for testing the behavior of MLSLiteral
 "
 Class {
 	#name : #MLSLiteralCandidateTest,
-	#superclass : #TestCase,
-	#category : #'MagicLiteralsSelector-Tests'
+	#superclass : #MLSAbstractTest,
+	#category : #'MagicLiteralsSelector-Tests-core'
 }
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeCanNotDecide [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
 	
 	candidate beCanNotDecide.
 	
-	self assert: candidate status class equals: MLSCanNotDecide.
-	self assert: candidate isCanNotDecide
+	self assert: candidate status class equals: MLSCannotDecide.
+	self assert: candidate isCannotDecide
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeMagic [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -29,7 +29,7 @@ MLSLiteralCandidateTest >> testBeMagic [
 	self assert: candidate isMagic
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeNotMagic [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -40,7 +40,7 @@ MLSLiteralCandidateTest >> testBeNotMagic [
 	self assert: candidate isNotMagic
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testBeUnknown [
 	| candidate |
 	candidate := MLSLiteralCandidate new.
@@ -62,15 +62,15 @@ MLSLiteralCandidateTest >> testCandidateHasUnknownStatusAfterInstantiation [
 { #category : #tests }
 MLSLiteralCandidateTest >> testPositionsInterval [
 	| literalCandidate |
-	literalCandidate := (MLSMethod compiledMethod: MLSTestCases >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (self mlsMethodFor: #manyLiterals) literalCandidates detect: [ :l | l literalValue = 42 ].
 	
 	self assert: literalCandidate positionsInterval equals: (44 to: 45)
 ]
 
-{ #category : #test }
+{ #category : #tests }
 MLSLiteralCandidateTest >> testWhenStatusChangedDo [
 	| literalCandidate newStatus |
-	literalCandidate := (MLSMethod compiledMethod: MLSTestCases >> #manyLiterals) literalsCandidates detect: [ :l | l literalValue = 42 ].
+	literalCandidate := (self mlsMethodFor: #manyLiterals) literalCandidates detect: [ :l | l literalValue = 42 ].
 	newStatus := nil.
 	literalCandidate whenStatusChangedDo: [ :candidate | newStatus := candidate status ].
 	

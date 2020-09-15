@@ -10,34 +10,20 @@ Class {
 		'methodClassName',
 		'methodSelector',
 		'literalCandidates',
-		'sourceCode'
+		'sourceCode',
+		'commentLength'
 	],
 	#category : #'MagicLiteralsSelector-serialization'
 }
 
-{ #category : #converting }
-MLSSerializedMethod >> asMLSMethod [
-	| compiledMethod parseTree |
-	[compiledMethod := ((RPackage organizer packageNamed: methodPackageName) 
-									definedClasses detect: [ :c | c name = methodClassName ])
-									>> methodSelector]
-		on: Error
-		do: [^self asMLSMethodExternal].
-	parseTree := compiledMethod parseTree.
-	^MLSMethod new
-		compiledMethod: compiledMethod ;
-		literalCandidates: (literalCandidates collect: [:c | c asMLSLiteralCandidateInAST: parseTree]) ;
-		yourself
-		
+{ #category : #accessing }
+MLSSerializedMethod >> commentLength [
+	^commentLength
 ]
 
-{ #category : #converting }
-MLSSerializedMethod >> asMLSMethodExternal [
-	^MLSMethodExternal new
-		serializedMethod: self ;
-		literalCandidates: (literalCandidates collect:  [:c | c asMLSLiteralCandidateInSourceCode: self sourceCode]) ;
-		yourself
-		
+{ #category : #accessing }
+MLSSerializedMethod >> commentLength: anInt [
+	commentLength := anInt
 ]
 
 { #category : #converting }
@@ -106,5 +92,6 @@ MLSSerializedMethod >> sourceCode [
 
 { #category : #accessing }
 MLSSerializedMethod >> sourceCode: anObject [
-	sourceCode := anObject
+	sourceCode := anObject.
+	self commentLength
 ]

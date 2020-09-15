@@ -15,54 +15,52 @@ MLSLiteralCandidatesPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+MLSLiteralCandidatesPresenter >> checkBoxColumnWidth [
+	^75
+]
+
 { #category : #initialization }
 MLSLiteralCandidatesPresenter >> initializePresenters [
 	literalCandidateStatusChangeBlock := [ :literalCandidate |  ].
 	literalCandidatesTable := self newTable.
 	literalCandidatesTable
 		addColumn:
-			(SpStringTableColumn
-				title: 'Literal value'
-				evaluated: [ :literalCandidate | literalCandidate literalValue storeString ]);
+			((SpStringTableColumn title: 'Literal value')
+				evaluated: [ :literalCandidate | String streamContents: [:s | literalCandidate literalValue printOn: s] ] ;
+				yourself) ;
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Magic'
-				evaluated: [ :literalCandidate | literalCandidate isMagic ])
-				onActivation: [ :literalCandidate | 
-					literalCandidate beMagic.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+			((SpCheckBoxTableColumn title: 'Magic')
+				evaluated: [ :literalCandidate | literalCandidate isMagic ] ;
+				onActivation: [ :literalCandidate |
+					self setCandidate: literalCandidate status: #beMagic ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
+				width: self checkBoxColumnWidth ;
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Not magic'
-				evaluated: [ :literalCandidate | literalCandidate isNotMagic ])
+			((SpCheckBoxTableColumn title: 'Not magic')
+				width: self checkBoxColumnWidth ;
+				evaluated: [ :literalCandidate | literalCandidate isNotMagic ] ;
 				onActivation: [ :literalCandidate | 
-					literalCandidate beNotMagic.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beNotMagic ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself);
 		addColumn:
-			((SpCheckBoxTableColumn
-				title: 'Can not decide'
-				evaluated: [ :literalCandidate | literalCandidate isCanNotDecide ])
+			((SpCheckBoxTableColumn title: 'Not sure')
+				width: self checkBoxColumnWidth ;
+				evaluated: [ :literalCandidate | literalCandidate isCannotDecide ] ;
 				onActivation: [ :literalCandidate | 
-					literalCandidate beCanNotDecide.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beCanNotDecide ];
 				onDesactivation: [ :literalCandidate | 
-					literalCandidate beUnknown.
-					self refresh.
-					literalCandidateStatusChangeBlock value: literalCandidate ];
+					self setCandidate: literalCandidate status: #beUnknown ];
 				yourself)
+]
+
+{ #category : #accessing }
+MLSLiteralCandidatesPresenter >> literalCandidates [
+	^ literalCandidatesTable items
 ]
 
 { #category : #accessing }
@@ -71,18 +69,22 @@ MLSLiteralCandidatesPresenter >> literalCandidatesTable [
 ]
 
 { #category : #accessing }
-MLSLiteralCandidatesPresenter >> literalsCandidates [
-	^ literalCandidatesTable items
-]
-
-{ #category : #accessing }
 MLSLiteralCandidatesPresenter >> literalsCandidates: aListOfCandidates [
-	literalCandidatesTable items: aListOfCandidates
+	literalCandidatesTable items: aListOfCandidates.
+	literalCandidatesTable unselectAll.
+	literalCandidatesTable selectIndex: 1
 ]
 
 { #category : #accessing }
 MLSLiteralCandidatesPresenter >> refresh [
-	self literalsCandidates: self literalsCandidates
+	self literalsCandidates: self literalCandidates
+]
+
+{ #category : #initialization }
+MLSLiteralCandidatesPresenter >> setCandidate: aLiteralCandidate status: aSelector [
+	aLiteralCandidate perform: aSelector.
+	literalCandidatesTable selectItem: aLiteralCandidate.
+	literalCandidateStatusChangeBlock value: aLiteralCandidate
 ]
 
 { #category : #api }
