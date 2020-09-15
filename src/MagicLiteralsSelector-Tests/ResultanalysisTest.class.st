@@ -20,12 +20,12 @@ ResultanalysisTest >> notConstantMethodSample [
 ResultanalysisTest >> testValueOfConstantMethodFalse [
 	| literals |
 	literals := MLSFindLiteralsNodeVisitor visit: (ResultanalysisTest >> #notConstantMethodSample) parseTree.
-	self deny: (MLSResultsAnalysis new valueOfConstantMethod: literals last)
+	self deny: (MLSResultsAnalysis new isConstantMethod: literals last)
 ]
 
 { #category : #tests }
 ResultanalysisTest >> testValueOfConstantMethodTrue [
 	| literals |
 	literals := MLSFindLiteralsNodeVisitor visit: (ResultanalysisTest >> #constantMethodSample) parseTree.
-	self assert: (MLSResultsAnalysis new valueOfConstantMethod: literals first)
+	self assert: (MLSResultsAnalysis new isConstantMethod: literals first)
 ]

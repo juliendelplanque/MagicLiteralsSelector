@@ -16,9 +16,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-MLSLiteralCandidate class >> astNode: aLiteralASTNode [
+MLSLiteralCandidate class >> detectASTNode: aLiteralASTNode [
 	^ self new
-		astNode: aLiteralASTNode;
+		detectASTNode: aLiteralASTNode;
 		yourself
 ]
 
@@ -35,11 +35,6 @@ MLSLiteralCandidate >> asSerializedLiteralCandidate [
 { #category : #accessing }
 MLSLiteralCandidate >> astNode [
 	^ astNode
-]
-
-{ #category : #accessing }
-MLSLiteralCandidate >> astNode: anObject [
-	astNode := anObject
 ]
 
 { #category : #'status setting' }
@@ -60,6 +55,11 @@ MLSLiteralCandidate >> beNotMagic [
 { #category : #'status setting' }
 MLSLiteralCandidate >> beUnknown [
 	self status: MLSUnknownStatus new
+]
+
+{ #category : #accessing }
+MLSLiteralCandidate >> detectASTNode: anObject [
+	astNode := anObject
 ]
 
 { #category : #initialization }

@@ -65,7 +65,7 @@ MLSMethod >> displayStringOn: aStream [
 MLSMethod >> gatherLiteralsCandidates [
 	^ literalsCandidates := self gatherRBLiteralsNodes
 		collect: [ :n | 
-			(MLSLiteralCandidate astNode: n)
+			(MLSLiteralCandidate detectASTNode: n)
 				whenStatusChangedDo: [ :literalCandidate | anyLiteralCandidateStatusChangedBlock cull: self cull: literalCandidate ];
 				yourself ]
 ]
