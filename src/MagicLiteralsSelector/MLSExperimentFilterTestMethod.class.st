@@ -2,12 +2,12 @@
 Accepts test methods
 "
 Class {
-	#name : #MLSExperimentFilterIsTest,
+	#name : #MLSExperimentFilterTestMethod,
 	#superclass : #MLSExperimentFilter,
 	#category : #'MagicLiteralsSelector-experiment'
 }
 
 { #category : #visiting }
-MLSExperimentFilterIsTest >> accept: aMethod [
+MLSExperimentFilterTestMethod >> accept: aMethod [
 	^aMethod isTestMethod
 ]
